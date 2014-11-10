@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  
+<xacro:property name="leg_width" value="0.03" />
+<xacro:property name="border_offset" value="0.055" />
+  
+<xacro:macro name="table_leg" params="parent name *origin">
+    <joint name="${name}_joint" type="fixed">
+        <insert_block name="origin"/>
+        <parent link="${parent}" />
+        <child link="${name}_link" />
+    </joint>
+    <link name="${name}_link">
+		<visual>
+			<geometry>
+				<box size="${leg_width} -${leg_width} ${height - plate_thickness}"/>
+			</geometry>
+			<material name="Vito/Black"/>
+		</visual>
+		<collision>
+			<geometry>
+				<box size="${leg_width} -${leg_width} ${height - plate_thickness}"/>
+			</geometry>
+		</collision>
+    </link>
+</xacro:macro>
+<xacro:macro name="model_table" params="parent name *origin length width height plate_thickness">
+    <joint name="${parent}_${name}_base_joint" type="fixed">
+        <insert_block name="origin"/>
+        <parent link="${parent}_link"/>
+        <child link="${name}_plate_link"/>
+    </joint>
+    <link name="${name}_plate_link">
+        <visual>
+            <origin xyz="${1/2 * length} ${-1/2 * width} ${-1/2 * plate_thickness}"/>
+            <geometry>
+                <box size="${length} ${width} ${plate_thickness}"/>
+			</geometry>
+			<material name="Vito/LightGrey"/>
+		</visual>
+        <collision>
+            <origin xyz="${1/2 * length} ${-1/2 * width} ${-1/2 * plate_thickness}"/>
+            <geometry>
+                <box size="${length} ${width} ${plate_thickness}"/>
+            </geometry>
+        </collision>
+    </link>
+    <xacro:table_leg parent="${name}_plate_link" name="leg_0">
+        <origin xyz="${border_offset} -${border_offset} -${1/2 * (plate_thickness + height)}"/>
+    </xacro:table_leg>
+    <xacro:table_leg parent="${name}_plate_link" name="leg_1">
+        <origin xyz="${length - border_offset} -${border_offset} -${1/2 * (plate_thickness + height)}"/>
+    </xacro:table_leg>
+    <xacro:table_leg parent="${name}_plate_link" name="leg_2">
+        <origin xyz="${border_offset} -${width - border_offset} -${1/2 * (plate_thickness + height)}"/>
+    </xacro:table_leg>
+    <xacro:table_leg parent="${name}_plate_link" name="leg_3">
+        <origin xyz="${length - border_offset} -${width - border_offset} -${1/2 * (plate_thickness + height)}"/>
+    </xacro:table_leg>
+</xacro:macro>
+</robot>
