@@ -2,11 +2,12 @@
 
     <arg name="gui" default="True" />
     <param name="use_gui" value="$(arg gui)"/>
+    <arg name="use_mimic_tag" default="true"/> <!-- the synergy is applied with pure kinematics -->
 
     <!-- This is required to test any posture of the robot by writing on the joint states /-->
     <rosparam param="source_list">[/joint_states]</rosparam>
     
-    <param name="robot_description" command="$(find xacro)/xacro.py $(find vito_description)/robots/vito.urdf.xacro"/> 
+    <param name="robot_description" command="$(find xacro)/xacro.py $(find vito_description)/robots/vito.urdf.xacro use_mimic_tag:=$(arg use_mimic_tag)"/> 
     <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" ></node>
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
 

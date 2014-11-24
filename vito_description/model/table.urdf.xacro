@@ -27,7 +27,7 @@
 <xacro:macro name="model_table" params="parent name *origin length width height plate_thickness">
     <joint name="${parent}_${name}_base_joint" type="fixed">
         <insert_block name="origin"/>
-        <parent link="${parent}_link"/>
+        <parent link="${parent}"/>
         <child link="${name}_plate_link"/>
     </joint>
     <link name="${name}_plate_link">

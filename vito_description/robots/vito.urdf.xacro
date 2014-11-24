@@ -7,8 +7,9 @@
   <xacro:include filename="$(find vito_description)/model/materials.urdf"/>
   <xacro:include filename="$(find lwr_description)/model/kuka_lwr.urdf.xacro"/>
   <xacro:include filename="$(find soft_hand_description)/model/soft_hand.urdf.xacro"/>
+  <xacro:include filename="$(find kit_head_description)/model/kit_head.urdf.xacro"/>
     
-  <link name="world_link" />
+  <link name="world" />
   
   <xacro:model_table name="table" 
                     parent="world"
@@ -19,18 +20,30 @@
     <origin xyz="-1.22 0.5 0" rpy="0 0 0"/>
   </xacro:model_table>
 
-  <xacro:model_torso name="torso" parent="world_link">
+  <xacro:model_torso name="torso" parent="world">
     <origin xyz="0 0 0"/>
   </xacro:model_torso>
   
-  <xacro:kuka_lwr parent="world_link" name="left">
+  <xacro:kuka_lwr name="left" parent="world">
     <origin xyz="0.0 -0.108585 0.475" 
       rpy="${M_PI*40.8933907/180} ${M_PI*48.5903708/180} ${M_PI*-40.8933907/180}"/>
   </xacro:kuka_lwr>
   
-  <xacro:kuka_lwr parent="world_link" name="right">
+  <xacro:kuka_lwr name="right" parent="world">
     <origin xyz="0.0 0.108585 0.475" 
       rpy="${M_PI*-40.8933907/180} ${M_PI*48.5903708/180} ${M_PI*40.8933907/180}"/>
   </xacro:kuka_lwr>
+
+  <xacro:soft_hand parent="left_arm_7_link" name="left_hand" withAdaptiveTransmission="true" useMimicTag="$(arg use_mimic_tag)">
+    <origin xyz="0 0 0" rpy="1.570796 0 0"/>
+  </xacro:soft_hand>
+
+  <xacro:soft_hand parent="right_arm_7_link" name="right_hand" withAdaptiveTransmission="true" useMimicTag="$(arg use_mimic_tag)">
+    <origin xyz="0 0 0" rpy="1.570796 0 0"/>
+  </xacro:soft_hand>
+
+  <xacro:kit_head name="head" parent="world">
+    <origin xyz="0.0 0.0 ${0.55 + 0.1}" rpy="0.0 0.0 3.141592"/>
+  </xacro:kit_head>
 
 </robot>

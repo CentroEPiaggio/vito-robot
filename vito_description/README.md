@@ -11,6 +11,8 @@ https://github.com/CentroEPiaggio/pisa-iit-soft-hand.git
 
 https://github.com/CentroEPiaggio/kuka-lwr.git
 
+https://github.com/CentroEPiaggio/kit-head.git
+
 1. Visualize
 ------------
 
