@@ -24,12 +24,12 @@
     <origin xyz="0 0 0"/>
   </xacro:model_torso>
   
-  <xacro:kuka_lwr name="left" parent="world">
+  <xacro:kuka_lwr name="left_arm" parent="world">
     <origin xyz="0.0 -0.108585 0.475" 
       rpy="${M_PI*40.8933907/180} ${M_PI*48.5903708/180} ${M_PI*-40.8933907/180}"/>
   </xacro:kuka_lwr>
   
-  <xacro:kuka_lwr name="right" parent="world">
+  <xacro:kuka_lwr name="right_arm" parent="world">
     <origin xyz="0.0 0.108585 0.475" 
       rpy="${M_PI*-40.8933907/180} ${M_PI*48.5903708/180} ${M_PI*40.8933907/180}"/>
   </xacro:kuka_lwr>
