@@ -1,0 +1,67 @@
+left_arm:
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 100  
+  joint_trajectory_controller:
+    type: effort_controllers/JointTrajectoryController
+    joints: 
+      - left_arm_0_joint
+      - left_arm_1_joint
+      - left_arm_2_joint
+      - left_arm_3_joint
+      - left_arm_4_joint
+      - left_arm_5_joint
+      - left_arm_6_joint
+    gains:
+      left_arm_0_joint: {p: 100,  d: 1, i: 1, i_clamp: 1}
+      left_arm_1_joint: {p: 100,  d: 1, i: 1, i_clamp: 1}
+      left_arm_2_joint: {p: 100,  d: 1, i: 1, i_clamp: 1}
+      left_arm_3_joint: {p: 100,  d: 1, i: 1, i_clamp: 1}
+      left_arm_4_joint: {p: 100,  d: 1, i: 1, i_clamp: 1}
+      left_arm_5_joint: {p: 100,  d: 1, i: 1, i_clamp: 1}
+      left_arm_6_joint: {p: 100,  d: 1, i: 1, i_clamp: 1}
+
+left_hand:
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 100  
+  joint_trajectory_controller:
+    type: effort_controllers/JointTrajectoryController
+    joints: 
+      - left_hand_synergy_joint
+    gains:
+      left_hand_synergy_joint: {p: 100,  d: 1, i: 1, i_clamp: 1}
+
+right_arm:
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 100  
+  joint_trajectory_controller:
+    type: effort_controllers/JointTrajectoryController
+    joints: 
+      - right_arm_0_joint
+      - right_arm_1_joint
+      - right_arm_2_joint
+      - right_arm_3_joint
+      - right_arm_4_joint
+      - right_arm_5_joint
+      - right_arm_6_joint
+    gains:
+      right_arm_0_joint: {p: 100,  d: 1, i: 1, i_clamp: 1}
+      right_arm_1_joint: {p: 100,  d: 1, i: 1, i_clamp: 1}
+      right_arm_2_joint: {p: 100,  d: 1, i: 1, i_clamp: 1}
+      right_arm_3_joint: {p: 100,  d: 1, i: 1, i_clamp: 1}
+      right_arm_4_joint: {p: 100,  d: 1, i: 1, i_clamp: 1}
+      right_arm_5_joint: {p: 100,  d: 1, i: 1, i_clamp: 1}
+      right_arm_6_joint: {p: 100,  d: 1, i: 1, i_clamp: 1}
+
+right_hand:
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 100  
+  joint_trajectory_controller:
+    type: effort_controllers/JointTrajectoryController
+    joints: 
+      - right_hand_synergy_joint
+    gains:
+      right_hand_synergy_joint: {p: 100,  d: 1, i: 1, i_clamp: 1}

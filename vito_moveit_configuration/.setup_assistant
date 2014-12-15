@@ -1,0 +1,8 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: vito_description
+    relative_path: robot/vito.urdf.xacro
+  SRDF:
+    relative_path: config/vito.srdf
+  CONFIG:
+    generated_timestamp: 1418634039

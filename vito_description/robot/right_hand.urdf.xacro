@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" 
+       name="right_hand">
+
+  <xacro:include filename="$(find soft_hand_description)/model/soft_hand.urdf.xacro"/>
+    
+  <link name="right_arm_7_link"/>
+  
+  <xacro:soft_hand parent="right_arm_7_link" name="right_hand" left="false" withAdaptiveTransmission="true" useMimicTag="false">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </xacro:soft_hand>
+
+</robot>

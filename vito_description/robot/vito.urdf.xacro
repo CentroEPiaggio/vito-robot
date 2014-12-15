@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" 
-       name="vito_description">
+       name="vito">
        
   <xacro:include filename="$(find vito_description)/model/torso.urdf.xacro"/>
   <xacro:include filename="$(find vito_description)/model/table.urdf.xacro"/>
@@ -34,11 +34,11 @@
       rpy="${M_PI*-40.8933907/180} ${M_PI*48.5903708/180} ${M_PI*40.8933907/180}"/>
   </xacro:kuka_lwr>
 
-  <xacro:soft_hand parent="left_arm_7_link" name="left_hand" left="true" withAdaptiveTransmission="true" useMimicTag="$(arg use_mimic_tag)">
+  <xacro:soft_hand parent="left_arm_7_link" name="left_hand" left="true" withAdaptiveTransmission="true" useMimicTag="false">
     <origin xyz="0 0 0" rpy="0 0 0"/>
   </xacro:soft_hand>
 
-  <xacro:soft_hand parent="right_arm_7_link" name="right_hand" left="false" withAdaptiveTransmission="true" useMimicTag="$(arg use_mimic_tag)">
+  <xacro:soft_hand parent="right_arm_7_link" name="right_hand" left="false" withAdaptiveTransmission="true" useMimicTag="false">
     <origin xyz="0 0 0" rpy="0 0 0"/>
   </xacro:soft_hand>
 
