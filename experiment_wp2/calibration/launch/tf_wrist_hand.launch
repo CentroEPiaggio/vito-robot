@@ -1,0 +1,3 @@
+<launch>
+<node pkg="tf" type="static_transform_publisher" name="tf_wrist_hand" args="0.148045 0.00296514 -0.0340039 0.710971 -0.00146995 -0.69798 0.085684 /bracelet /hand 100" />
+ </launch>

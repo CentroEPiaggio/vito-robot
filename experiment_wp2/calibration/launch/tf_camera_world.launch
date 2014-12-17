@@ -1,0 +1,3 @@
+<launch>
+<node pkg="tf" type="static_transform_publisher" name="tf_camera_world" args="-0.0403112 0.602358 1.94445 -0.59975 -0.192058 0.751222 0.197685 /camera_rgb_optical_frame /phase_space_world 100" />
+ </launch>

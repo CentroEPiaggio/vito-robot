@@ -1,0 +1,3 @@
+<launch>
+<node pkg="tf" type="static_transform_publisher" name="tf_star_object" args="-0.0105903 -0.0118632 0.0662251 0.933154 -0.296132 -0.202899 0.0190393 /star /object 100" />
+ </launch>

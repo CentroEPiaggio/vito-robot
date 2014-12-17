@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="object">
+
+<xacro:include filename="$(find phase_space)/urdf/macro/materials.urdf"/>
+ 
+  
+  <macro name="object" params="child filename parent scx scy scz color">
+    
+    <link name="${parent}"/>
+    
+    <link name="${child}">
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find display)/mesh/${filename}" scale="${scx} ${scy} ${scz}"/>
+         </geometry>
+        <material name="${color}" />
+      </visual>
+    </link>
+
+
+<joint name="${parent}_${child}_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="${parent}"/>
+      <child link="${child}"/>
+    </joint>
+ 
+  </macro>
+
+
+
+ <xacro:object child="$(arg child)" filename="$(arg filename)" parent="$(arg parent)" scx="$(arg scalex)" scy="$(arg scaley)" scz="$(arg scalez)" color="PhaseSpace/SickBlue"/>
+ 
+</robot>
+
+
+

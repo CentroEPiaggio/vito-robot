@@ -1,0 +1,22 @@
+<package>
+  <name>experiment_wp2</name>
+  <version>0.0.0</version>
+  <description>
+     meta-package containing common  packages.
+  </description>
+  
+  <maintainer email="michela.antonelli@iet.unipi.it">Michela Antonelli</maintainer>
+  
+  <license>GPLv2</license>
+  
+  
+  <author>Michela Antonelli</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  
+
+  <export>
+    <metapackage/>
+  </export>
+</package>

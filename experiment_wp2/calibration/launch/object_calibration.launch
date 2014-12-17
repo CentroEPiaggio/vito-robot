@@ -1,0 +1,27 @@
+<!-- calculate the transfomation from /star to /object -->
+<launch>
+    <include file="$(find calibration)/launch/tf_camera_world.launch"/>
+	
+	<include file="$(find phase_space)/launch/track_object.launch">
+  		<arg name="object" value="star" />
+		<arg name="turn_rviz_on" value="False" />
+	</include>
+
+
+	<node pkg="calibration" type="calibration" name="object_calibration_node" output="screen"> 
+		<param name="manualTxyz" value= "0.34,0.17,1.07" />
+  		<param name="manualQwxyz" value= "0.99,0.09,-0.09,-0.00" /> 
+		<param name="parent_frame_name_" value= "/star" />
+      	<param name="child_frame_name_" value= "/object" />
+      	<param name="phase_frame_name_" value= "/phase_space_world" />
+      	<param name="camera_frame_name_" value= "/camera_rgb_optical_frame" />
+      	<param name="type_frame_name_" value= "/star" />
+      	 <param name="calibration_type_" value="object"/>
+      	<param name="tf_launch_file_dir" value="$(find calibration)/launch/"/>
+
+ 	</node>
+
+</launch>
+
+
+
