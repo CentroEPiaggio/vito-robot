@@ -25,8 +25,6 @@ controller_list:
       - head_neck_yaw_joint
       - head_head_tilt_joint
       - head_eyes_tilt_joint
-      - head_left_eye_joint
-      - head_right_eye_joint
   - name: fake_left_arm_controller
     joints:
       - left_arm_0_joint

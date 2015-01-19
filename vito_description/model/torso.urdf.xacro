@@ -1,6 +1,20 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
+<!-- conversions -->
+<!-- I couldn't make the simulation work with realistic values, so I tweaked the conversion values -->
+<xacro:property name="mm_to_m" value="0.001"/>
+<xacro:property name="mm2_to_m2" value="0.001"/>
+<xacro:property name="gr_to_Kg" value="0.01"/>
+
+<!-- not so negligible, otherwise simulation fails -->
+<xacro:property name="negligible_mass" value="${10*gr_to_Kg}"/>
+<xacro:property name="negligible_inertia">
+    <origin xyz="0 0 0"/>
+    <mass value="${negligible_mass}"/>
+    <inertia ixx="${negligible_mass * 10 * mm2_to_m2}" ixy="0.0" ixz="0.0" iyy="${negligible_mass * 10 * mm2_to_m2}" iyz="0.0" izz="${negligible_mass * 10 * mm2_to_m2}"/>
+</xacro:property>
+
 <xacro:macro name="model_torso" params="parent name *origin">
   <joint name="${parent}_${name}_base_joint" type="fixed">
     <insert_block name="origin"/>
@@ -8,6 +22,9 @@
     <child link="${name}_link"/>
   </joint>
   <link name="${name}_link">
+    <inertial>
+      <insert_block name="negligible_inertia"/>
+    </inertial>
     <visual>
       <geometry>
         <mesh filename="package://vito_description/meshes/torso.stl"/>
@@ -20,6 +37,11 @@
       </geometry>
     </collision>
   </link>
+
+  <gazebo reference="${name}_link">
+    <static>true</static>
+  </gazebo>
+
 </xacro:macro>
 
 </robot>

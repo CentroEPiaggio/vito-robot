@@ -18,4 +18,8 @@ https://github.com/CentroEPiaggio/kit-head.git
 
 `roslaunch vito_description display.launch`
 
+By default, the simulation is paused at the begining to wait for all controllers and stuff load, otherwise, the robots move around without control. So, when the command above finishes, you must call in a different terminal the following:
 
+`rosservice call /gazebo/unpause_physics`
+
+See the "display.launch" file for more details and options, switch to real robots, select which part to simulate, load the moveit environment, etc.

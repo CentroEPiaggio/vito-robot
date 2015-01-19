@@ -5,7 +5,7 @@
   <!-- GDB Debug Option -->
   <arg name="debug" default="false" />
   <arg unless="$(arg debug)" name="launch_prefix" value="" />
-  <arg     if="$(arg debug)" name="launch_prefix"
+  <arg if="$(arg debug)" name="launch_prefix"
 	   value="gdb -x $(find vito_moveit_configuration)/launch/gdb_settings.gdb --ex run --args" />
 
   <!-- Verbose Mode Option -->

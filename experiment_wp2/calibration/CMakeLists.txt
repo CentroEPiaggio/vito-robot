@@ -4,7 +4,7 @@ project(calibration)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED tf roscpp)
+find_package(catkin REQUIRED tf roscpp cmake_modules)
 
 
 ## System dependencies are found with CMake's conventions
