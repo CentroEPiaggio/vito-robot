@@ -201,9 +201,6 @@
     </group_state>
     <!-- Define how the robot moves in its environment, i.e., connection to robot's root link -->
     <virtual_joint name="world_joint" type="fixed" parent_frame="world_frame" child_link="world"/> <!-- type can be planar, floating or fixed -->
-    <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
-    <end_effector name="right_hand" parent_link="right_arm_7_link" group="right_arm" />
-    <end_effector name="left_hand" parent_link="left_arm_7_link" group="left_arm" />
     <!--PASSIVE JOINT: Purpose: this element is used to mark joints that are not actuated-->
     <passive_joint name="left_hand_index_abd_joint" />
     <passive_joint name="left_hand_index_inner_joint" />
