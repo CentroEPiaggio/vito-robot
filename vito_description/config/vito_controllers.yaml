@@ -21,6 +21,29 @@ left_arm:
       left_arm_5_joint: {p: 50000,  d: 0.0, i: 10.0, i_clamp: 1}
       left_arm_6_joint: {p: 50000,  d: 0.0, i: 10.0, i_clamp: 1}
 
+left_hand_arm:
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 100  
+  joint_trajectory_controller:
+    type: effort_controllers/JointTrajectoryController
+    joints: 
+      - left_arm_0_joint
+      - left_arm_1_joint
+      - left_arm_2_joint
+      - left_arm_3_joint
+      - left_arm_4_joint
+      - left_arm_5_joint
+      - left_arm_6_joint
+    gains:
+      left_arm_0_joint: {p: 210000,  d: 0.0, i: 10.0, i_clamp: 1}
+      left_arm_1_joint: {p: 50000,  d: 0.0, i: 10.0, i_clamp: 1}
+      left_arm_2_joint: {p: 50000,  d: 0.0, i: 10.0, i_clamp: 1}
+      left_arm_3_joint: {p: 50000,  d: 0.0, i: 10.0, i_clamp: 1}
+      left_arm_4_joint: {p: 50000,  d: 0.0, i: 10.0, i_clamp: 1}
+      left_arm_5_joint: {p: 50000,  d: 0.0, i: 10.0, i_clamp: 1}
+      left_arm_6_joint: {p: 50000,  d: 0.0, i: 10.0, i_clamp: 1}
+
 left_hand:
   joint_state_controller:
     type: joint_state_controller/JointStateController
@@ -33,6 +56,29 @@ left_hand:
       left_hand_synergy_joint: {p: 100,  d: 1, i: 1, i_clamp: 1}
 
 right_arm:
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 100  
+  joint_trajectory_controller:
+    type: effort_controllers/JointTrajectoryController
+    joints: 
+      - right_arm_0_joint
+      - right_arm_1_joint
+      - right_arm_2_joint
+      - right_arm_3_joint
+      - right_arm_4_joint
+      - right_arm_5_joint
+      - right_arm_6_joint
+    gains:
+      right_arm_0_joint: {p: 210000,  d: 0.0, i: 10.0, i_clamp: 1}
+      right_arm_1_joint: {p: 50000,  d: 0.0, i: 10.0, i_clamp: 1}
+      right_arm_2_joint: {p: 50000,  d: 0.0, i: 10.0, i_clamp: 1}
+      right_arm_3_joint: {p: 50000,  d: 0.0, i: 10.0, i_clamp: 1}
+      right_arm_4_joint: {p: 50000,  d: 0.0, i: 10.0, i_clamp: 1}
+      right_arm_5_joint: {p: 50000,  d: 0.0, i: 10.0, i_clamp: 1}
+      right_arm_6_joint: {p: 50000,  d: 0.0, i: 10.0, i_clamp: 1}
+
+right_hand_arm:
   joint_state_controller:
     type: joint_state_controller/JointStateController
     publish_rate: 100  
@@ -88,3 +134,54 @@ head:
       head_eyes_tilt_joint: {p: 1000,  d: 0, i: 10, i_clamp: 1}
       head_left_eye_joint: {p: 1000,  d: 0, i: 10, i_clamp: 1}
       head_right_eye_joint: {p: 1000,  d: 0, i: 10, i_clamp: 1}
+
+full_robot:
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 100  
+  joint_trajectory_controller:
+    type: effort_controllers/JointTrajectoryController
+    joints: 
+      - head_neck_pitch_joint
+      - head_neck_roll_joint
+      - head_neck_yaw_joint
+      - head_head_tilt_joint
+      - head_eyes_tilt_joint
+      - head_left_eye_joint
+      - head_right_eye_joint
+      - left_arm_0_joint
+      - left_arm_1_joint
+      - left_arm_2_joint
+      - left_arm_3_joint
+      - left_arm_4_joint
+      - left_arm_5_joint
+      - left_arm_6_joint
+      - right_arm_0_joint
+      - right_arm_1_joint
+      - right_arm_2_joint
+      - right_arm_3_joint
+      - right_arm_4_joint
+      - right_arm_5_joint
+      - right_arm_6_joint
+    gains:
+      head_neck_pitch_joint: {p: 1000,  d: 0, i: 10, i_clamp: 1}
+      head_neck_roll_joint: {p: 1000,  d: 0, i: 10, i_clamp: 1}
+      head_neck_yaw_joint: {p: 1000,  d: 0, i: 10, i_clamp: 1}
+      head_head_tilt_joint: {p: 1000,  d: 0, i: 10, i_clamp: 1}
+      head_eyes_tilt_joint: {p: 1000,  d: 0, i: 10, i_clamp: 1}
+      head_left_eye_joint: {p: 1000,  d: 0, i: 10, i_clamp: 1}
+      head_right_eye_joint: {p: 1000,  d: 0, i: 10, i_clamp: 1}
+      left_arm_0_joint: {p: 210000,  d: 0.0, i: 10.0, i_clamp: 1}
+      left_arm_1_joint: {p: 50000,  d: 0.0, i: 10.0, i_clamp: 1}
+      left_arm_2_joint: {p: 50000,  d: 0.0, i: 10.0, i_clamp: 1}
+      left_arm_3_joint: {p: 50000,  d: 0.0, i: 10.0, i_clamp: 1}
+      left_arm_4_joint: {p: 50000,  d: 0.0, i: 10.0, i_clamp: 1}
+      left_arm_5_joint: {p: 50000,  d: 0.0, i: 10.0, i_clamp: 1}
+      left_arm_6_joint: {p: 50000,  d: 0.0, i: 10.0, i_clamp: 1}
+      right_arm_0_joint: {p: 210000,  d: 0.0, i: 10.0, i_clamp: 1}
+      right_arm_1_joint: {p: 50000,  d: 0.0, i: 10.0, i_clamp: 1}
+      right_arm_2_joint: {p: 50000,  d: 0.0, i: 10.0, i_clamp: 1}
+      right_arm_3_joint: {p: 50000,  d: 0.0, i: 10.0, i_clamp: 1}
+      right_arm_4_joint: {p: 50000,  d: 0.0, i: 10.0, i_clamp: 1}
+      right_arm_5_joint: {p: 50000,  d: 0.0, i: 10.0, i_clamp: 1}
+      right_arm_6_joint: {p: 50000,  d: 0.0, i: 10.0, i_clamp: 1}

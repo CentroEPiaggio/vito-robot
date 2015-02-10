@@ -180,4 +180,19 @@
         <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen"  args="joint_state_controller joint_trajectory_controller"/>
     </group>
 
+    <group ns="left_hand_arm">
+        <!-- add the right stuff here : now it should just launch the simulated controller -->
+        <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen"  args="joint_state_controller joint_trajectory_controller"/>
+    </group>
+
+    <group ns="right_hand_arm">
+        <!-- add the right stuff here : now it should just launch the simulated controller -->
+        <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen"  args="joint_state_controller joint_trajectory_controller"/>
+    </group>
+
+    <group ns="full_robot">
+        <!-- add the right stuff here : now it should just launch the simulated controller -->
+        <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen"  args="joint_state_controller joint_trajectory_controller"/>
+    </group>
+
 </launch>
