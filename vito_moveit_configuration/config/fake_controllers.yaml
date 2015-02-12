@@ -17,7 +17,6 @@ controller_list:
       - right_arm_4_joint
       - right_arm_5_joint
       - right_arm_6_joint
-      - right_hand_synergy_joint
   - name: fake_head_controller
     joints:
       - head_neck_pitch_joint
@@ -25,6 +24,8 @@ controller_list:
       - head_neck_yaw_joint
       - head_head_tilt_joint
       - head_eyes_tilt_joint
+      - head_left_eye_joint
+      - head_right_eye_joint
   - name: fake_left_arm_controller
     joints:
       - left_arm_0_joint
@@ -43,7 +44,6 @@ controller_list:
       - left_arm_4_joint
       - left_arm_5_joint
       - left_arm_6_joint
-      - left_hand_synergy_joint
   - name: fake_full_robot_controller
     joints:
       - head_neck_pitch_joint
@@ -60,7 +60,6 @@ controller_list:
       - left_arm_4_joint
       - left_arm_5_joint
       - left_arm_6_joint
-      - left_hand_synergy_joint
       - right_arm_0_joint
       - right_arm_1_joint
       - right_arm_2_joint
@@ -68,4 +67,3 @@ controller_list:
       - right_arm_4_joint
       - right_arm_5_joint
       - right_arm_6_joint
-      - right_hand_synergy_joint

@@ -4,7 +4,7 @@
     <arg name="robot_name" default="vito"/>
     <arg name="use_rviz" default="true"/>
     <arg name="use_joint_state_publisher" default="true"/>
-    <arg name="load_moveit" default="false"/>
+    <arg name="load_moveit" default="true"/>
 
     <!-- configure whether to use real/sim hardware -->
     <arg name="head_sim" default="true"/>
@@ -177,21 +177,6 @@
         </group>
 
         <!-- load the controllers in current namespace -->
-        <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen"  args="joint_state_controller joint_trajectory_controller"/>
-    </group>
-
-    <group ns="left_hand_arm">
-        <!-- add the right stuff here : now it should just launch the simulated controller -->
-        <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen"  args="joint_state_controller joint_trajectory_controller"/>
-    </group>
-
-    <group ns="right_hand_arm">
-        <!-- add the right stuff here : now it should just launch the simulated controller -->
-        <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen"  args="joint_state_controller joint_trajectory_controller"/>
-    </group>
-
-    <group ns="full_robot">
-        <!-- add the right stuff here : now it should just launch the simulated controller -->
         <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen"  args="joint_state_controller joint_trajectory_controller"/>
     </group>
 
