@@ -42,7 +42,7 @@
     </link>
 
     <gazebo reference="${name}_link">
-        <static>true</static>
+        <!-- <static>true</static> -->
     </gazebo>
 </xacro:macro>
 
@@ -84,7 +84,7 @@
     </xacro:table_leg>
 
     <gazebo reference="${name}_plate_link">
-        <static>true</static>
+        <!-- <static>true</static> -->
     </gazebo>
     
 </xacro:macro>

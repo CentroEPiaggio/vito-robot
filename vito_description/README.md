@@ -13,6 +13,12 @@ https://github.com/CentroEPiaggio/kuka-lwr.git
 
 https://github.com/CentroEPiaggio/kit-head.git
 
+https://github.com/CentroEPiaggio/gazebo_ros_pkgs.git
+
+https://github.com/CentroEPiaggio/ros_control.git
+
+IMPORTANT FOR NOW: ALL REPOS MUST BE CHECKEDOUT TO `multi-robot-test` BRANCH
+
 1. Visualize
 ------------
 

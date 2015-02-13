@@ -39,7 +39,7 @@
   </link>
 
   <gazebo reference="${name}_link">
-    <static>true</static>
+    <!-- <static>true</static> -->
   </gazebo>
 
 </xacro:macro>

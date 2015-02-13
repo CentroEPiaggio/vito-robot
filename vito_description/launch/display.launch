@@ -20,7 +20,7 @@
 
     <!-- Spawn the full robot into Gazebo 
         (doesn't work well with transmissions and plugins, see part spawning below) -->
-    <!--node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model $(arg robot_name)" respawn="false" output="screen"/-->
+    <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model $(arg robot_name) -x 0 -y 0 -z 1.0 -R 0 -P 0 -Y 0" respawn="false" output="screen"/>
 
     <group if="$(arg use_joint_state_publisher)">
         <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
@@ -66,9 +66,9 @@
 
     <group ns="tableTorso">
         <!-- load the part in robot description in current namespace -->
-        <param name="robot_description" command="$(find xacro)/xacro.py $(find vito_description)/robot/tableTorso.urdf.xacro"/>
+        <!-- <param name="robot_description" command="$(find xacro)/xacro.py $(find vito_description)/robot/tableTorso.urdf.xacro"/> -->
         <!-- Spawn the part into Gazebo in current namespace -->
-        <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model tableTorso" respawn="false" output="screen"/>
+        <!-- <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model tableTorso" respawn="false" output="screen"/> -->
     </group>
 
     <!--group ns="head"--> <!-- could not left the namespace because of the frame names didn't work well -->
@@ -77,9 +77,9 @@
             <!-- include the axes transformations -->
             <include file="$(find kit_head_description)/launch/openni_axes.launch"/>
             <!-- load the part in robot description in current namespace -->
-            <param name="head_description" command="$(find xacro)/xacro.py $(find vito_description)/robot/head.urdf.xacro"/>
+            <!-- <param name="head_description" command="$(find xacro)/xacro.py $(find vito_description)/robot/head.urdf.xacro"/> -->
             <!-- Spawn the part into Gazebo in current namespace -->
-            <node name="spawn_head" pkg="gazebo_ros" type="spawn_model" args="-param head_description -urdf -model head" respawn="false" output="screen"/>
+            <!-- <node name="spawn_head" pkg="gazebo_ros" type="spawn_model" args="-param head_description -urdf -model head" respawn="false" output="screen"/> -->
         </group>
         <group unless="$(arg head_sim)">
             <!-- <include file="$(find kit_head_hw)/launch/head_hw.launch">
@@ -99,9 +99,9 @@
         <!-- select the sim/real hardware interface -->
         <group if="$(arg left_arm_sim)">
             <!-- load the part in robot description in current namespace -->
-            <param name="robot_description" command="$(find xacro)/xacro.py $(find vito_description)/robot/left_arm.urdf.xacro"/>
+            <!-- <param name="robot_description" command="$(find xacro)/xacro.py $(find vito_description)/robot/left_arm.urdf.xacro"/> -->
             <!-- Spawn the part into Gazebo in current namespace -->
-            <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model left_arm" respawn="false" output="screen"/>
+            <!-- <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model left_arm" respawn="false" output="screen"/> -->
         </group>
         <group unless="$(arg left_arm_sim)">
             <include file="$(find lwr_hw)/launch/lwr_hw.launch">
@@ -121,9 +121,9 @@
         <!-- select the sim/real hardware interface -->
         <group if="$(arg left_hand_sim)">
             <!-- load the part in robot description in current namespace -->
-            <param name="robot_description" command="$(find xacro)/xacro.py $(find vito_description)/robot/left_hand.urdf.xacro"/>
+            <!-- <param name="robot_description" command="$(find xacro)/xacro.py $(find vito_description)/robot/left_hand.urdf.xacro"/> -->
             <!-- Spawn the part into Gazebo in current namespace -->
-            <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -x 0 -y -1.5 -z 0 -R 0 -P 0 -Y 0 -model left_hand" respawn="false" output="screen"/>
+            <!-- <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -x 0 -y -1.5 -z 0 -R 0 -P 0 -Y 0 -model left_hand" respawn="false" output="screen"/> -->
         </group>
         <group unless="$(arg left_hand_sim)">
             <!-- <include file="$(find soft_hand_hw)/launch/soft_hand_hw.launch">
@@ -143,9 +143,9 @@
         <!-- select the sim/real hardware interface -->
         <group if="$(arg right_arm_sim)">
             <!-- load the part in robot description in current namespace -->
-            <param name="robot_description" command="$(find xacro)/xacro.py $(find vito_description)/robot/right_arm.urdf.xacro"/>
+            <!-- <param name="robot_description" command="$(find xacro)/xacro.py $(find vito_description)/robot/right_arm.urdf.xacro"/> -->
             <!-- Spawn the part into Gazebo in current namespace -->
-            <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model right_arm" respawn="false" output="screen"/>
+            <!-- <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model right_arm" respawn="false" output="screen"/> -->
         </group>
         <group unless="$(arg right_arm_sim)">
             <include file="$(find lwr_hw)/launch/lwr_hw.launch">
@@ -165,9 +165,9 @@
         <!-- select the sim/real hardware interface -->
         <group if="$(arg right_hand_sim)">
             <!-- load the part in robot description in current namespace -->
-            <param name="robot_description" command="$(find xacro)/xacro.py $(find vito_description)/robot/right_hand.urdf.xacro"/>
+            <!-- <param name="robot_description" command="$(find xacro)/xacro.py $(find vito_description)/robot/right_hand.urdf.xacro"/> -->
             <!-- Spawn the part into Gazebo in current namespace -->
-            <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -x 0 -y 1.5 -z 0 -R 0 -P 0 -Y 0 -model right_hand" respawn="false" output="screen"/>
+            <!-- <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -x 0 -y 1.5 -z 0 -R 0 -P 0 -Y 0 -model right_hand" respawn="false" output="screen"/> -->
         </group>
         <group unless="$(arg right_hand_sim)">
             <!-- <include file="$(find soft_hand_hw)/launch/soft_hand_hw.launch">
