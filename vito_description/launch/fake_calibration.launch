@@ -4,6 +4,4 @@
 
 	<node pkg="tf" type="static_transform_publisher" name="tf_right_eye" args="0 0 0 0 0 0 1 head_right_eye_link head_right_eye_calib_frame 100" />
 
-	<node pkg="tf" type="static_transform_publisher" name="tf_asus" args="0 0 0 0 0 0 1 head_asus_link head_asus_calib_frame 100" />
-
 </launch>

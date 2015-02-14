@@ -12,6 +12,8 @@ Panels:
         - /PointCloud21
         - /TF1
         - /TF1/Frames1
+        - /MotionPlanning1
+        - /MotionPlanning1/Planned Path1
       Splitter Ratio: 0.5
     Tree Height: 268
   - Class: rviz/Selection
@@ -32,7 +34,7 @@ Panels:
     Experimental: false
     Name: Time
     SyncMode: 0
-    SyncSource: PointCloud2
+    SyncSource: Camera
 Visualization Manager:
   Class: ""
   Displays:
@@ -1123,7 +1125,7 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
         Loop Animation: false
-        Robot Alpha: 0.5
+        Robot Alpha: 0.2
         Show Robot Collision: false
         Show Robot Visual: true
         Show Trail: false
@@ -1148,7 +1150,7 @@ Visualization Manager:
         Show Workspace: false
         Start State Alpha: 1
         Start State Color: 0; 255; 0
-      Planning Scene Topic: planning_scene
+      Planning Scene Topic: /move_group/monitored_planning_scene
       Robot Description: robot_description
       Scene Geometry:
         Scene Alpha: 0.9
@@ -1683,10 +1685,10 @@ Visualization Manager:
         Z: 0.49251
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 0.135202
+      Pitch: 0.150202
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 6.27781
+      Yaw: 5.26781
     Saved: ~
 Window Geometry:
   Camera:
