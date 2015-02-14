@@ -13,6 +13,8 @@ Panels:
         - /TF1
         - /TF1/Frames1
         - /MotionPlanning1
+        - /MotionPlanning1/Scene Robot1
+        - /MotionPlanning1/Planning Request1
         - /MotionPlanning1/Planned Path1
       Splitter Ratio: 0.5
     Tree Height: 268
@@ -1141,12 +1143,12 @@ Visualization Manager:
       Planning Request:
         Colliding Link Color: 255; 0; 0
         Goal State Alpha: 1
-        Goal State Color: 250; 128; 0
+        Goal State Color: 170; 170; 127
         Interactive Marker Size: 0
         Joint Violation Color: 255; 0; 255
         Planning Group: full_robot
         Query Goal State: true
-        Query Start State: true
+        Query Start State: false
         Show Workspace: false
         Start State Alpha: 1
         Start State Color: 0; 255; 0
@@ -1647,7 +1649,7 @@ Visualization Manager:
             Show Trail: false
         Robot Alpha: 0.5
         Show Robot Collision: false
-        Show Robot Visual: true
+        Show Robot Visual: false
       Value: true
   Enabled: true
   Global Options:
@@ -1673,22 +1675,22 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 2.63324
+      Distance: 2.57728
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.06
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.323638
-        Y: 0.0521172
-        Z: 0.49251
+        X: -0.411637
+        Y: 0.105372
+        Z: 0.286173
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 0.150202
+      Pitch: 0.250202
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 5.26781
+      Yaw: 2.7828
     Saved: ~
 Window Geometry:
   Camera:
