@@ -17,7 +17,8 @@ https://github.com/CentroEPiaggio/gazebo_ros_pkgs.git
 
 https://github.com/CentroEPiaggio/ros_control.git
 
-IMPORTANT FOR NOW: ALL REPOS MUST BE CHECKEDOUT TO `multi-robot-test` BRANCH
+IMPORTANT FOR NOW IF YOU WANT SIMULATE IN GAZEBO: 
+__ALL REPOS MUST BE CHECKEDOUT TO `multi-robot-test` BRANCH__
 
 1. Visualize
 ------------
