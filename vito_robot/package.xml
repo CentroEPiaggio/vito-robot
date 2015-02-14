@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package>
-  <name>pacman_unipi_pkgs</name>
+  <name>vito_robot</name>
   <version>0.0.0</version>
-  <description>The pacman_unipi_pkgs package</description>
+  <description>The vito_robot package</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag --> 
   <!-- Example:  -->
