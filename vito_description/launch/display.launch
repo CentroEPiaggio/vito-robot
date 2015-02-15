@@ -5,6 +5,7 @@
     <arg name="use_rviz" default="true"/>
     <arg name="use_joint_state_publisher" default="true"/>
     <arg name="load_moveit" default="true"/>
+    <arg name="use_calibration_package" default="true"/>
 
     <!-- configure whether the real hardware is enabled or not -->
     <arg name="head_enabled" default="false"/>
@@ -58,7 +59,19 @@
             <arg name="debug" value="false"/>
         </include>
 
+        <!-- calibration transformations -->
+        <include file="$(find vito_description)/launch/fake_calibration.launch"/>
+
         <!-- perhaps remapping joint states is advised -->
+    </group>
+    <!-- calibration transformations -->
+    <group unless="$(arg use_robot_sim)">
+        <group if="$(arg use_calibration_package)">
+            <!-- it takes the last calibration performed, you can call calibrate and it will overwrite the yaml file -->
+            <!-- however, you need to relaunch da capo -->
+            <!--include file="$(find calibration)/launch/asus_head_kuka_broadcaster.launch" -->
+            <!-- for the fake eyes, which are not still included here -->
+        </group>
     </group>
 
     <!-- load moveit configuration -->
@@ -70,13 +83,6 @@
             <arg name="debug" value="false"/>
         </include>
     </group>
-
-    <!-- calibration transformations -->
-    <!-- it takes the last calibration performed, you can call calibrate and it will overwrite the yaml file -->
-    <!-- however, you need to relaunch da capo -->
-    <!--include file="$(find calibration)/launch/asus_head_kuka_broadcaster.launch" -->
-    <!-- for the fake eyes, which are not still included here -->
-    <!--include file="$(find vito_description)/launch/fake_calibration.launch" -->
 
     <group if="$(arg head_enabled)">
         <!-- <include file="$(find kit_head_hw)/launch/head_hw.launch">
