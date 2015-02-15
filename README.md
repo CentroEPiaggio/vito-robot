@@ -1,6 +1,8 @@
 # VITO, the UNIPI Robot
 
-The UNIPI robot is composed of two Kuka LWR mounted on a torso. The torso is fixed. The end-effectors are several depending on the application, typically two Pisa/IIT Soft Hands.
+The UNIPI robot is composed of two Kuka LWR equipped with two Pisa/IIT Soft Hands each. The arms are mounted on a torso that is fixed on a working table.
+
+![vito](vito_gazebo.png)
 
 This package and its dependencies use [ROS/indigo](http://wiki.ros.org/indigo/Installation/Ubuntu) and [Ubuntu 14.04](http://www.ubuntu.com/download/desktop).
 
@@ -11,10 +13,10 @@ This package and its dependencies use [ROS/indigo](http://wiki.ros.org/indigo/In
     * [KUKA LWR](https://github.com/CentroEPiaggio/kuka-lwr.git)
     * [KIT Head](https://github.com/CentroEPiaggio/kit-head.git)
 
-- For simulation, you need [Gazebo4](http://gazebosim.org/tutorials?tut=install_ubuntu&ver=4.0&cat=install) or later, and also to clone the forked repositories regarding:
+- For simulation, you need [Gazebo4](http://gazebosim.org/tutorials?tut=install_ubuntu&ver=4.0&cat=install) or later to install `sudo apt-get install ros-indigo-gazebo4-ros` only. Additionally, you need to clone the forked repositories regarding:
     * [gazebo_ros_packages](https://github.com/CentroEPiaggio/gazebo_ros_pkgs.git)
     * [ros_control](https://github.com/CentroEPiaggio/ros_control.git)
-
+   
     IMPORTANT: all repos above must be checked out to the `multi-robot-test` branch.
 
 - For the real scenario, you need to perform camera-robot calibration. We provide a [calibration](https://github.com/CentroEPiaggio/calibration.git) package that can help you to do that. However, other method that provides where the cameras (asus and two eyes of the KIT head) are w.r.t. the world is valid.
