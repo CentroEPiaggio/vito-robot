@@ -1,10 +1,10 @@
 # VITO, the UNIPI Robot
 
-The UNIPI robot is composed of two Kuka LWR equipped with two Pisa/IIT Soft Hands each. The arms are mounted on a torso that is fixed on a working table.
-
 ![vito](vito_gazebo.png)
 
-This package and its dependencies use [ROS/indigo](http://wiki.ros.org/indigo/Installation/Ubuntu) and [Ubuntu 14.04](http://www.ubuntu.com/download/desktop).
+The UNIPI robot is composed of two Kuka LWR equipped with two Pisa/IIT Soft Hands each. The arms are mounted on a torso that is fixed on a working table.
+
+This package use [ROS/indigo](http://wiki.ros.org/indigo/Installation/Ubuntu), [Gazebo4](http://gazebosim.org/tutorials?tut=install_ubuntu&ver=4.0&cat=install) on [Ubuntu 14.04](http://www.ubuntu.com/download/desktop).
 
 ## Local dependencies
 
