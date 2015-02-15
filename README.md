@@ -2,6 +2,7 @@
 
 The UNIPI robot is composed of two Kuka LWR mounted on a torso. The torso is fixed. The end-effectors are several depending on the application, typically two Pisa/IIT Soft Hands.
 
+This package and its dependencies use [ROS/indigo](http://wiki.ros.org/indigo/Installation/Ubuntu) and [Ubuntu 14.04](http://www.ubuntu.com/download/desktop).
 
 ## Local dependencies
 
@@ -10,7 +11,7 @@ The UNIPI robot is composed of two Kuka LWR mounted on a torso. The torso is fix
     * [KUKA LWR](https://github.com/CentroEPiaggio/kuka-lwr.git)
     * [KIT Head](https://github.com/CentroEPiaggio/kit-head.git)
 
-- For simulation, you need also to clone the forked repositories regarding:
+- For simulation, you need [Gazebo4](http://gazebosim.org/tutorials?tut=install_ubuntu&ver=4.0&cat=install) or later, and also to clone the forked repositories regarding:
     * [gazebo_ros_packages](https://github.com/CentroEPiaggio/gazebo_ros_pkgs.git)
     * [ros_control](https://github.com/CentroEPiaggio/ros_control.git)
 
