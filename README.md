@@ -26,8 +26,11 @@ Note: you must fulfil dependencies of all dependencies as well.
 
 ## Use
 
-The command to launch the robot is:
+The command to launch the robot in simulation is:
 `roslaunch vito_description display.launch`
+
+The command to launch the robot for real is:
+`roslaunch vito_description display.launch use_rviz:=true load_moveit:=false use_calibration_package:=false left_arm_enabled:=true right_arm_enabled:=true use_robot_sim:=false`
 
 Please, edit it at `vito_descrtiption/launch/display.launch` for the available options.
 
