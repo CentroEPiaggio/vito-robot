@@ -152,6 +152,16 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        left_base:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_clamp:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         left_hand_index_distal_link:
           Alpha: 1
           Show Axes: false
@@ -368,6 +378,16 @@ Visualization Manager:
           Show Trail: false
           Value: true
         right_arm_base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_base:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_clamp:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -612,7 +632,7 @@ Visualization Manager:
       Selectable: true
       Size (Pixels): 3
       Size (m): 0.01
-      Style: Flat Squares
+      Style: Points
       Topic: /head_asus/head_asus/depth/points
       Use Fixed Frame: true
       Use rainbow: true
@@ -728,6 +748,16 @@ Visualization Manager:
             Show Trail: false
             Value: true
           left_arm_base_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_base:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_clamp:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -948,6 +978,16 @@ Visualization Manager:
             Show Trail: false
             Value: true
           right_arm_base_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_base:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_clamp:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -1253,6 +1293,16 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
+          left_base:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          left_clamp:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
           left_hand_index_distal_link:
             Alpha: 1
             Show Axes: false
@@ -1473,6 +1523,16 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
+          right_base:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          right_clamp:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
           right_hand_index_distal_link:
             Alpha: 1
             Show Axes: false
@@ -1687,10 +1747,10 @@ Visualization Manager:
         Z: 0.286173
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 0.250202
+      Pitch: 0.420202
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 2.7828
+      Yaw: 0.1228
     Saved: ~
 Window Geometry:
   Camera:

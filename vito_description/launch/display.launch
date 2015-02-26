@@ -61,6 +61,7 @@
 
         <!-- calibration transformations -->
         <include file="$(find vito_description)/launch/fake_calibration.launch"/>
+        <include file="$(find kit_head_description)/launch/openni_axes.launch"/>
 
         <!-- perhaps remapping joint states is advised -->
     </group>
