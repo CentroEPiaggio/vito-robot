@@ -26,7 +26,7 @@ left_hand:
     type: joint_state_controller/JointStateController
     publish_rate: 100  
   joint_trajectory_controller:
-    type: effort_controllers/JointTrajectoryController
+    type: position_controllers/JointTrajectoryController
     joints: 
       - left_hand_synergy_joint
     gains:
@@ -60,7 +60,7 @@ right_hand:
     type: joint_state_controller/JointStateController
     publish_rate: 100  
   joint_trajectory_controller:
-    type: effort_controllers/JointTrajectoryController
+    type: position_controllers/JointTrajectoryController
     joints: 
       - right_hand_synergy_joint
     gains:

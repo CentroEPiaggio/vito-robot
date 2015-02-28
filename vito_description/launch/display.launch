@@ -124,10 +124,12 @@
         <group if="$(arg left_hand_enabled)">
             <!--add a copy of the robot description within the name space -->
             <param name="robot_description" command="$(find xacro)/xacro.py $(find vito_description)/robot/$(arg robot_name).urdf.xacro"/>
-            <!-- <include file="$(find soft_hand_hw)/launch/soft_hand_hw.launch">
-                <arg name="port" value="ttyUSB0"/>
-                <arg name="id" value="1"/>
-            </include> -->
+
+            <rosparam command="load" file="$(find vito_description)/config/left_hand_names.yaml" />
+
+            <include file="$(find soft_hand_ros_control)/launch/soft_hand_hw.launch">
+                <arg name="use_deafult_joint_names" value="false"/>
+            </include>
         </group>
 
         <!-- load the controllers in current namespace -->
@@ -155,10 +157,13 @@
 
     <group ns="right_hand">
         <group if="$(arg right_hand_enabled)">
-            <!-- <include file="$(find soft_hand_hw)/launch/soft_hand_hw.launch">
-                <arg name="port" value="ttyUSB0"/>
-                <arg name="id" value="2"/>
-            </include> -->
+            <!--add a copy of the robot description within the name space -->
+            <param name="robot_description" command="$(find xacro)/xacro.py $(find vito_description)/robot/$(arg robot_name).urdf.xacro"/>
+            <rosparam command="load" file="$(find vito_description)/config/right_hand_names.yaml" />
+
+            <include file="$(find soft_hand_ros_control)/launch/soft_hand_hw.launch">
+                <arg name="use_deafult_joint_names" value="false"/>
+            </include>
         </group>
 
         <!-- load the controllers in current namespace -->

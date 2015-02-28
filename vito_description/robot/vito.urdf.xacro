@@ -45,7 +45,7 @@
   </xacro:softhand_base>
 
   <!-- LEFT SOFTHAND -->
-  <xacro:soft_hand parent="left_base" name="left_hand" left="true" withAdaptiveTransmission="true" useMimicTag="false">
+  <xacro:soft_hand parent="left_base" name="left_hand" left="true" withAdaptiveTransmission="true" useMimicTag="true">
     <origin xyz="0 0 0.0535" rpy="0 0 0"/>
   </xacro:soft_hand>
 
@@ -65,7 +65,7 @@
   </xacro:softhand_base>
 
   <!-- RIGHT SOFTHAND -->
-  <xacro:soft_hand parent="right_base" name="right_hand" left="false" withAdaptiveTransmission="true" useMimicTag="false">
+  <xacro:soft_hand parent="right_base" name="right_hand" left="false" withAdaptiveTransmission="true" useMimicTag="true">
     <origin xyz="0 0 0.0535" rpy="0 0 0"/>
   </xacro:soft_hand>
 
