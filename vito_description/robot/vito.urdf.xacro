@@ -6,8 +6,6 @@
   <xacro:include filename="$(find vito_description)/model/torso.urdf.xacro"/>
   <xacro:include filename="$(find vito_description)/model/table.urdf.xacro"/>
   <xacro:include filename="$(find vito_description)/model/materials.urdf"/>
-  <xacro:include filename="$(find vito_description)/model/clamp.urdf.xacro"/>
-  <xacro:include filename="$(find vito_description)/model/softhand_base.urdf.xacro"/>
   <xacro:include filename="$(find lwr_description)/model/kuka_lwr.urdf.xacro"/>
   <xacro:include filename="$(find soft_hand_description)/model/soft_hand.urdf.xacro"/>
   <xacro:include filename="$(find kit_head_description)/model/kit_head.urdf.xacro"/>
@@ -35,18 +33,9 @@
       rpy="${M_PI*40.8933907/180} ${M_PI*48.5903708/180} ${M_PI*-40.8933907/180}"/>
   </xacro:kuka_lwr>
 
-  <!-- LEFT COUPLERS -->
-  <xacro:clamp name="left_clamp" parent="left_arm_7_link">
-    <origin xyz="0 0 0.01" rpy="0 0 0"/>
-  </xacro:clamp>
-
-  <xacro:softhand_base name="left_base" parent="left_clamp" left="true">
-    <origin xyz="0 0 0.004" rpy="0 0 0"/>
-  </xacro:softhand_base>
-
   <!-- LEFT SOFTHAND -->
-  <xacro:soft_hand parent="left_base" name="left_hand" left="true" withAdaptiveTransmission="true" useMimicTag="true">
-    <origin xyz="0 0 0.0535" rpy="0 0 0"/>
+  <xacro:soft_hand parent="left_arm_7_link" name="left_hand" left="true" withAdaptiveTransmission="true" useMimicTag="true">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
   </xacro:soft_hand>
 
   <!-- RIGHT ARM -->
@@ -55,18 +44,9 @@
       rpy="${M_PI*-40.8933907/180} ${M_PI*48.5903708/180} ${M_PI*40.8933907/180}"/>
   </xacro:kuka_lwr>
 
-  <!-- RIGHT COUPLERS -->
-  <xacro:clamp name="right_clamp" parent="right_arm_7_link">
-    <origin xyz="0 0 0.01" rpy="0 0 0"/>
-  </xacro:clamp>
-
-  <xacro:softhand_base name="right_base" parent="right_clamp" left="false">
-    <origin xyz="0 0 0.004" rpy="0 0 0"/>
-  </xacro:softhand_base>
-
   <!-- RIGHT SOFTHAND -->
-  <xacro:soft_hand parent="right_base" name="right_hand" left="false" withAdaptiveTransmission="true" useMimicTag="true">
-    <origin xyz="0 0 0.0535" rpy="0 0 0"/>
+  <xacro:soft_hand parent="right_arm_7_link" name="right_hand" left="false" withAdaptiveTransmission="true" useMimicTag="true">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
   </xacro:soft_hand>
 
   <!-- HEAD -->

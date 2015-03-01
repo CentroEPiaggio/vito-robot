@@ -3,7 +3,7 @@ left_arm:
     type: joint_state_controller/JointStateController
     publish_rate: 100  
   joint_trajectory_controller:
-    type: effort_controllers/JointTrajectoryController
+    type: position_controllers/JointTrajectoryController
     joints: 
       - left_arm_0_joint
       - left_arm_1_joint
@@ -37,7 +37,7 @@ right_arm:
     type: joint_state_controller/JointStateController
     publish_rate: 100  
   joint_trajectory_controller:
-    type: effort_controllers/JointTrajectoryController
+    type: position_controllers/JointTrajectoryController
     joints: 
       - right_arm_0_joint
       - right_arm_1_joint
@@ -71,7 +71,7 @@ head:
     type: joint_state_controller/JointStateController
     publish_rate: 100  
   joint_trajectory_controller:
-    type: effort_controllers/JointTrajectoryController
+    type: position_controllers/JointTrajectoryController
     joints: 
       - head_neck_pitch_joint
       - head_neck_roll_joint
