@@ -47,6 +47,7 @@ The configured groups in MoveIt! for this robot are:
 * `left_arm`: a serial kinematic chain from `world` to `left_arm_7_link`
 * `left_hand_arm`: a serial kinematic chain from `world` to `left_hand_palm_link` 
 * `head`: a kinematic tree containing all joints that belongs to the head
+* `dual_hand_arm`: it contains groups `right_hand_arm` and `left_hand_arm` for bi-manual tasks.
 * `full_robot`: it contains the grous `right_hand_arm`, `left_hand_arm` and `head`
 
 There is a home pose called <GROUP_NAME>_home for each group that you can use readly.
