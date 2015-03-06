@@ -1,6 +1,6 @@
 # VITO, the UNIPI Robot
 
-![vito](vito_gazebo.png)
+![vito](media/vito_gazebo.png)
 
 The UNIPI robot is composed of two Kuka LWR equipped with two Pisa/IIT Soft Hands each. The arms are mounted on a torso that is fixed on a working table.
 
@@ -84,4 +84,4 @@ UPLOAD SIMULATION ONLY (AS IF YOU LAUNCH THE ROBOT DRIVERS IN A REMOTE PC):
 
 A suggested hardware cockpit setup, using the joint trajectory controller rqt plugin:
 
-![Hardware cockpit screen](media/hardware_cockpit_steup.png)
+![Hardware cockpit screen](media/hardware_cockpit_setup.png)
