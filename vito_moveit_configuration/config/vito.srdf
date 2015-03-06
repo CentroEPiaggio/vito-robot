@@ -195,6 +195,8 @@
     <passive_joint name="right_hand_thumb_outer_joint" />
     <passive_joint name="right_hand_thumb_outer_joint_mimic" />
     <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
+    <disable_collisions link1="box" link2="table_plate_link" reason="User" />
+    <disable_collisions link1="box" link2="torso_link" reason="User" />
     <disable_collisions link1="head_asus_link" link2="head_head_1_link" reason="Never" />
     <disable_collisions link1="head_asus_link" link2="head_head_2_link" reason="Never" />
     <disable_collisions link1="head_asus_link" link2="head_head_3_link" reason="Never" />
@@ -902,6 +904,7 @@
     <disable_collisions link1="left_hand_little_proximal_link" link2="left_hand_middle_knuckle_link" reason="Never" />
     <disable_collisions link1="left_hand_little_proximal_link" link2="left_hand_middle_middle_link" reason="Never" />
     <disable_collisions link1="left_hand_little_proximal_link" link2="left_hand_middle_proximal_link" reason="Never" />
+    <disable_collisions link1="left_hand_little_proximal_link" link2="left_hand_palm_link" reason="User" />
     <disable_collisions link1="left_hand_little_proximal_link" link2="left_hand_ring_distal_link" reason="Never" />
     <disable_collisions link1="left_hand_little_proximal_link" link2="left_hand_ring_knuckle_link" reason="Never" />
     <disable_collisions link1="left_hand_little_proximal_link" link2="left_hand_ring_middle_link" reason="Never" />
