@@ -69,11 +69,11 @@ If you use [this calibration](https://github.com/CentroEPiaggio/calibration.git)
 * UPLOAD ALL DRIVERS WITH ROBOT-CAMERA CALIBRATION BROADCASTER:
 `roslaunch vito_description display.launch left_arm_enabled:=true right_arm_enabled:=true left_hand_enabled:=true right_hand_enabled:=true load_moveit:=false use_rviz:=false use_robot_sim:=false`
 
-*UPLOAD ALL DRIVERS ONLY (NO CAMERA CALIBRATION): 
+* UPLOAD ALL DRIVERS ONLY (NO CAMERA CALIBRATION): 
 `roslaunch vito_description display.launch left_arm_enabled:=true right_arm_enabled:=true left_hand_enabled:=true right_hand_enabled:=true load_moveit:=false use_rviz:=false use_robot_sim:=false`
 
 * UPLOAD MOVEIT ENVIRONMENT:
-* `roslaunch vito_description display.launch load_moveit:=true use_rviz:=false use_robot_sim:=false`
+`roslaunch vito_description display.launch load_moveit:=true use_rviz:=false use_robot_sim:=false`
 
 * UPLOAD EVERYTHING IN SIMULATION:
 `roslaunch vito_description display.launch`
