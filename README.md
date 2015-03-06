@@ -66,20 +66,20 @@ If you use [this calibration](https://github.com/CentroEPiaggio/calibration.git)
 
 ## Useful configured commands:
 
-UPLOAD ALL DRIVERS ONLY WITH ROBOT-CAMERA CALIBRATION BROADCASTER:
+* UPLOAD ALL DRIVERS WITH ROBOT-CAMERA CALIBRATION BROADCASTER:
 `roslaunch vito_description display.launch left_arm_enabled:=true right_arm_enabled:=true left_hand_enabled:=true right_hand_enabled:=true load_moveit:=false use_rviz:=false use_robot_sim:=false`
 
-UPLOAD ALL DRIVERS ONLY (NO CAMERA CALIBRATION):
+*UPLOAD ALL DRIVERS ONLY (NO CAMERA CALIBRATION): 
 `roslaunch vito_description display.launch left_arm_enabled:=true right_arm_enabled:=true left_hand_enabled:=true right_hand_enabled:=true load_moveit:=false use_rviz:=false use_robot_sim:=false`
 
-UPLOAD MOVEIT ENVIRONMENT:
-`roslaunch vito_description display.launch load_moveit:=true use_rviz:=false use_robot_sim:=false`
+* UPLOAD MOVEIT ENVIRONMENT:
+* `roslaunch vito_description display.launch load_moveit:=true use_rviz:=false use_robot_sim:=false`
 
-UPLOAD EVERYTHING IN SIMULATION:
+* UPLOAD EVERYTHING IN SIMULATION:
 `roslaunch vito_description display.launch`
 
-UPLOAD SIMULATION ONLY (AS IF YOU LAUNCH THE ROBOT DRIVERS IN A REMOTE PC):
-`roslaunch vito_description display.launch load_moveit:=true use_rviz:=false`
+* UPLOAD SIMULATION DRIVERS ONLY (AS IF YOU LAUNCH THE ROBOT DRIVERS IN A REMOTE PC):
+`roslaunch vito_description display.launch load_moveit:=true use_rviz:=false calibration:=false`
 
 
 A suggested hardware cockpit setup, using the joint trajectory controller rqt plugin:
