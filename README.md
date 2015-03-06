@@ -62,3 +62,26 @@ IMPORTANT: We don't use the mounting plate on the KUKA arms, the small disc that
 ## Camera-robot calibration
 
 If you use [this calibration](https://github.com/CentroEPiaggio/calibration.git) package, we provide the robot model that contains the calibrator piece on the robot at `robot/vito_calib.urdf.xacro` that assit the calibration procedure. Just follow the instructions in the calibration package. Recall that you can use any external package for this as well.
+
+
+## Useful configured commands:
+
+UPLOAD ALL DRIVERS ONLY WITH ROBOT-CAMERA CALIBRATION BROADCASTER:
+`roslaunch vito_description display.launch left_arm_enabled:=true right_arm_enabled:=true left_hand_enabled:=true right_hand_enabled:=true load_moveit:=false use_rviz:=false use_robot_sim:=false`
+
+UPLOAD ALL DRIVERS ONLY (NO CAMERA CALIBRATION):
+`roslaunch vito_description display.launch left_arm_enabled:=true right_arm_enabled:=true left_hand_enabled:=true right_hand_enabled:=true load_moveit:=false use_rviz:=false use_robot_sim:=false`
+
+UPLOAD MOVEIT ENVIRONMENT:
+`roslaunch vito_description display.launch load_moveit:=true use_rviz:=false use_robot_sim:=false`
+
+UPLOAD EVERYTHING IN SIMULATION:
+`roslaunch vito_description display.launch`
+
+UPLOAD SIMULATION ONLY (AS IF YOU LAUNCH THE ROBOT DRIVERS IN A REMOTE PC):
+`roslaunch vito_description display.launch load_moveit:=true use_rviz:=false`
+
+
+A suggested hardware cockpit setup, using the joint trajectory controller rqt plugin:
+
+![Hardware cockpit screen](media/hardware_cockpit_steup.png)
