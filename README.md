@@ -1,6 +1,6 @@
 # VITO, the UNIPI Robot
 
-![vito](vito_gazebo.png)
+![vito](media/vito_gazebo.png)
 
 The UNIPI robot is composed of two Kuka LWR equipped with two Pisa/IIT Soft Hands each. The arms are mounted on a torso that is fixed on a working table.
 
@@ -47,6 +47,7 @@ The configured groups in MoveIt! for this robot are:
 * `left_arm`: a serial kinematic chain from `world` to `left_arm_7_link`
 * `left_hand_arm`: a serial kinematic chain from `world` to `left_hand_palm_link` 
 * `head`: a kinematic tree containing all joints that belongs to the head
+* `dual_hand_arm`: it contains groups `right_hand_arm` and `left_hand_arm` for bi-manual tasks.
 * `full_robot`: it contains the grous `right_hand_arm`, `left_hand_arm` and `head`
 
 There is a home pose called <GROUP_NAME>_home for each group that you can use readly.
@@ -61,3 +62,26 @@ IMPORTANT: We don't use the mounting plate on the KUKA arms, the small disc that
 ## Camera-robot calibration
 
 If you use [this calibration](https://github.com/CentroEPiaggio/calibration.git) package, we provide the robot model that contains the calibrator piece on the robot at `robot/vito_calib.urdf.xacro` that assit the calibration procedure. Just follow the instructions in the calibration package. Recall that you can use any external package for this as well.
+
+
+## Useful configured commands
+
+* UPLOAD ALL DRIVERS WITH ROBOT-CAMERA CALIBRATION BROADCASTER:
+`roslaunch vito_description display.launch left_arm_enabled:=true right_arm_enabled:=true left_hand_enabled:=true right_hand_enabled:=true load_moveit:=false use_rviz:=false use_robot_sim:=false`
+
+* UPLOAD ALL DRIVERS ONLY (NO CAMERA CALIBRATION): 
+`roslaunch vito_description display.launch left_arm_enabled:=true right_arm_enabled:=true left_hand_enabled:=true right_hand_enabled:=true load_moveit:=false use_rviz:=false use_robot_sim:=false`
+
+* UPLOAD MOVEIT ENVIRONMENT:
+`roslaunch vito_description display.launch load_moveit:=true use_rviz:=false use_robot_sim:=false`
+
+* UPLOAD EVERYTHING IN SIMULATION:
+`roslaunch vito_description display.launch`
+
+* UPLOAD SIMULATION DRIVERS ONLY (AS IF YOU LAUNCH THE ROBOT DRIVERS IN A REMOTE PC):
+`roslaunch vito_description display.launch load_moveit:=true use_rviz:=false calibration:=false`
+
+
+A suggested hardware cockpit setup, using the joint trajectory controller rqt plugin:
+
+![Hardware cockpit screen](media/hardware_cockpit_setup.png)
