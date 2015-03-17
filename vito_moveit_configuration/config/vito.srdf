@@ -902,6 +902,7 @@
     <disable_collisions link1="left_hand_little_proximal_link" link2="left_hand_middle_knuckle_link" reason="Never" />
     <disable_collisions link1="left_hand_little_proximal_link" link2="left_hand_middle_middle_link" reason="Never" />
     <disable_collisions link1="left_hand_little_proximal_link" link2="left_hand_middle_proximal_link" reason="Never" />
+    <disable_collisions link1="left_hand_little_proximal_link" link2="left_hand_palm_link" reason="User" />
     <disable_collisions link1="left_hand_little_proximal_link" link2="left_hand_ring_distal_link" reason="Never" />
     <disable_collisions link1="left_hand_little_proximal_link" link2="left_hand_ring_knuckle_link" reason="Never" />
     <disable_collisions link1="left_hand_little_proximal_link" link2="left_hand_ring_middle_link" reason="Never" />
