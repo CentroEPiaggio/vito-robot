@@ -8,7 +8,13 @@ This package use [ROS/indigo](http://wiki.ros.org/indigo/Installation/Ubuntu), [
 
 ## Clonning with sub-modules
 
-`git clone --recursive git@github.com:CentroEPiaggio/vito-robot.git`
+Clone recursively:
+
+`git clone --recursive https://github.com/CentroEPiaggio/vito-robot.git`
+
+And checkout development branch for all of then:
+
+`cd vito-robot && git submodule foreach git checkout multi-robot-test`
 
 - For simulation, you need [Gazebo4](http://gazebosim.org/tutorials?tut=install_ubuntu&ver=4.0&cat=install) or later to install `sudo apt-get install ros-indigo-gazebo4-ros` and all ['ros-controls' framework](https://github.com/ros-controls) (from `synaptic`/`apt-get` is ok as well).
 
