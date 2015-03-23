@@ -22,7 +22,13 @@
     <!-- #### -->
 
     <!-- load the full robot in robot_description, useful for visualization, collision detection and planning simultaneously -->
-    <param name="robot_description" command="$(find xacro)/xacro.py $(find vito_description)/robot/$(arg robot_name).urdf.xacro"/>
+    <!-- the selection is only due to the hand visualization which is different in real and simulation -->
+    <group if="$(arg use_robot_sim)">
+        <param name="robot_description" command="$(find xacro)/xacro.py $(find vito_description)/robot/$(arg robot_name).urdf.xacro use_mimic_tag:=false"/>
+    </group>
+    <group unless="$(arg use_robot_sim)">
+        <param name="robot_description" command="$(find xacro)/xacro.py $(find vito_description)/robot/$(arg robot_name).urdf.xacro use_mimic_tag:=true"/>
+    </group>
 
     <group if="$(arg use_joint_state_publisher)">
         <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">

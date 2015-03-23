@@ -34,7 +34,7 @@
   </xacro:kuka_lwr>
 
   <!-- LEFT SOFTHAND -->
-  <xacro:soft_hand parent="left_arm_7_link" name="left_hand" left="true" withAdaptiveTransmission="true" useMimicTag="true">
+  <xacro:soft_hand parent="left_arm_7_link" name="left_hand" left="true" withAdaptiveTransmission="true" useMimicTag="$(arg use_mimic_tag)">
     <origin xyz="0 0 0" rpy="0 0 0"/>
   </xacro:soft_hand>
 
@@ -45,7 +45,7 @@
   </xacro:kuka_lwr>
 
   <!-- RIGHT SOFTHAND -->
-  <xacro:soft_hand parent="right_arm_7_link" name="right_hand" left="false" withAdaptiveTransmission="true" useMimicTag="true">
+  <xacro:soft_hand parent="right_arm_7_link" name="right_hand" left="false" withAdaptiveTransmission="true" useMimicTag="$(arg use_mimic_tag)">
     <origin xyz="0 0 0" rpy="0 0 0"/>
   </xacro:soft_hand>
 
