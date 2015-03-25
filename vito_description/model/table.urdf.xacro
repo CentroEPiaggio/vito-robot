@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
   
-<xacro:property name="leg_width" value="0.03" />
+<xacro:property name="leg_width" value="0.08" />
 <xacro:property name="border_offset" value="0.055" />
 
 <!-- conversions -->
@@ -30,13 +30,13 @@
         </inertial>
 		<visual>
 			<geometry>
-				<box size="${leg_width} -${leg_width} ${height - plate_thickness}"/>
+				<box size="${leg_width/2} -${leg_width} ${height - plate_thickness}"/>
 			</geometry>
 			<material name="Vito/Black"/>
 		</visual>
 		<collision>
 			<geometry>
-				<box size="${leg_width} -${leg_width} ${height - plate_thickness}"/>
+				<box size="${leg_width/2} -${leg_width} ${height - plate_thickness}"/>
 			</geometry>
 		</collision>
     </link>
@@ -70,16 +70,16 @@
             </geometry>
         </collision>
     </link>
-    <xacro:table_leg parent="${name}_plate_link" name="leg_0">
+    <xacro:table_leg parent="${name}_plate_link" name="${name}_leg_0">
         <origin xyz="${border_offset} -${border_offset} -${1/2 * (plate_thickness + height)}"/>
     </xacro:table_leg>
-    <xacro:table_leg parent="${name}_plate_link" name="leg_1">
+    <xacro:table_leg parent="${name}_plate_link" name="${name}_leg_1">
         <origin xyz="${length - border_offset} -${border_offset} -${1/2 * (plate_thickness + height)}"/>
     </xacro:table_leg>
-    <xacro:table_leg parent="${name}_plate_link" name="leg_2">
+    <xacro:table_leg parent="${name}_plate_link" name="${name}_leg_2">
         <origin xyz="${border_offset} -${width - border_offset} -${1/2 * (plate_thickness + height)}"/>
     </xacro:table_leg>
-    <xacro:table_leg parent="${name}_plate_link" name="leg_3">
+    <xacro:table_leg parent="${name}_plate_link" name="${name}_leg_3">
         <origin xyz="${length - border_offset} -${width - border_offset} -${1/2 * (plate_thickness + height)}"/>
     </xacro:table_leg>
 
