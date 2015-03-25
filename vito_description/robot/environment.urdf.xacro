@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" 
+       name="environment">
+       
+  <!-- MODELS -->
+  <xacro:include filename="$(find vito_description)/model/table.urdf.xacro"/>
+  <xacro:include filename="$(find vito_description)/model/materials.urdf"/>
+
+  <!-- WORKBENCH -->
+  <link name="workbench_anchor"/>
+  <xacro:model_table name="workbench" 
+                    parent="workbench_anchor"
+                    length="0.725"
+                    width="1.05"
+                    height="0.960"
+                    plate_thickness="0.1">
+    <origin xyz="-1.25 0.55 0" rpy="0 0 0"/>
+  </xacro:model_table>
+
+</robot>

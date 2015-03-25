@@ -10,6 +10,7 @@ Panels:
         - /Camera1
         - /Camera2
         - /PointCloud21
+        - /PointCloud21/Status1
         - /TF1
         - /TF1/Frames1
         - /MotionPlanning1
@@ -56,7 +57,7 @@ Visualization Manager:
         Z: 0
       Plane: XY
       Plane Cell Count: 10
-      Reference Frame: world
+      Reference Frame: vito_anchor
       Value: true
     - Alpha: 1
       Class: rviz/RobotModel
@@ -152,12 +153,7 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        left_base:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_clamp:
+        left_hand_clamp:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -198,6 +194,15 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
+        left_hand_kuka_coupler:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        left_hand_kuka_coupler_bottom:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         left_hand_little_distal_link:
           Alpha: 1
           Show Axes: false
@@ -299,6 +304,11 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        left_hand_softhand_base:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         left_hand_thumb_distal_link:
           Alpha: 1
           Show Axes: false
@@ -318,26 +328,6 @@ Visualization Manager:
           Show Trail: false
           Value: true
         left_hand_thumb_proximal_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        leg_0_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        leg_1_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        leg_2_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        leg_3_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -382,12 +372,7 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        right_base:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_clamp:
+        right_hand_clamp:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -428,6 +413,15 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
+        right_hand_kuka_coupler:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        right_hand_kuka_coupler_bottom:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         right_hand_little_distal_link:
           Alpha: 1
           Show Axes: false
@@ -529,6 +523,11 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        right_hand_softhand_base:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         right_hand_thumb_distal_link:
           Alpha: 1
           Show Axes: false
@@ -552,6 +551,26 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        table_leg_0_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        table_leg_1_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        table_leg_2_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        table_leg_3_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         table_plate_link:
           Alpha: 1
           Show Axes: false
@@ -562,7 +581,7 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        world:
+        vito_anchor:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -752,12 +771,7 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
-          left_base:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          left_clamp:
+          left_hand_clamp:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -798,6 +812,15 @@ Visualization Manager:
             Alpha: 1
             Show Axes: false
             Show Trail: false
+          left_hand_kuka_coupler:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          left_hand_kuka_coupler_bottom:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
           left_hand_little_distal_link:
             Alpha: 1
             Show Axes: false
@@ -899,6 +922,11 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
+          left_hand_softhand_base:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
           left_hand_thumb_distal_link:
             Alpha: 1
             Show Axes: false
@@ -918,26 +946,6 @@ Visualization Manager:
             Show Trail: false
             Value: true
           left_hand_thumb_proximal_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          leg_0_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          leg_1_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          leg_2_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          leg_3_link:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -982,12 +990,7 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
-          right_base:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          right_clamp:
+          right_hand_clamp:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -1028,6 +1031,15 @@ Visualization Manager:
             Alpha: 1
             Show Axes: false
             Show Trail: false
+          right_hand_kuka_coupler:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          right_hand_kuka_coupler_bottom:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
           right_hand_little_distal_link:
             Alpha: 1
             Show Axes: false
@@ -1129,6 +1141,11 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
+          right_hand_softhand_base:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
           right_hand_thumb_distal_link:
             Alpha: 1
             Show Axes: false
@@ -1152,6 +1169,26 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
+          table_leg_0_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          table_leg_1_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          table_leg_2_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          table_leg_3_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
           table_plate_link:
             Alpha: 1
             Show Axes: false
@@ -1162,7 +1199,7 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
-          world:
+          vito_anchor:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -1186,7 +1223,7 @@ Visualization Manager:
         Goal State Color: 170; 170; 127
         Interactive Marker Size: 0
         Joint Violation Color: 255; 0; 255
-        Planning Group: full_robot
+        Planning Group: dual_hand_arm
         Query Goal State: true
         Query Start State: false
         Show Workspace: false
@@ -1293,12 +1330,7 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
-          left_base:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          left_clamp:
+          left_hand_clamp:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -1339,6 +1371,15 @@ Visualization Manager:
             Alpha: 1
             Show Axes: false
             Show Trail: false
+          left_hand_kuka_coupler:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          left_hand_kuka_coupler_bottom:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
           left_hand_little_distal_link:
             Alpha: 1
             Show Axes: false
@@ -1440,6 +1481,11 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
+          left_hand_softhand_base:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
           left_hand_thumb_distal_link:
             Alpha: 1
             Show Axes: false
@@ -1459,26 +1505,6 @@ Visualization Manager:
             Show Trail: false
             Value: true
           left_hand_thumb_proximal_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          leg_0_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          leg_1_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          leg_2_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          leg_3_link:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -1523,12 +1549,7 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
-          right_base:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          right_clamp:
+          right_hand_clamp:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -1569,6 +1590,15 @@ Visualization Manager:
             Alpha: 1
             Show Axes: false
             Show Trail: false
+          right_hand_kuka_coupler:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          right_hand_kuka_coupler_bottom:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
           right_hand_little_distal_link:
             Alpha: 1
             Show Axes: false
@@ -1670,6 +1700,11 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
+          right_hand_softhand_base:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
           right_hand_thumb_distal_link:
             Alpha: 1
             Show Axes: false
@@ -1693,6 +1728,26 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
+          table_leg_0_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          table_leg_1_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          table_leg_2_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          table_leg_3_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
           table_plate_link:
             Alpha: 1
             Show Axes: false
@@ -1703,7 +1758,7 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
-          world:
+          vito_anchor:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -1714,7 +1769,7 @@ Visualization Manager:
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
-    Fixed Frame: world
+    Fixed Frame: vito_anchor
     Frame Rate: 30
   Name: root
   Tools:
@@ -1747,10 +1802,10 @@ Visualization Manager:
         Z: 0.286173
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 0.420202
+      Pitch: 0.0202019
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 0.1228
+      Yaw: 5.73098
     Saved: ~
 Window Geometry:
   Camera:

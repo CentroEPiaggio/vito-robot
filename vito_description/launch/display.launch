@@ -48,6 +48,15 @@
     <!-- load controller configurations -->
     <rosparam file="$(find vito_description)/config/vito_controllers.yaml" command="load"/>
 
+    <!-- publish the environment in moveit -->
+    <!-- (useful for kinematic planning, not fully completed)-->
+    <!-- node name="collision_object_publisher" pkg="rostopic" type="rostopic" output="screen" args="pub /collision_object moveit_msgs/CollisionObject -l -f $(find vito_moveit_configuration)/config/environment.yaml">
+    </node-->
+
+    <!-- spawn the environment in gazebo -->
+    <param name="environment_description" command="$(find xacro)/xacro.py $(find vito_description)/robot/environment.urdf.xacro"/>
+    <node name="spawn_env" pkg="gazebo_ros" type="spawn_model" args="-param environment_description -urdf -model environment -x 0 -y 0 -z 1.0 -R 0 -P 0 -Y 0" respawn="false" output="screen"/>
+
     <!-- #### simulation and planning -->
 
     <group if="$(arg use_robot_sim)">
