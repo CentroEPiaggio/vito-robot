@@ -54,25 +54,4 @@
     <origin xyz="0.0 0.0 ${0.55 + 0.1}" rpy="0.0 0.0 3.141592"/>
   </xacro:kit_head>
 
-  <!-- TEMPORAL BOX, DO NOT COMMIT IT! -->
-  <joint name="box_world_joint" type="fixed">
-        <origin xyz="-1.22 0.75 0.055" rpy="0 0 0"/>
-        <parent link="world"/>
-        <child link="box"/>
-    </joint>
-    <link name="box">
-        <visual>
-            <origin xyz="${1/2 * 1.45} ${-1/2 * 1.45} ${-1/2 * 0.055}"/>
-            <geometry>
-                <box size="1.45 1.45 0.055"/>
-      </geometry>
-    </visual>
-        <collision>
-            <origin xyz="${1/2 * 1.45} ${-1/2 * 1.45} ${-1/2 * 0.055}"/>
-            <geometry>
-                <box size="1.45 1.45 0.055"/>
-            </geometry>
-        </collision>
-    </link>
-
 </robot>
