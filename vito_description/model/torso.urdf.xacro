@@ -4,15 +4,15 @@
 <!-- conversions -->
 <!-- I couldn't make the simulation work with realistic values, so I tweaked the conversion values -->
 <xacro:property name="mm_to_m" value="0.001"/>
-<xacro:property name="mm2_to_m2" value="0.001"/>
-<xacro:property name="gr_to_Kg" value="0.01"/>
+<xacro:property name="mm2_to_m2" value="0.000001"/>
+<xacro:property name="gr_to_Kg" value="0.001"/>
 
 <!-- not so negligible, otherwise simulation fails -->
-<xacro:property name="negligible_mass" value="${10*gr_to_Kg}"/>
-<xacro:property name="negligible_inertia">
+<xacro:property name="torso_mass" value="${20000*gr_to_Kg}"/>
+<xacro:property name="torso_inertia">
     <origin xyz="0 0 0"/>
-    <mass value="${negligible_mass}"/>
-    <inertia ixx="${negligible_mass * 10 * mm2_to_m2}" ixy="0.0" ixz="0.0" iyy="${negligible_mass * 10 * mm2_to_m2}" iyz="0.0" izz="${negligible_mass * 10 * mm2_to_m2}"/>
+    <mass value="${torso_mass}"/>
+    <inertia ixx="${torso_mass * 10 * mm2_to_m2}" ixy="0.0" ixz="0.0" iyy="${torso_mass * 10 * mm2_to_m2}" iyz="0.0" izz="${torso_mass * 10 * mm2_to_m2}"/>
 </xacro:property>
 
 <xacro:macro name="model_torso" params="parent name *origin">
@@ -23,7 +23,7 @@
   </joint>
   <link name="${name}_link">
     <inertial>
-      <insert_block name="negligible_inertia"/>
+      <insert_block name="torso_inertia"/>
     </inertial>
     <visual>
       <geometry>
