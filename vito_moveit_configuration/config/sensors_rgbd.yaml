@@ -1,8 +1,14 @@
 sensors: 
  - sensor_plugin: occupancy_map_monitor/PointCloudOctomapUpdater
-   point_cloud_topic: /head_asus/head_asus/depth_registered/points
-   max_range: 5.0
+   point_cloud_topic: /camera/depth_registered/points #/head_asus/head_asus/depth_registered/points
+   max_range: 2.0
    padding_offset: 0
    padding_scale: 1
    point_subsample: 1
-   filtered_cloud_topic: output_cloud
+   shape_padding: 0.02
+   shape_scale: 1.0
+   filtered_cloud_topic: movit_filtered_cloud
+   self_mask:
+        min_sensor_dist: 0.1
+        self_see_default_padding: 0.05
+        self_see_default_scale: 1.1
