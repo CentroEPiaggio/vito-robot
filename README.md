@@ -28,7 +28,7 @@ The command to launch the robot in simulation is:
 The command to launch the robot for real is:
 `roslaunch vito_description display.launch use_rviz:=true load_moveit:=false use_calibration_package:=false left_arm_enabled:=true right_arm_enabled:=true use_robot_sim:=false`
 
-Please, edit it at `vito_descrtiption/launch/display.launch` for the available options.
+Please, check the available options and docs for arguments with: `roslaunch --ros-args vito_descrtiption display.launch`
 
 By default, the simulation is paused at the begining to wait for all controllers and stuff load, otherwise, the robots move around without control. When the command above stop sending messages on the screen, you need to call the following service in a different terminal:
 
