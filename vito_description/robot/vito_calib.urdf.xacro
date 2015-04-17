@@ -8,27 +8,38 @@
   <xacro:include filename="$(find vito_description)/model/calibrator.urdf.xacro"/>
   <xacro:include filename="$(find lwr_description)/model/kuka_lwr.urdf.xacro"/>
     
-  <link name="world" />
+  <link name="vito_anchor" />
   
+  <!-- BODY -->
   <xacro:model_table name="table" 
-                    parent="world"
-                    length="1.45"
-                    width="1.45"
-                    height="0.9"
-                    plate_thickness="0.1">
-    <origin xyz="-1.22 0.75 0" rpy="0 0 0"/>
+                    parent="vito_anchor"
+                    length="0.725"
+                    width="1.05"
+                    height="0.910"
+                    plate_thickness="0.05">
+    <origin xyz="-0.495 0.55 0" rpy="0 0 0"/>
   </xacro:model_table>
 
-  <xacro:model_torso name="torso" parent="world">
+  <!-- WORKBENCH -->
+  <xacro:model_table name="workbench"
+                    parent="vito_anchor"
+                    length="0.725"
+                    width="1.05"
+                    height="0.960"
+                    plate_thickness="0.1">
+  <origin xyz="-1.25 0.55 0.05" rpy="0 0 0"/>
+  </xacro:model_table>
+  
+  <xacro:model_torso name="torso" parent="vito_anchor">
     <origin xyz="0 0 0"/>
   </xacro:model_torso>
   
-  <xacro:kuka_lwr name="left_arm" parent="world">
+  <xacro:kuka_lwr name="left_arm" parent="vito_anchor">
     <origin xyz="0.0 -0.108585 0.475" 
       rpy="${M_PI*40.8933907/180} ${M_PI*48.5903708/180} ${M_PI*-40.8933907/180}"/>
   </xacro:kuka_lwr>
   
-  <xacro:kuka_lwr name="right_arm" parent="world">
+  <xacro:kuka_lwr name="right_arm" parent="vito_anchor">
     <origin xyz="0.0 0.108585 0.475" 
       rpy="${M_PI*-40.8933907/180} ${M_PI*48.5903708/180} ${M_PI*40.8933907/180}"/>
   </xacro:kuka_lwr>
