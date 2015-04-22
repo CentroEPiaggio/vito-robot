@@ -12,7 +12,9 @@
   </include>
 
   <!-- If needed, broadcast static tf for robot root -->
-  
+
+  <!-- Load .yaml configuration files on the param server -->
+  <include file="$(find dual_manipulation_shared)/launch/dual_manipulation.launch"/>
 
   <!-- We do not have a robot connected, so publish fake joint states -->
   <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
