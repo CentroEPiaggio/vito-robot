@@ -7,9 +7,6 @@
 [submodule "kit-head"]
 	path = kit-head
 	url = https://github.com/CentroEPiaggio/kit-head.git
-[submodule "gazebo_ros_pkgs"]
-	path = gazebo_ros_pkgs
-	url = https://github.com/CentroEPiaggio/gazebo_ros_pkgs.git
 [submodule "ros_control"]
 	path = ros_control
 	url = https://github.com/CentroEPiaggio/ros_control.git
