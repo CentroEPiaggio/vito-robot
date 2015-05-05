@@ -13,3 +13,7 @@ left_hand_arm:
   kinematics_solver_search_resolution: 0.005
   kinematics_solver_timeout: 0.005
   kinematics_solver_attempts: 3
+# PARAMETERS OF THE PRIVATE NODEHANDLE INSIDE KDL_KINEMATICS_PLUGIN
+# _epsilon: (default 0.00001)
+# _max_solver_iterations:= (default 500)
+# _${group_name}/position_only_ik:= (default false)
