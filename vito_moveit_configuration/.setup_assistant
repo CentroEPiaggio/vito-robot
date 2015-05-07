@@ -5,4 +5,4 @@ moveit_setup_assistant_config:
   SRDF:
     relative_path: config/vito.srdf
   CONFIG:
-    generated_timestamp: 1424213954
+    generated_timestamp: 1431014953
