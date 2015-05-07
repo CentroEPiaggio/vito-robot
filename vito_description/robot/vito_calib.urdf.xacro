@@ -35,13 +35,11 @@
   </xacro:model_torso>
   
   <xacro:kuka_lwr name="left_arm" parent="vito_anchor">
-    <origin xyz="0.0 -0.108585 0.475" 
-      rpy="${M_PI*40.8933907/180} ${M_PI*48.5903708/180} ${M_PI*-40.8933907/180}"/>
+    <origin xyz="-0.165 -0.1085854 0.390" rpy="1.5707963267948966 0.5235987010713441 -0.5235990737060282"/>
   </xacro:kuka_lwr>
   
   <xacro:kuka_lwr name="right_arm" parent="vito_anchor">
-    <origin xyz="0.0 0.108585 0.475" 
-      rpy="${M_PI*-40.8933907/180} ${M_PI*48.5903708/180} ${M_PI*40.8933907/180}"/>
+    <origin xyz="-0.165 0.10858 0.390" rpy="-1.5707963267948966 0.5235987010713441 0.5235990737060282"/>
   </xacro:kuka_lwr>
 
   <!-- from the CAD model, the frame coincides with the 7-th link -->
