@@ -12,10 +12,6 @@ Clone recursively:
 
 `git clone --recursive https://github.com/CentroEPiaggio/vito-robot.git`
 
-And checkout development branch for all of then:
-
-`cd vito-robot && git submodule foreach git checkout multi-robot-test`
-
 - For simulation, you need [Gazebo4](http://gazebosim.org/tutorials?tut=install_ubuntu&ver=4.0&cat=install) or later to install `sudo apt-get install ros-indigo-gazebo4-ros` and all ['ros-controls' framework](https://github.com/ros-controls) (from `synaptic`/`apt-get` is ok as well).
 
 - For the real scenario, you need to perform camera-robot calibration. We provide a [calibration](https://github.com/CentroEPiaggio/calibration.git) package that can help you to do that. However, other method that provides where the cameras (asus and two eyes of the KIT head) are w.r.t. the world is valid.
