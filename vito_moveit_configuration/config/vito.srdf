@@ -50,9 +50,9 @@
         <joint name="right_arm_6_joint" value="-0.2" />
     </group_state>
     <group_state name="right_hand_arm_home" group="right_hand_arm">
-        <joint name="right_arm_0_joint" value="0.5" />
-        <joint name="right_arm_1_joint" value="-0.5" />
-        <joint name="right_arm_2_joint" value="2.2" />
+        <joint name="right_arm_0_joint" value="2.35" />
+        <joint name="right_arm_1_joint" value="0.3" />
+        <joint name="right_arm_2_joint" value="0.0" />
         <joint name="right_arm_3_joint" value="1.4" />
         <joint name="right_arm_4_joint" value="-0.2" />
         <joint name="right_arm_5_joint" value="-0.2" />
@@ -75,13 +75,13 @@
         <joint name="left_arm_6_joint" value="-2" />
     </group_state>
     <group_state name="left_hand_arm_home" group="left_hand_arm">
-        <joint name="left_arm_0_joint" value="-0.2" />
-        <joint name="left_arm_1_joint" value="-0.4" />
-        <joint name="left_arm_2_joint" value="0.7" />
-        <joint name="left_arm_3_joint" value="-1.5" />
-        <joint name="left_arm_4_joint" value="-0.6" />
-        <joint name="left_arm_5_joint" value="0.1" />
-        <joint name="left_arm_6_joint" value="-2" />
+        <joint name="left_arm_0_joint" value="0.8" />
+        <joint name="left_arm_1_joint" value="-0.3" />
+        <joint name="left_arm_2_joint" value="0.0" />
+        <joint name="left_arm_3_joint" value="-1.4" />
+        <joint name="left_arm_4_joint" value="-0.2" />
+        <joint name="left_arm_5_joint" value="0.2" />
+        <joint name="left_arm_6_joint" value="-2.3" />
     </group_state>
     <group_state name="full_robot_home" group="full_robot">
         <joint name="head_eyes_tilt_joint" value="0" />
@@ -107,16 +107,16 @@
         <joint name="right_arm_6_joint" value="-0.2" />
     </group_state>
     <group_state name="dual_hand_arm_home" group="dual_hand_arm">
-        <joint name="left_arm_0_joint" value="-0.2" />
-        <joint name="left_arm_1_joint" value="-0.4" />
-        <joint name="left_arm_2_joint" value="0.7" />
-        <joint name="left_arm_3_joint" value="-1.5" />
-        <joint name="left_arm_4_joint" value="-0.6" />
-        <joint name="left_arm_5_joint" value="0.1" />
-        <joint name="left_arm_6_joint" value="-2" />
-        <joint name="right_arm_0_joint" value="0.5" />
-        <joint name="right_arm_1_joint" value="-0.5" />
-        <joint name="right_arm_2_joint" value="2.2" />
+        <joint name="left_arm_0_joint" value="0.8" />
+        <joint name="left_arm_1_joint" value="-0.3" />
+        <joint name="left_arm_2_joint" value="0.0" />
+        <joint name="left_arm_3_joint" value="-1.4" />
+        <joint name="left_arm_4_joint" value="-0.2" />
+        <joint name="left_arm_5_joint" value="0.2" />
+        <joint name="left_arm_6_joint" value="-2.3" />
+        <joint name="right_arm_0_joint" value="2.35" />
+        <joint name="right_arm_1_joint" value="0.3" />
+        <joint name="right_arm_2_joint" value="0.0" />
         <joint name="right_arm_3_joint" value="1.4" />
         <joint name="right_arm_4_joint" value="-0.2" />
         <joint name="right_arm_5_joint" value="-0.2" />

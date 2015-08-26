@@ -125,12 +125,13 @@
                 <arg name="ip" value="192.168.0.20"/>
                 <arg name="use_default_joint_names" default="false"/>
                 <arg name="use_default_namespace" default="false"/>
+                <arg name="respawning" value="true"/>
             </include>
             <!-- perhaps it is worth remapping joint states -->
         </group>
 
         <!-- load the controllers in current namespace -->
-        <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen"  args="joint_state_controller joint_trajectory_controller stiffness_trajectory_controller"/>
+        <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="$(arg left_arm_enabled)" output="screen"  args="joint_state_controller joint_trajectory_controller stiffness_trajectory_controller"/>
     </group>
     
     <group ns="left_hand">
@@ -147,7 +148,7 @@
         </group>
 
         <!-- load the controllers in current namespace -->
-        <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="true" output="screen"  args="joint_state_controller joint_trajectory_controller"/>
+        <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="$(arg left_hand_enabled)" output="screen"  args="joint_state_controller joint_trajectory_controller"/>
     </group>
 
     <group ns="right_arm">
@@ -162,11 +163,12 @@
                 <arg name="ip" value="192.168.0.10"/>
                 <arg name="use_default_joint_names" default="false"/>
                 <arg name="use_default_namespace" default="false"/>
+                <arg name="respawning" value="true"/>
             </include>
         </group>
 
         <!-- load the controllers in current namespace -->
-        <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen"  args="joint_state_controller joint_trajectory_controller stiffness_trajectory_controller"/>
+        <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="$(arg right_arm_enabled)" output="screen"  args="joint_state_controller joint_trajectory_controller stiffness_trajectory_controller"/>
     </group>
 
     <group ns="right_hand">
@@ -183,7 +185,7 @@
         </group>
 
         <!-- load the controllers in current namespace -->
-        <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="true" output="screen"  args="joint_state_controller joint_trajectory_controller"/>
+        <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="$(arg right_hand_enabled)" output="screen"  args="joint_state_controller joint_trajectory_controller"/>
     </group>
 
 </launch>
