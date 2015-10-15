@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" 
+       name="vito">
+       
+  <!-- MODELS -->
+  <xacro:include filename="$(find vito_description)/model/torso.urdf.xacro"/>
+  <xacro:include filename="$(find vito_description)/model/table.urdf.xacro"/>
+  <xacro:include filename="$(find vito_description)/model/materials.urdf"/>
+  <xacro:include filename="$(find lwr_description)/model/kuka_lwr.urdf.xacro"/>
+  <xacro:include filename="$(find soft_hand_description)/model/soft_hand.urdf.xacro"/>
+  <xacro:include filename="$(find kit_head_description)/model/kit_head.urdf.xacro"/>
+  <xacro:include filename="$(find stewart_ppcc_wrist)/model/stewart_wrist.urdf.xacro"/>
+    
+  <link name="vito_anchor" />
+  
+  <!-- BODY -->
+  <xacro:model_table name="table" 
+                    parent="vito_anchor"
+                    length="0.725"
+                    width="1.05"
+                    height="0.910"
+                    plate_thickness="0.05">
+    <origin xyz="-0.495 0.55 0" rpy="0 0 0"/>
+  </xacro:model_table>
+
+  <!-- WORKBENCH -->
+  <xacro:model_table name="workbench"
+                    parent="vito_anchor"
+                    length="0.725"
+                    width="1.05"
+                    height="0.960"
+                    plate_thickness="0.1">
+  <origin xyz="-1.25 0.55 0.07" rpy="0 0 0"/>
+  </xacro:model_table>
+
+  <!-- TORSO -->
+  <xacro:model_torso name="torso" parent="vito_anchor">
+    <origin xyz="0 0 0"/>
+  </xacro:model_torso>
+  
+  <!-- LEFT ARM -->
+  <xacro:kuka_lwr name="left_arm" parent="vito_anchor">
+    <origin xyz="-0.165 -0.1085854 0.390" rpy="1.5707963267948966 0.5235987010713441 -0.5235990737060282"/>
+  </xacro:kuka_lwr>
+
+  <!-- LEFT SOFTHAND -->
+  <xacro:soft_hand parent="left_arm_7_link" name="left_hand" left="true" withAdaptiveTransmission="true" useMimicTag="false">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </xacro:soft_hand>
+
+  <!-- RIGHT ARM -->
+  <xacro:kuka_lwr name="right_arm" parent="vito_anchor">
+    <origin xyz="-0.165 0.10858 0.390" rpy="-1.5707963267948966 0.5235987010713441 0.5235990737060282"/>
+  </xacro:kuka_lwr>
+
+  <!-- RIGHT STEWART FINGER -->
+  <xacro:stewart_wrist parent="right_arm_7_link" name="probe">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </xacro:stewart_wrist>
+
+  <!-- HEAD -->
+  <xacro:kit_head name="head" parent="vito_anchor">
+    <origin xyz="0.0 0.0 ${0.55 + 0.1}" rpy="0.0 0.0 3.141592"/>
+  </xacro:kit_head>
+
+</robot>
