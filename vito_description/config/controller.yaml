@@ -29,3 +29,15 @@ controller_list:
       - right_arm_4_joint
       - right_arm_5_joint
       - right_arm_6_joint
+  - name: /head/joint_trajectory_controller
+    type: FollowJointTrajectory
+    action_ns: follow_joint_trajectory
+    default: true
+    joints:
+      - head_neck_pitch_joint
+      - head_neck_roll_joint
+      - head_neck_yaw_joint
+      - head_head_tilt_joint
+      - head_eyes_tilt_joint
+      - head_left_eye_joint
+      - head_right_eye_joint
