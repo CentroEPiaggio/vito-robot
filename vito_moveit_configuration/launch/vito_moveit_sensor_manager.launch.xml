@@ -1,8 +1,3 @@
 <launch>
 
-	<param name="octomap_frame" type="string" value="camera_rgb_optical_frame" />
-	<param name="octomap_resolution" type="double" value="0.02" />
-
-	<!--rosparam command="load" file="$(find vito_moveit_configuration)/config/sensors_rgbd.yaml" /-->
-
 </launch>
