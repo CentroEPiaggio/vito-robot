@@ -32,8 +32,9 @@
         <node name="my_rviz" pkg="rviz" type="rviz" respawn="false" args="-d $(find vito_description)/launch/rviz_calib_config.rviz" output="screen"/>
     </group>
 
-    <!-- load controller configurations -->
-    <rosparam file="$(find vito_description)/config/vito_controllers.yaml" command="load"/>
+    <!-- load hardware interface and controller configurations -->
+    <rosparam command="load" file="$(find vito_description)/config/vito_controllers.yaml"/>
+    <rosparam command="load" file="$(find vito_description)/config/hardware_interfaces.yaml"/>
 
     <!-- #### -->
     <!-- since we usually do this with the real hardware, we can merge the groups with ns and if atributes -->
@@ -58,8 +59,7 @@
         <include file="$(find lwr_hw)/launch/lwr_hw.launch">
             <arg name="port" value="49948"/>
             <arg name="ip" value="192.168.0.20"/>
-            <arg name="use_default_joint_names" value="false"/>
-            <arg name="use_default_namespace" value="false"/>
+            <arg name="name" value="left_arm"/>
         </include>
         <!-- load the controllers in current namespace -->
         <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen"  args="joint_state_controller joint_trajectory_controller"/>
@@ -75,8 +75,7 @@
         <include file="$(find lwr_hw)/launch/lwr_hw.launch">
             <arg name="port" value="49939"/>
             <arg name="ip" value="192.168.0.10"/>
-            <arg name="use_default_joint_names" value="false"/>
-            <arg name="use_default_namespace" value="false"/>
+            <arg name="name" value="right_arm"/>
         </include>
 
         <!-- load the controllers in current namespace -->
