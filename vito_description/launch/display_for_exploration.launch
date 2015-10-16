@@ -41,8 +41,9 @@
         <node name="my_rviz" pkg="rviz" type="rviz" respawn="false" args="-d $(find vito_description)/launch/rviz_config.rviz" output="screen"/>
     </group>
 
-    <!-- load controller configurations -->
-    <rosparam file="$(find vito_description)/config/vito_controllers.yaml" command="load"/>
+    <!-- load hardware interface and controller configurations -->
+    <rosparam command="load" file="$(find vito_description)/config/vito_controllers.yaml"/>
+    <rosparam command="load" file="$(find vito_description)/config/hardware_interfaces.yaml"/>
 
     <!-- publish the environment in moveit -->
     <!-- (useful for kinematic planning, not fully completed)-->
@@ -119,14 +120,13 @@
             <include file="$(find lwr_hw)/launch/lwr_hw.launch">
                 <arg name="port" value="49948"/>
                 <arg name="ip" value="192.168.0.20"/>
-                <arg name="use_default_joint_names" default="false"/>
-                <arg name="use_default_namespace" default="false"/>
+                <arg name="name" value="left_arm"/>
             </include>
             <!-- perhaps it is worth remapping joint states -->
         </group>
 
         <!-- load the controllers in current namespace -->
-        <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen"  args="joint_state_controller joint_trajectory_controller stiffness_trajectory_controller"/>
+        <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen"  args="joint_state_controller joint_trajectory_controller"/>
     </group>
     
     <group ns="left_hand">
@@ -147,7 +147,7 @@
 
         <!-- grasp estimator -->
         <rosparam command="load" file="$(find grasp_state_publisher)/config/softgrasp.yaml" />
-        <node name="grasp_state_publisher" pkg="grasp_state_publisher" type="grasp_state_publisher" respawn="true" output="screen" />
+        <node name="grasp_state_publisher" pkg="grasp_state_publisher" type="grasp_state_publisher" respawn="false" output="screen" />
     </group>
 
     <group ns="right_arm">
@@ -160,34 +160,13 @@
             <include file="$(find lwr_hw)/launch/lwr_hw.launch">
                 <arg name="port" value="49939"/>
                 <arg name="ip" value="192.168.0.10"/>
-                <arg name="use_default_joint_names" default="false"/>
-                <arg name="use_default_namespace" default="false"/>
+                <arg name="name" value="right_arm"/>
             </include>
         </group>
 
         <!-- load the controllers in current namespace -->
-        <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen"  args="joint_state_controller joint_trajectory_controller stiffness_trajectory_controller"/>
+        <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen"  args="joint_state_controller joint_trajectory_controller"/>
     </group>
-
-    <!-- group ns="right_hand">
-        <group if="$(arg right_hand_enabled)">
-            <param name="robot_description" command="$(find xacro)/xacro.py $(find vito_description)/robot/$(arg robot_name).urdf.xacro use_mimic_tag:=true"/>
-
-            <rosparam command="load" file="$(find vito_description)/config/right_hand_names.yaml" />
-
-            <include file="$(find soft_hand_ros_control)/launch/soft_hand_hw.launch">
-                <arg name="use_deafult_joint_names" value="false"/>
-                <arg name="hand_id" value="2"/>
-            </include>
-        </group>
-
-        <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="true" output="screen"  args="joint_state_controller joint_trajectory_controller"/>
-
-
-        <rosparam command="load" file="$(find grasp_state_publisher)/config/softgrasp.yaml" />
-        <node name="grasp_state_publisher" pkg="grasp_state_publisher" type="grasp_state_publisher" respawn="true" output="screen" />
-    </group>
-    -->
 
     <group if="$(arg stewart_probe_enabled)">
         <!-- stewart probe in th eright arm -->
