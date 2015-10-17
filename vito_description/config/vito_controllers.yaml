@@ -4,7 +4,7 @@ left_arm:
     publish_rate: 100  
   joint_trajectory_controller:
     type: position_controllers/JointTrajectoryController
-    joints: 
+    joints:
       - left_arm_0_joint
       - left_arm_1_joint
       - left_arm_2_joint
@@ -26,7 +26,7 @@ left_arm:
 left_hand:
   joint_state_controller:
     type: joint_state_controller/JointStateController
-    publish_rate: 100  
+    publish_rate: 100
   joint_trajectory_controller:
     type: position_controllers/JointTrajectoryController
     joints: 
@@ -35,10 +35,10 @@ left_hand:
 right_arm:
   joint_state_controller:
     type: joint_state_controller/JointStateController
-    publish_rate: 100  
+    publish_rate: 100
   joint_trajectory_controller:
     type: position_controllers/JointTrajectoryController
-    joints: 
+    joints:
       - right_arm_0_joint
       - right_arm_1_joint
       - right_arm_2_joint
@@ -46,6 +46,10 @@ right_arm:
       - right_arm_4_joint
       - right_arm_5_joint
       - right_arm_6_joint
+  cartesian_impedance_controller:
+    type: lwr_controllers/CartesianImpedanceController
+    root_name: right_arm_base_link
+    tip_name: right_arm_7_link
   # stiffness_trajectory_controller:
   #   type: position_controllers/JointTrajectoryController
   #   joints:
@@ -60,19 +64,19 @@ right_arm:
 right_hand:
   joint_state_controller:
     type: joint_state_controller/JointStateController
-    publish_rate: 100  
+    publish_rate: 100
   joint_trajectory_controller:
     type: position_controllers/JointTrajectoryController
-    joints: 
+    joints:
       - right_hand_synergy_joint
 
 head:
   joint_state_controller:
     type: joint_state_controller/JointStateController
-    publish_rate: 100  
+    publish_rate: 100
   joint_trajectory_controller:
     type: position_controllers/JointTrajectoryController
-    joints: 
+    joints:
       - head_neck_pitch_joint
       - head_neck_roll_joint
       - head_neck_yaw_joint
