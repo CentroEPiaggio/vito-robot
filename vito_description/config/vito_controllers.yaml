@@ -12,16 +12,6 @@ left_arm:
       - left_arm_4_joint
       - left_arm_5_joint
       - left_arm_6_joint
-  # stiffness_trajectory_controller:
-  #   type: position_controllers/JointTrajectoryController
-  #   joints:
-  #     - left_arm_0_joint_stiffness
-  #     - left_arm_1_joint_stiffness
-  #     - left_arm_2_joint_stiffness
-  #     - left_arm_3_joint_stiffness
-  #     - left_arm_4_joint_stiffness
-  #     - left_arm_5_joint_stiffness
-  #     - left_arm_6_joint_stiffness
 
 left_hand:
   joint_state_controller:
@@ -50,25 +40,6 @@ right_arm:
     type: lwr_controllers/CartesianImpedanceController
     root_name: right_arm_base_link
     tip_name: right_arm_7_link
-  # stiffness_trajectory_controller:
-  #   type: position_controllers/JointTrajectoryController
-  #   joints:
-  #     - right_arm_0_joint_stiffness
-  #     - right_arm_1_joint_stiffness
-  #     - right_arm_2_joint_stiffness
-  #     - right_arm_3_joint_stiffness
-  #     - right_arm_4_joint_stiffness
-  #     - right_arm_5_joint_stiffness
-  #     - right_arm_6_joint_stiffness
-
-right_hand:
-  joint_state_controller:
-    type: joint_state_controller/JointStateController
-    publish_rate: 100
-  joint_trajectory_controller:
-    type: position_controllers/JointTrajectoryController
-    joints:
-      - right_hand_synergy_joint
 
 head:
   joint_state_controller:

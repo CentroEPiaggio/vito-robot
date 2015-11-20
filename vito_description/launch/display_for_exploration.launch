@@ -59,7 +59,7 @@
         <!-- load Gazebo simulation environment -->
         <include file="$(find gazebo_ros)/launch/empty_world.launch">
             <arg name="world_name" value="$(find vito_description)/worlds/simple_environment.world"/>
-            <arg name="paused" value="true"/>
+            <arg name="paused" value="false"/>
             <!-- when using the real/sim scenario in parallel, set "use_enabled_time" to false -->
             <arg name="use_sim_time" value="true"/>
             <arg name="gui" value="true"/>
