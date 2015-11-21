@@ -19,6 +19,9 @@
         <group name="left_arm_hand" />
         <group name="right_arm_probe" />
     </group>
+    <group name="touch_chain">
+        <chain base_link="vito_anchor" tip_link="probe_tip_touch" />
+    </group>
     <!--GROUP STATES: Purpose: Define a named state for a particular group, in terms of joint values. This is useful to define states like 'folded arms'-->
     <group_state name="right_arm_home" group="right_arm_probe">
         <joint name="right_arm_0_joint" value="-0.0628" />
@@ -40,12 +43,12 @@
     </group_state>
     <group_state name="left_arm_pick" group="left_arm_hand">
         <joint name="left_arm_0_joint" value="0.502" />
-        <joint name="left_arm_1_joint" value="0.906" />
-        <joint name="left_arm_2_joint" value="0.2824" />
-        <joint name="left_arm_3_joint" value="-0.3451" />
+        <joint name="left_arm_1_joint" value="0.2588" />
+        <joint name="left_arm_2_joint" value="0.1333" />
+        <joint name="left_arm_3_joint" value="-1.3413" />
         <joint name="left_arm_4_joint" value="0.4706" />
-        <joint name="left_arm_5_joint" value="-0.2157" />
-        <joint name="left_arm_6_joint" value="1.8198" />
+        <joint name="left_arm_5_joint" value="-0.3059" />
+        <joint name="left_arm_6_joint" value="1.2668" />
     </group_state>
     <group_state name="left_arm_drop" group="left_arm_hand">
         <joint name="left_arm_0_joint" value="0.6589" />
@@ -108,6 +111,8 @@
         <joint name="right_arm_5_joint" value="0.7118" />
         <joint name="right_arm_6_joint" value="0.2824" />
     </group_state>
+    <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
+    <end_effector name="touch" parent_link="probe_tip_touch" group="right_arm_probe" />
     <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
     <disable_collisions link1="head_asus_link" link2="head_head_1_link" reason="Never" />
     <disable_collisions link1="head_asus_link" link2="head_head_2_link" reason="Never" />
