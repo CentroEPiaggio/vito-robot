@@ -69,20 +69,19 @@
 
         <!-- calibration transformations -->
         <include file="$(find vito_description)/launch/fake_calibration.launch.xml"/>
-        <include file="$(find kit_head_description)/launch/openni_axes.launch"/>
 
         <!-- spawn the environment in gazebo -->
         <!--param name="environment_description" command="$(find xacro)/xacro.py $(find vito_description)/robot/environment.urdf.xacro"/>
         <node name="spawn_env" pkg="gazebo_ros" type="spawn_model" args="-param environment_description -urdf -model environment -x 0 -y 0 -z 1.0 -R 0 -P 0 -Y 0" respawn="false" output="screen"/-->
     </group>
     <!-- calibration transformations -->
-    <group unless="$(arg use_robot_sim)">
+    <!-- group unless="$(arg use_robot_sim)" -->
         <group if="$(arg use_calibration_package)">
             <!-- it takes the last calibration performed, you can call calibrate and it will overwrite the yaml file -->
             <include file="$(find calibration)/launch/asus_head_vito_broadcaster.launch"/>
             <!-- for the fake eyes, which are not still included here -->
         </group>
-    </group>
+    <!--/group-->
 
     <!-- load moveit configuration -->
     <group if="$(arg load_moveit)">
@@ -105,6 +104,7 @@
         </include>
         -->
         <!-- openni launch inclusion -->
+        <!-- include file="$(find kit_head_description)/launch/openni_axes.launch"/-->
     </group>
 
     <!-- load the controllers in current namespace -->
