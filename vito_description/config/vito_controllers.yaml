@@ -36,8 +36,14 @@ right_arm:
       - right_arm_4_joint
       - right_arm_5_joint
       - right_arm_6_joint
+
   cartesian_impedance_controller:
     type: lwr_controllers/CartesianImpedanceController
+    root_name: right_arm_base_link
+    tip_name: right_arm_7_link
+
+  gravity_compensation_controller:
+    type: lwr_controllers/GravityCompensation
     root_name: right_arm_base_link
     tip_name: right_arm_7_link
 

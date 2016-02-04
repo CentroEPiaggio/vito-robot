@@ -5,5 +5,5 @@ left_arm:
 
 # make the namespace match the name you use to instantiate the arm in the xacro
 right_arm:
-  root: right_arm_base_link
-  tip: right_arm_7_link
+  root: vito_anchor
+  tip: probe_tip_touch
