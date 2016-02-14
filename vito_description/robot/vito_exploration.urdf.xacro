@@ -24,14 +24,14 @@
   </xacro:model_table>
 
   <!-- WORKBENCH -->
-  <xacro:model_table name="workbench"
+<!--   <xacro:model_table name="workbench"
                     parent="vito_anchor"
                     length="0.725"
                     width="1.05"
                     height="0.960"
                     plate_thickness="0.1">
   <origin xyz="-1.25 0.55 0.07" rpy="0 0 0"/>
-  </xacro:model_table>
+  </xacro:model_table> -->
 
   <!-- TORSO -->
   <xacro:model_torso name="torso" parent="vito_anchor">

@@ -60,13 +60,13 @@
         <joint name="left_arm_6_joint" value="1.6943" />
     </group_state>
     <group_state name="left_arm_peek" group="left_arm_hand">
-        <joint name="left_arm_0_joint" value="0.6589" />
-        <joint name="left_arm_1_joint" value="0.3408" />
-        <joint name="left_arm_2_joint" value="-0.0667" />
-        <joint name="left_arm_3_joint" value="-1.9315" />
-        <joint name="left_arm_4_joint" value="1.9767" />
-        <joint name="left_arm_5_joint" value="-0.1883" />
-        <joint name="left_arm_6_joint" value="0.8785" />
+        <joint name="left_arm_0_joint" value="0.66" />
+        <joint name="left_arm_1_joint" value="0.34" />
+        <joint name="left_arm_2_joint" value="-0.07" />
+        <joint name="left_arm_3_joint" value="-1.76" />
+        <joint name="left_arm_4_joint" value="2.31" />
+        <joint name="left_arm_5_joint" value="-0.75" />
+        <joint name="left_arm_6_joint" value="0.88" />
     </group_state>
     <group_state name="glove_calib_1" group="left_arm_hand">
         <joint name="left_arm_0_joint" value="0.502" />
