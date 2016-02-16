@@ -39,6 +39,7 @@ right_arm:
 
   cartesian_impedance_controller:
     type: lwr_controllers/CartesianImpedanceController
+    robot_name: right_arm
     root_name: right_arm_base_link
     tip_name: right_arm_7_link
 
