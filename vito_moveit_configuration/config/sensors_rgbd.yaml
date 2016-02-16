@@ -2,10 +2,10 @@ sensors:
  - sensor_plugin: occupancy_map_monitor/PointCloudOctomapUpdater
    point_cloud_topic: /gaussian_process/estimated_model
    max_range: 3.0
-   padding_offset: 0.1
+   padding_offset: 0.05
    padding_scale: 1.0
    point_subsample: 1
-   shape_padding: 0.02
+   shape_padding: 0.01
    shape_scale: 1.0
    filtered_cloud_topic: moveit_filtered_cloud
    self_mask:
