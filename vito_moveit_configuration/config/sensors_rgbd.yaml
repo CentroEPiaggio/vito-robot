@@ -7,8 +7,21 @@ sensors:
    point_subsample: 1
    shape_padding: 0.01
    shape_scale: 1.0
-   filtered_cloud_topic: moveit_filtered_cloud
+   filtered_cloud_topic: object_filtered_cloud
    self_mask:
         min_sensor_dist: 0.1
         self_see_default_padding: 0.05
         self_see_default_scale: 1.1
+ # - sensor_plugin: occupancy_map_monitor/PointCloudOctomapUpdater
+ #   point_cloud_topic: /camera/depth_registered/points
+ #   max_range: 3.0
+ #   padding_offset: 0.05
+ #   padding_scale: 1.0
+ #   point_subsample: 1
+ #   shape_padding: 0.01
+ #   shape_scale: 1.0
+ #   filtered_cloud_topic: robot_filtered_cloud
+ #   self_mask:
+ #        min_sensor_dist: 0.1
+ #        self_see_default_padding: 0.05
+ #        self_see_default_scale: 1.1
