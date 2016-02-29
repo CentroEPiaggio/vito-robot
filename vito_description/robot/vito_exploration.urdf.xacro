@@ -60,7 +60,50 @@
 
   <!-- HEAD -->
   <xacro:kit_head name="head" parent="vito_anchor">
-    <origin xyz="0.0 0.0 ${0.55 + 0.1}" rpy="0.0 0.0 3.141592"/>
+    <origin xyz="-0.1 0.0 ${0.55 + 0.1}" rpy="0.0 0.0 3.141592"/>
   </xacro:kit_head>
+
+  <!-- Obstacles to reduce the workspace -->
+  <joint name="box1_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <parent link="vito_anchor"/>
+    <child link="box1"/>
+  </joint>
+  <link name="box1">
+    <collision>
+      <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.25 3.0 3.0"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="box2_joint" type="fixed">
+    <origin xyz="0 1.1 0" rpy="0 0 1.57"/>
+    <parent link="vito_anchor"/>
+    <child link="box2"/>
+  </joint>
+  <link name="box2">
+    <collision>
+      <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.1 3.0 3.0"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="box3_joint" type="fixed">
+    <origin xyz="0 -1.1 0" rpy="0 0 1.57"/>
+    <parent link="vito_anchor"/>
+    <child link="box3"/>
+  </joint>
+  <link name="box3">
+    <collision>
+      <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.1 3.0 3.0"/>
+      </geometry>
+    </collision>
+  </link>
 
 </robot>
