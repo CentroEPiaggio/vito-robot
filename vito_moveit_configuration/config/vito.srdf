@@ -971,4 +971,38 @@
     <disable_collisions link1="table_leg_3_link" link2="table_plate_link" reason="Adjacent" />
     <disable_collisions link1="table_leg_3_link" link2="torso_link" reason="Never" />
     <disable_collisions link1="table_plate_link" link2="torso_link" reason="Adjacent" />
+    <disable_collisions link1="left_arm_1_link" link2="box1" reason="User" />
+    <disable_collisions link1="right_arm_1_link" link2="box1" reason="User" />
+    <disable_collisions link1="left_arm_2_link" link2="box1" reason="User" />
+    <disable_collisions link1="right_arm_2_link" link2="box1" reason="User" />
+    <disable_collisions link1="right_arm_1_link" link2="box4left1" reason="User" />
+    <disable_collisions link1="right_arm_1_link" link2="box4left2" reason="User" />
+    <disable_collisions link1="right_arm_1_link" link2="box4left3" reason="User" />
+    <disable_collisions link1="right_arm_2_link" link2="box4left1" reason="User" />
+    <disable_collisions link1="right_arm_2_link" link2="box4left2" reason="User" />
+    <disable_collisions link1="right_arm_2_link" link2="box4left3" reason="User" />
+    <disable_collisions link1="right_arm_3_link" link2="box4left1" reason="User" />
+    <disable_collisions link1="right_arm_3_link" link2="box4left2" reason="User" />
+    <disable_collisions link1="right_arm_3_link" link2="box4left3" reason="User" />
+    <disable_collisions link1="right_arm_4_link" link2="box4left1" reason="User" />
+    <disable_collisions link1="right_arm_4_link" link2="box4left2" reason="User" />
+    <disable_collisions link1="right_arm_4_link" link2="box4left3" reason="User" />
+    <disable_collisions link1="right_arm_5_link" link2="box4left1" reason="User" />
+    <disable_collisions link1="right_arm_5_link" link2="box4left2" reason="User" />
+    <disable_collisions link1="right_arm_5_link" link2="box4left3" reason="User" />
+    <disable_collisions link1="right_arm_6_link" link2="box4left1" reason="User" />
+    <disable_collisions link1="right_arm_6_link" link2="box4left2" reason="User" />
+    <disable_collisions link1="right_arm_6_link" link2="box4left3" reason="User" />
+    <disable_collisions link1="right_arm_7_link" link2="box4left1" reason="User" />
+    <disable_collisions link1="right_arm_7_link" link2="box4left2" reason="User" />
+    <disable_collisions link1="right_arm_7_link" link2="box4left3" reason="User" />
+    <disable_collisions link1="probe_tip_surface" link2="box4left1" reason="User" />
+    <disable_collisions link1="probe_tip_surface" link2="box4left2" reason="User" />
+    <disable_collisions link1="probe_tip_surface" link2="box4left3" reason="User" />
+    <disable_collisions link1="probe_ft_sensor_nano17_base" link2="box4left1" reason="User" />
+    <disable_collisions link1="probe_ft_sensor_nano17_base" link2="box4left2" reason="User" />
+    <disable_collisions link1="probe_ft_sensor_nano17_base" link2="box4left3" reason="User" />
+    <disable_collisions link1="probe_base" link2="box4left1" reason="User" />
+    <disable_collisions link1="probe_base" link2="box4left2" reason="User" />
+    <disable_collisions link1="probe_base" link2="box4left3" reason="User" />
 </robot>
