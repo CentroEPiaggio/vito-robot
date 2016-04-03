@@ -1005,4 +1005,6 @@
     <disable_collisions link1="probe_base" link2="box4left1" reason="User" />
     <disable_collisions link1="probe_base" link2="box4left2" reason="User" />
     <disable_collisions link1="probe_base" link2="box4left3" reason="User" />
+    <disable_collisions link1="probe_base" link2="probe_extension" reason="Adjacent" />
+    <disable_collisions link1="probe_base" link2="probe_ft_sensor_nano17_base" reason="Adjacent" />
 </robot>
