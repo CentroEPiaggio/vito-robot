@@ -6,7 +6,7 @@
     <arg name="use_joint_state_publisher" default="true"/>
     <arg name="load_moveit" default="true"/>
     <arg name="use_calibration_package" default="true"/>
-    <arg name="use_grasp_estimator" default="true"/>
+    <arg name="use_grasp_estimator" default="false"/>
 
     <!-- configure whether the real hardware is enabled or not -->
     <arg name="head_enabled" default="false"/>
@@ -151,8 +151,10 @@
         <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen"  args="joint_state_controller joint_trajectory_controller"/>
 
         <!-- grasp estimator -->
-        <rosparam command="load" file="$(find grasp_state_publisher)/config/softgrasp.yaml" />
-        <node name="grasp_state_publisher" pkg="grasp_state_publisher" type="grasp_state_publisher" respawn="false" output="screen" />
+        <group if="$(arg use_grasp_estimator)">
+            <rosparam command="load" file="$(find grasp_state_publisher)/config/softgrasp.yaml" />
+            <node name="grasp_state_publisher" pkg="grasp_state_publisher" type="grasp_state_publisher" respawn="false" output="screen" />
+        </group>
     </group>
 
     <group ns="right_arm">
@@ -190,8 +192,10 @@
         <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen"  args="joint_state_controller joint_trajectory_controller"/>
 
         <!-- grasp estimator -->
-        <rosparam command="load" file="$(find grasp_state_publisher)/config/softgrasp.yaml" />
-        <node name="grasp_state_publisher" pkg="grasp_state_publisher" type="grasp_state_publisher" respawn="false" output="screen" />
+        <group if="$(arg use_grasp_estimator)">
+            <rosparam command="load" file="$(find grasp_state_publisher)/config/softgrasp.yaml" />
+            <node name="grasp_state_publisher" pkg="grasp_state_publisher" type="grasp_state_publisher" respawn="false" output="screen" />
+        </group>
     </group>
 
 </launch>
