@@ -4,8 +4,9 @@
   <arg name="debug" default="false" />
 
   <!-- Load .yaml configuration files on the param server -->
-  <include file="$(find dual_manipulation_shared)/launch/dual_manipulation.launch"/>
-
+  <include file="$(find dual_manipulation_shared)/launch/dual_manipulation.launch">
+    <arg name="robot_name" value="vito"/>
+  </include>
   <!-- Run the main MoveIt executable without trajectory execution (we do not have controllers configured by default) -->
   <include file="$(find vito_moveit_configuration)/launch/move_group.launch">
     <arg name="allow_trajectory_execution" value="true"/>  

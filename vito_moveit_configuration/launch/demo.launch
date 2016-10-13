@@ -3,6 +3,9 @@
   <!-- By default, we do not start a database (it can be large) -->
   <arg name="db" default="false" />
 
+  <!-- By default, publish joint states -->
+  <arg name="publish_joint_states" default="false" />
+
   <!-- By default, we are not in debug mode -->
   <arg name="debug" default="false" />
 
@@ -14,16 +17,28 @@
   <!-- If needed, broadcast static tf for robot root -->
 
   <!-- Load .yaml configuration files on the param server -->
-  <include file="$(find dual_manipulation_shared)/launch/dual_manipulation.launch"/>
+  <include file="$(find dual_manipulation_shared)/launch/dual_manipulation.launch">
+    <arg name="robot_name" value="vito"/>
+  </include>
 
   <!-- We do not have a robot connected, so publish fake joint states -->
-  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+  <group if="$(arg publish_joint_states)">
+  <node name="vito_joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
     <param name="/use_gui" value="false"/> 
     <rosparam param="/source_list">[/move_group/fake_controller_joint_states]</rosparam>
   </node>
+  </group>
+  <group unless="$(arg publish_joint_states)">
+  <node name="vito_joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+    <param name="/use_gui" value="false"/> 
+    <rosparam param="source_list">[ik_control_joint_states]</rosparam>
+  </node>
+  </group>
   
   <!-- Given the published joint states, publish tf for the robot links -->
-  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen" />
+  <node name="vito_robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen" >
+    <!-- <remap from="joint_states" to="ik_control_joint_states" /> -->
+  </node>
 
   <!-- Run the main MoveIt executable without trajectory execution (we do not have controllers configured by default) -->
   <include file="$(find vito_moveit_configuration)/launch/move_group.launch">
