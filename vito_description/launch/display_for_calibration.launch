@@ -15,7 +15,7 @@
     <!-- #### -->
 
     <!-- load the full robot in robot_description, useful for visualization, collision detection and planning simultaneously -->
-    <param name="robot_description" command="$(find xacro)/xacro.py $(find vito_description)/robot/$(arg robot_name).urdf.xacro"/>
+    <param name="robot_description" command="$(find xacro)/xacro --inorder $(find vito_description)/robot/$(arg robot_name).urdf.xacro"/>
 
     <group if="$(arg use_joint_state_publisher)">
         <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
@@ -41,7 +41,7 @@
 
     <group ns="head" if="$(arg head_enabled)">
         <!--add a copy of the robot description within the name space -->
-        <param name="robot_description" command="$(find xacro)/xacro.py $(find vito_description)/robot/$(arg robot_name).urdf.xacro"/>
+        <param name="robot_description" command="$(find xacro)/xacro --inorder $(find vito_description)/robot/$(arg robot_name).urdf.xacro"/>
         <!-- <include file="$(find kit_head_hw)/launch/head_hw.launch">
         </include>
         -->
@@ -52,7 +52,7 @@
 
     <group ns="left_arm" if="$(arg left_arm_enabled)">
         <!--add a copy of the robot description within the name space -->
-        <param name="robot_description" command="$(find xacro)/xacro.py $(find vito_description)/robot/$(arg robot_name).urdf.xacro"/>
+        <param name="robot_description" command="$(find xacro)/xacro --inorder $(find vito_description)/robot/$(arg robot_name).urdf.xacro"/>
 
         <rosparam command="load" file="$(find vito_description)/config/left_arm_names.yaml" />
 
@@ -68,7 +68,7 @@
 
     <group ns="right_arm" if="$(arg right_arm_enabled)">
         <!--add a copy of the robot description within the name space -->
-        <param name="robot_description" command="$(find xacro)/xacro.py $(find vito_description)/robot/$(arg robot_name).urdf.xacro"/>
+        <param name="robot_description" command="$(find xacro)/xacro --inorder $(find vito_description)/robot/$(arg robot_name).urdf.xacro"/>
 
         <rosparam command="load" file="$(find vito_description)/config/right_arm_names.yaml" />
 
