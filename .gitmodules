@@ -7,6 +7,3 @@
 [submodule "kit-head"]
 	path = kit-head
 	url = https://github.com/CentroEPiaggio/kit-head.git
-[submodule "ros_control"]
-	path = ros_control
-	url = https://github.com/CentroEPiaggio/ros_control.git
