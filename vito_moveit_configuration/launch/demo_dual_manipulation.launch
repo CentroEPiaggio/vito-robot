@@ -1,0 +1,60 @@
+<launch>
+
+  <!-- By default, we do not start a database (it can be large) -->
+  <arg name="db" default="false" />
+
+  <!-- By default, publish joint states -->
+  <arg name="publish_joint_states" default="false" />
+
+  <!-- By default, we are not in debug mode -->
+  <arg name="debug" default="false" />
+
+  <!-- Load the URDF, SRDF and other .yaml configuration files on the param server -->
+  <include file="$(find vito_moveit_configuration)/launch/planning_context.launch">
+    <arg name="load_robot_description" value="true"/>
+  </include>
+
+  <!-- If needed, broadcast static tf for robot root -->
+
+  <!-- Load .yaml configuration files on the param server -->
+  <include file="$(find dual_manipulation_shared)/launch/dual_manipulation.launch">
+    <arg name="robot_name" value="vito"/>
+  </include>
+
+  <!-- We do not have a robot connected, so publish fake joint states -->
+  <group if="$(arg publish_joint_states)">
+  <node name="vito_joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+    <param name="/use_gui" value="false"/> 
+    <rosparam param="/source_list">[/move_group/fake_controller_joint_states]</rosparam>
+  </node>
+  </group>
+  <group unless="$(arg publish_joint_states)">
+  <node name="vito_joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+    <param name="/use_gui" value="false"/> 
+    <rosparam param="source_list">[ik_control_joint_states]</rosparam>
+  </node>
+  </group>
+  
+  <!-- Given the published joint states, publish tf for the robot links -->
+  <node name="vito_robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen" >
+    <!-- <remap from="joint_states" to="ik_control_joint_states" /> -->
+  </node>
+
+  <!-- Run the main MoveIt executable without trajectory execution (we do not have controllers configured by default) -->
+  <include file="$(find vito_moveit_configuration)/launch/move_group_dual_manipulation.launch">
+    <arg name="allow_trajectory_execution" value="true"/>  
+    <arg name="fake_execution" value="true"/>
+    <arg name="info" value="true"/>
+    <arg name="debug" value="$(arg debug)"/>
+  </include>
+
+  <!-- Run Rviz and load the default config to see the state of the move_group node -->
+  <include file="$(find vito_moveit_configuration)/launch/moveit_rviz.launch">
+    <arg name="config" value="true"/>
+    <arg name="debug" value="$(arg debug)"/>
+  </include>
+
+  <!-- If database loading was enabled, start mongodb as well -->
+  <include file="$(find vito_moveit_configuration)/launch/default_warehouse_db.launch" if="$(arg db)"/>
+
+</launch>
