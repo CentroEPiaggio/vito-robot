@@ -48,6 +48,11 @@ left_arm:
     root_name: vito_anchor
     tip_name: left_arm_7_link
 
+  joint_impedance_controller:
+    type: lwr_controllers/JointImpedanceController
+    root_name: left_arm_base_link
+    tip_name: left_arm_7_link
+
 left_hand:
   joint_state_controller:
     type: joint_state_controller/JointStateController
@@ -105,6 +110,10 @@ right_arm:
     type: lwr_controllers/CartesianImpedanceController
     robot_name: right_arm
     root_name: vito_anchor
+    tip_name: right_arm_7_link
+  joint_impedance_controller:
+    type: lwr_controllers/JointImpedanceController
+    root_name: right_arm_base_link
     tip_name: right_arm_7_link
 
 right_hand:
