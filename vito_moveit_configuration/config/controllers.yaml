@@ -4,13 +4,13 @@ controller_list:
     action_ns: follow_joint_trajectory
     default: true
     joints:
-      - left_arm_0_joint
-      - left_arm_1_joint
-      - left_arm_2_joint
-      - left_arm_3_joint
-      - left_arm_4_joint
-      - left_arm_5_joint
-      - left_arm_6_joint
+      - left_arm_a1_joint
+      - left_arm_a2_joint
+      - left_arm_e1_joint
+      - left_arm_a3_joint
+      - left_arm_a4_joint
+      - left_arm_a5_joint
+      - left_arm_a6_joint
   - name: /left_hand/joint_trajectory_controller
     type: FollowJointTrajectory
     action_ns: follow_joint_trajectory
@@ -22,13 +22,13 @@ controller_list:
     action_ns: follow_joint_trajectory
     default: true
     joints:
-      - right_arm_0_joint
-      - right_arm_1_joint
-      - right_arm_2_joint
-      - right_arm_3_joint
-      - right_arm_4_joint
-      - right_arm_5_joint
-      - right_arm_6_joint
+      - right_arm_a1_joint
+      - right_arm_a2_joint
+      - right_arm_e1_joint
+      - right_arm_a3_joint
+      - right_arm_a4_joint
+      - right_arm_a5_joint
+      - right_arm_a6_joint
   - name: /right_hand/joint_trajectory_controller
     type: FollowJointTrajectory
     action_ns: follow_joint_trajectory
