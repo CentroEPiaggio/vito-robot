@@ -12,16 +12,41 @@ left_arm:
       - left_arm_a4_joint
       - left_arm_a5_joint
       - left_arm_a6_joint
-  # stiffness_trajectory_controller:
-  #   type: position_controllers/JointTrajectoryController
-  #   joints:
-  #     - left_arm_a1_joint_stiffness
-  #     - left_arm_a2_joint_stiffness
-  #     - left_arm_e1_joint_stiffness
-  #     - left_arm_a3_joint_stiffness
-  #     - left_arm_a4_joint_stiffness
-  #     - left_arm_a5_joint_stiffness
-  #     - left_arm_a6_joint_stiffness
+  stiffness_trajectory_controller:
+    type: position_controllers/JointTrajectoryController
+    joints:
+      - left_arm_a1_joint_stiffness
+      - left_arm_a2_joint_stiffness
+      - left_arm_e1_joint_stiffness
+      - left_arm_a3_joint_stiffness
+      - left_arm_a4_joint_stiffness
+      - left_arm_a5_joint_stiffness
+      - left_arm_a6_joint_stiffness
+  damping_trajectory_controller:
+    type: position_controllers/JointTrajectoryController
+    joints:
+      - left_arm_a1_joint_damping
+      - left_arm_a2_joint_damping
+      - left_arm_e1_joint_damping
+      - left_arm_a3_joint_damping
+      - left_arm_a4_joint_damping
+      - left_arm_a5_joint_damping
+      - left_arm_a6_joint_damping
+  add_torque_trajectory_controller:
+    type: position_controllers/JointTrajectoryController
+    joints:
+      - left_arm_a1_joint_add_torque
+      - left_arm_a2_joint_add_torque
+      - left_arm_e1_joint_add_torque
+      - left_arm_a3_joint_add_torque
+      - left_arm_a4_joint_add_torque
+      - left_arm_a5_joint_add_torque
+      - left_arm_a6_joint_add_torque
+  cartesian_impedance_controller:
+    type: lwr_controllers/CartesianImpedanceController
+    robot_name: left_arm
+    root_name: vito_anchor
+    tip_name: left_arm_7_link
 
 left_hand:
   joint_state_controller:
@@ -46,16 +71,41 @@ right_arm:
       - right_arm_a4_joint
       - right_arm_a5_joint
       - right_arm_a6_joint
-  # stiffness_trajectory_controller:
-  #   type: position_controllers/JointTrajectoryController
-  #   joints:
-  #     - right_arm_a1_joint_stiffness
-  #     - right_arm_a2_joint_stiffness
-  #     - right_arm_e1_joint_stiffness
-  #     - right_arm_a3_joint_stiffness
-  #     - right_arm_a4_joint_stiffness
-  #     - right_arm_a5_joint_stiffness
-  #     - right_arm_a6_joint_stiffness
+  stiffness_trajectory_controller:
+    type: position_controllers/JointTrajectoryController
+    joints:
+      - right_arm_a1_joint_stiffness
+      - right_arm_a2_joint_stiffness
+      - right_arm_e1_joint_stiffness
+      - right_arm_a3_joint_stiffness
+      - right_arm_a4_joint_stiffness
+      - right_arm_a5_joint_stiffness
+      - right_arm_a6_joint_stiffness
+  damping_trajectory_controller:
+    type: position_controllers/JointTrajectoryController
+    joints:
+      - right_arm_a1_joint_damping
+      - right_arm_a2_joint_damping
+      - right_arm_e1_joint_damping
+      - right_arm_a3_joint_damping
+      - right_arm_a4_joint_damping
+      - right_arm_a5_joint_damping
+      - right_arm_a6_joint_damping
+  add_torque_trajectory_controller:
+    type: position_controllers/JointTrajectoryController
+    joints:
+      - right_arm_a1_joint_add_torque
+      - right_arm_a2_joint_add_torque
+      - right_arm_e1_joint_add_torque
+      - right_arm_a3_joint_add_torque
+      - right_arm_a4_joint_add_torque
+      - right_arm_a5_joint_add_torque
+      - right_arm_a6_joint_add_torque
+  cartesian_impedance_controller:
+    type: lwr_controllers/CartesianImpedanceController
+    robot_name: right_arm
+    root_name: vito_anchor
+    tip_name: right_arm_7_link
 
 right_hand:
   joint_state_controller:

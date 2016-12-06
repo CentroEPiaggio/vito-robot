@@ -11,6 +11,42 @@ controller_list:
       - left_arm_a4_joint
       - left_arm_a5_joint
       - left_arm_a6_joint
+  - name: /left_arm/stiffness_trajectory_controller
+    type: FollowJointTrajectory
+    action_ns: follow_joint_trajectory
+    default: true
+    joints:
+      - left_arm_a1_joint_stiffness
+      - left_arm_a2_joint_stiffness
+      - left_arm_e1_joint_stiffness
+      - left_arm_a3_joint_stiffness
+      - left_arm_a4_joint_stiffness
+      - left_arm_a5_joint_stiffness
+      - left_arm_a6_joint_stiffness
+  - name: /left_arm/damping_trajectory_controller
+    type: FollowJointTrajectory
+    action_ns: follow_joint_trajectory
+    default: true
+    joints:
+      - left_arm_a1_joint_damping
+      - left_arm_a2_joint_damping
+      - left_arm_e1_joint_damping
+      - left_arm_a3_joint_damping
+      - left_arm_a4_joint_damping
+      - left_arm_a5_joint_damping
+      - left_arm_a6_joint_damping
+  - name: /left_arm/add_torque_trajectory_controller
+    type: FollowJointTrajectory
+    action_ns: follow_joint_trajectory
+    default: true
+    joints:
+      - left_arm_a1_joint_add_torque
+      - left_arm_a2_joint_add_torque
+      - left_arm_e1_joint_add_torque
+      - left_arm_a3_joint_add_torque
+      - left_arm_a4_joint_add_torque
+      - left_arm_a5_joint_add_torque
+      - left_arm_a6_joint_add_torque
   - name: /left_hand/joint_trajectory_controller
     type: FollowJointTrajectory
     action_ns: follow_joint_trajectory
@@ -29,6 +65,42 @@ controller_list:
       - right_arm_a4_joint
       - right_arm_a5_joint
       - right_arm_a6_joint
+  - name: /right_arm/stiffness_trajectory_controller
+    type: FollowJointTrajectory
+    action_ns: follow_joint_trajectory
+    default: true
+    joints:
+      - right_arm_a1_joint_stiffness
+      - right_arm_a2_joint_stiffness
+      - right_arm_e1_joint_stiffness
+      - right_arm_a3_joint_stiffness
+      - right_arm_a4_joint_stiffness
+      - right_arm_a5_joint_stiffness
+      - right_arm_a6_joint_stiffness
+  - name: /right_arm/damping_trajectory_controller
+    type: FollowJointTrajectory
+    action_ns: follow_joint_trajectory
+    default: true
+    joints:
+      - right_arm_a1_joint_damping
+      - right_arm_a2_joint_damping
+      - right_arm_e1_joint_damping
+      - right_arm_a3_joint_damping
+      - right_arm_a4_joint_damping
+      - right_arm_a5_joint_damping
+      - right_arm_a6_joint_damping
+  - name: /right_arm/add_torque_trajectory_controller
+    type: FollowJointTrajectory
+    action_ns: follow_joint_trajectory
+    default: true
+    joints:
+      - right_arm_a1_joint_add_torque
+      - right_arm_a2_joint_add_torque
+      - right_arm_e1_joint_add_torque
+      - right_arm_a3_joint_add_torque
+      - right_arm_a4_joint_add_torque
+      - right_arm_a5_joint_add_torque
+      - right_arm_a6_joint_add_torque
   - name: /right_hand/joint_trajectory_controller
     type: FollowJointTrajectory
     action_ns: follow_joint_trajectory
