@@ -1,4 +1,4 @@
-<?xml version="1.0" ?>
+<!-- <?xml version="1.0" ?> -->
 <sdf version="1.4">
   <world name="default">
     <include>
@@ -7,5 +7,13 @@
     <include>
       <uri>model://sun</uri>
     </include>
+    <physics name='default_physics' default='0' type='ode'>
+      <max_step_size>0.002</max_step_size>
+      <real_time_factor>1</real_time_factor>
+      <real_time_update_rate>500</real_time_update_rate>
+      <gravity>0 0 -9.81</gravity>
+      <magnetic_field>5.5645e-06 2.28758e-05 -4.23884e-05</magnetic_field>
+      <max_contacts>0</max_contacts>
+    </physics>
   </world>
 </sdf>

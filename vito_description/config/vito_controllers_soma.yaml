@@ -127,7 +127,7 @@ right_arm:
   teleoperation_controller:
     type: myo_kuka/TeleoperationController
     root_name: vito_anchor
-    tip_name: right_arm_7_link
+    tip_name: ft_surface
     listen_topic: /spacenav_pose
     alpha1: 1.0
     alpha2: 0.5

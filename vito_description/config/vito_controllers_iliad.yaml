@@ -52,14 +52,6 @@ left_arm:
     type: lwr_controllers/JointImpedanceController
     root_name: left_arm_base_link
     tip_name: left_arm_7_link
-  
-  teleoperation_controller:
-    type: myo_kuka/TeleoperationController
-    root_name: vito_anchor
-    tip_name: left_arm_7_link
-    listen_topic: /spacenav_pose_
-    alpha1: 1.0
-    alpha2: 0.5
 
 left_hand:
   joint_state_controller:
@@ -123,14 +115,6 @@ right_arm:
     type: lwr_controllers/JointImpedanceController
     root_name: right_arm_base_link
     tip_name: right_arm_7_link
-  
-  teleoperation_controller:
-    type: myo_kuka/TeleoperationController
-    root_name: vito_anchor
-    tip_name: right_arm_7_link
-    listen_topic: /spacenav_pose
-    alpha1: 1.0
-    alpha2: 0.5
 
 
 right_hand:

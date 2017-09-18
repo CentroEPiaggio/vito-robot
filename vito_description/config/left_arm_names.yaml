@@ -1,8 +1,8 @@
 joints:
-  - left_arm_0_joint
-  - left_arm_1_joint
-  - left_arm_2_joint
-  - left_arm_3_joint
-  - left_arm_4_joint
-  - left_arm_5_joint
-  - left_arm_6_joint
+  - left_arm_a1_joint
+  - left_arm_a2_joint
+  - left_arm_e1_joint
+  - left_arm_a3_joint
+  - left_arm_a4_joint
+  - left_arm_a5_joint
+  - left_arm_a6_joint

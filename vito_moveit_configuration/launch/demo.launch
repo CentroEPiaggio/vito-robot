@@ -4,7 +4,7 @@
   <arg name="db" default="false" />
 
   <!-- By default, publish joint states -->
-  <arg name="publish_joint_states" default="false" />
+  <arg name="publish_joint_states" default="true" />
 
   <!-- By default, we are not in debug mode -->
   <arg name="debug" default="false" />

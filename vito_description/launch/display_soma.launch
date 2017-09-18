@@ -1,12 +1,11 @@
 <launch>
     <!-- LAUNCH INTERFACE -->
     <arg name="gui" default="false" />
-    <arg name="robot_name" default="vito"/>
+    <arg name="robot_name" default="vito_soma"/>
     <arg name="use_rviz" default="true"/>
     <arg name="use_joint_state_publisher" default="true"/>
-    <arg name="load_moveit" default="false"/>
-    <arg name="use_calibration_package" default="true"/>
     <arg name="use_grasp_estimator" default="false"/>
+    <arg name="use_calibration_package" default="true"/>
 
     <!-- configure whether the real hardware is enabled or not -->
     <arg name="head_enabled" default="false"/>
@@ -14,6 +13,7 @@
     <arg name="left_hand_enabled" default="false"/>
     <arg name="right_arm_enabled" default="false"/>
     <arg name="right_hand_enabled" default="false"/>
+
 
     <!-- choose whether or not to start the full robot simulation -->
     <arg name="use_robot_sim" default="true"/>
@@ -47,13 +47,8 @@
     </group>
 
     <!-- load hardware interface and controller configurations -->
-    <rosparam command="load" file="$(find vito_description)/config/vito_controllers.yaml"/>
+    <rosparam command="load" file="$(find vito_description)/config/vito_controllers_soma.yaml"/>
     <rosparam command="load" file="$(find vito_description)/config/hardware_interfaces.yaml"/>
-
-    <!-- publish the environment in moveit -->
-    <!-- (useful for kinematic planning, not fully completed)-->
-    <!-- node name="collision_object_publisher" pkg="rostopic" type="rostopic" output="screen" args="pub /collision_object moveit_msgs/CollisionObject -l -f $(find vito_moveit_configuration)/config/environment.yaml">
-    </node-->
 
     <!-- #### simulation and planning -->
 
@@ -72,77 +67,20 @@
             <arg name="debug" value="false"/>
         </include>
 
-        <!-- calibration transformations -->
-        <include file="$(find vito_description)/launch/fake_calibration.launch.xml"/>
-
+        <param name="workbench" command="$(find xacro)/xacro $(find lwr_force_position_controllers)/robot/workbench.urdf.xacro"/>
+        <node name="spawn_workbench" pkg="gazebo_ros" type="spawn_model" args="-param workbench -urdf -model workbench -x 0 -y 0 -z 1.0 -R 0 -P 0 -Y 0" respawn="false" output="screen"/>
     </group>
     <!-- calibration transformations -->
-    <group unless="$(arg use_robot_sim)">
         <group if="$(arg use_calibration_package)">
             <!-- it takes the last calibration performed, you can call calibrate and it will overwrite the yaml file -->
             <include file="$(find calibration)/launch/asus_head_vito_broadcaster.launch"/>
             <!-- for the fake eyes, which are not still included here -->
         </group>
-    </group>
-
-    <!-- load moveit configuration -->
-    <group if="$(arg load_moveit)">
-        <include file="$(find vito_moveit_configuration)/launch/move_group.launch">
-            <arg name="allow_trajectory_execution" value="true"/>  
-            <arg name="fake_execution" value="false"/>
-            <arg name="info" value="true"/>
-            <arg name="debug" value="false"/>
-        </include>
-    </group>
 
     <!-- #### components -->
 
     <!-- controllers are launched always, since either real or simulated hardware will be present -->
-
-
-    <group ns="left_arm">
-        <group if="$(arg left_arm_enabled)">
-            <!--add a copy of the robot description within the name space -->
-            <param name="robot_description" command="$(find xacro)/xacro --inorder $(find vito_description)/robot/$(arg robot_name).urdf.xacro use_mimic_tag:=true"/>
-
-            <rosparam command="load" file="$(find vito_description)/config/left_arm_names.yaml" />
-
-            <include file="$(find lwr_hw)/launch/lwr_hw.launch">
-                <arg name="port" value="49948"/>
-                <arg name="ip" value="192.168.0.20"/>
-                <arg name="name" value="left_arm"/>
-            </include>
-            <!-- perhaps it is worth remapping joint states -->
-        </group>
-
-        <!-- load the controllers in current namespace -->
-        <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen"  args="joint_state_controller joint_trajectory_controller stiffness_trajectory_controller damping_trajectory_controller add_torque_trajectory_controller"/>
-        <node name="controller_stopper" pkg="controller_manager" type="spawner" args="--stopped joint_impedance_controller teleoperation_controller" />
-    </group>
     
-    <group ns="left_hand">
-        <group if="$(arg left_hand_enabled)">
-            <!--add a copy of the robot description within the name space -->
-            <param name="robot_description" command="$(find xacro)/xacro --inorder $(find vito_description)/robot/$(arg robot_name).urdf.xacro use_mimic_tag:=true"/>
-
-            <rosparam command="load" file="$(find vito_description)/config/left_hand_names.yaml" />
-
-            <include file="$(find soft_hand_ros_control)/launch/soft_hand_hw.launch">
-                <arg name="use_deafult_joint_names" value="false"/>
-                <arg name="hand_id" value="21"/>
-            </include>
-        </group>
-
-        <!-- load the controllers in current namespace -->
-        <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen"  args="joint_state_controller joint_trajectory_controller"/>
-
-        <!-- grasp estimator -->
-        <group if="$(arg use_grasp_estimator)">
-            <rosparam command="load" file="$(find grasp_state_publisher)/config/softgrasp.yaml" />
-            <node name="grasp_state_publisher" pkg="grasp_state_publisher" type="grasp_state_publisher" respawn="false" output="screen" />
-        </group>
-    </group>
-
     <group ns="right_arm">
         <group if="$(arg right_arm_enabled)">
             <!--add a copy of the robot description within the name space -->
@@ -184,5 +122,7 @@
             <node name="grasp_state_publisher" pkg="grasp_state_publisher" type="grasp_state_publisher" respawn="false" output="screen" />
         </group>
     </group>
+
+    <node name="trik_controller_node" pkg="trik_controller" type="trik_controller_node" respawn="false" output="screen"/>
 
 </launch>

@@ -42,6 +42,35 @@
     <!-- <static>true</static> -->
   </gazebo>
 
+
+<joint name="${parent}_${name}_base_joint_b" type="fixed">
+    <origin xyz="-0.09 0.0 0.49" rpy="${pi / 2} 0 0"/>
+    <parent link="${name}_link"/>
+    <child link="${name}_link_b"/>
+  </joint>
+  <link name="${name}_link_b">
+    <inertial>
+      <xacro:insert_block name="torso_inertia"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://vito_description/meshes/torso_b.stl"/>
+      </geometry>
+      <material name="Vito/Silver"/>
+    </visual>z
+    <collision>
+      <geometry>
+        <mesh filename="package://vito_description/meshes/torso_b.stl"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <gazebo reference="${name}_link_b">
+    <!-- <static>true</static> -->
+  </gazebo>
+
+
+
 </xacro:macro>
 
 </robot>

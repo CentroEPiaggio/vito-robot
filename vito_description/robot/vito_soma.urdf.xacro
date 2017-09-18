@@ -26,18 +26,9 @@
                     width="1.05"
                     height="0.910"
                     plate_thickness="0.05">
-    <origin xyz="0.0 0.55 0" rpy="0 0 0"/>
+    <origin xyz="-0.495 0.55 0" rpy="0 0 0"/>
   </xacro:model_table>
 
-  <!-- WORKBENCH -->
-  <xacro:model_table name="workbench"
-                    parent="vito_anchor"
-                    length="0.725"
-                    width="1.25"
-                    height="0.960"
-                    plate_thickness="0.1">
-  <origin xyz="-1.25 0.625 0.07" rpy="0 0 0"/>
-  </xacro:model_table>
 
   <!-- TORSO -->
   <xacro:model_torso name="torso" parent="vito_anchor">
@@ -45,15 +36,15 @@
   </xacro:model_torso>
   
   <!-- LEFT ARM -->
-  <xacro:kuka_lwr name="left_arm" parent="vito_anchor">
+<!--   <xacro:kuka_lwr name="left_arm" parent="vito_anchor">
     <origin xyz="-0.165 -0.1085854 0.390" rpy="1.5707963267948966 0.5235987010713441 -0.5235990737060282"/>
-  </xacro:kuka_lwr>
+  </xacro:kuka_lwr> -->
 
   <!-- LEFT SOFTHAND -->
-  <xacro:soft_hand parent="left_arm_7_link" name="left_hand" left="true" withAdaptiveTransmission="true" useMimicTag="$(arg use_mimic_tag)">
+<!--   <xacro:soft_hand parent="left_arm_7_link" name="left_hand" left="true" withAdaptiveTransmission="true" useMimicTag="$(arg use_mimic_tag)">
     <origin xyz="0 0 0" rpy="0 0 0"/>
   </xacro:soft_hand>
-
+ -->
   <!-- RIGHT ARM -->
   <xacro:kuka_lwr name="right_arm" parent="vito_anchor">
     <origin xyz="-0.165 0.10858 0.390" rpy="-1.5707963267948966 -0.5235987010713441 0.5235990737060282"/>
@@ -63,5 +54,55 @@
   <xacro:soft_hand parent="right_arm_7_link" name="right_hand" left="false" withAdaptiveTransmission="true" useMimicTag="$(arg use_mimic_tag)">
     <origin xyz="0 0 0.0" rpy="0 0 0"/>
   </xacro:soft_hand>
+
+
+  <link name="ft_surface">
+      <inertial>
+        <mass value="0.1"/>
+          <origin xyz="0 0 0.0" rpy="0 0 0"/>
+            <inertia ixx="${1 / 12  * (3 * 0.05 * 0.05 + 0.01 * 0.01)}"  ixy="0"  ixz="0" iyy="${1 / 12  * (3 * 0.05 * 0.05 + 0.01 * 0.01)}" iyz="0" izz="${1 / 12  * (3 * 0.05 * 0.05 + 0.01 * 0.01)}" />
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0.0" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.01" />
+        </geometry>
+      </visual>
+
+      <collision>
+        <origin xyz="0 0 0.0" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.02" />
+        </geometry>
+<!--         <surface>
+          <contact>
+            <collide_bitmask>"0x11111"</collide_bitmask>
+          </contact>
+        </surface> -->
+      </collision>
+
+  </link>
+  
+  <joint name="ft_joint_sensor" type="fixed">
+    <origin xyz="0.030 0.000 0.192" rpy="0.0 ${-pi / 2} ${pi}"/>
+    <parent link="right_arm_7_link" />
+    <child link="ft_surface" />
+  </joint>
+  <gazebo reference="ft_surface">
+    <gravity>true</gravity>
+  </gazebo>
+
+    <gazebo>
+      <plugin name="force_sensor" filename="libgazebo_ros_ft_sensor.so">
+        <updateRate>100.0</updateRate>
+        <topicName>ft_sensor_topic</topicName>
+        <jointName>ft_joint_sensor</jointName>
+      </plugin>
+    </gazebo>
+
+    <gazebo reference="ft_joint_sensor">
+      <provideFeedback>true</provideFeedback>
+      <disableFixedJointLumping>true</disableFixedJointLumping>
+    </gazebo>
 
 </robot>
