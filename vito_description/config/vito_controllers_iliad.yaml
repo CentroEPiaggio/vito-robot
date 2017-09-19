@@ -52,6 +52,14 @@ left_arm:
     type: lwr_controllers/JointImpedanceController
     root_name: left_arm_base_link
     tip_name: left_arm_7_link
+    
+  CLIK_controller:
+    type: lwr_controllers/CLIKController
+    root_name: vito_anchor
+    tip_name:  left_arm_7_link
+    joint_home: [0.1, 1.5, 1.7, -0.8, -0.6, 0, 0.2]
+    p_wrist_ee: [0, -0.045, 0.298]
+    weight_gains: [0.3, 2, 1.4, -1, -0.1, 0, 0.1]
 
 left_hand:
   joint_state_controller:
@@ -116,6 +124,13 @@ right_arm:
     root_name: right_arm_base_link
     tip_name: right_arm_7_link
 
+  CLIK_controller:
+    type: lwr_controllers/CLIKController
+    root_name: vito_anchor
+    tip_name: right_arm_7_link
+    joint_home: [-0.6, 0.9, 0, -0.8, -0.6, 0, 0.2]
+    p_wrist_ee: [0, 0, 0.23]
+    weight_gains: [0.1, 0.1, 0.1, 1, 1, 1, 1]
 
 right_hand:
   joint_state_controller:
