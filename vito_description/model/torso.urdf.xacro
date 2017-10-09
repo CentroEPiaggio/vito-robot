@@ -8,11 +8,11 @@
 <xacro:property name="gr_to_Kg" value="0.001"/>
 
 <!-- not so negligible, otherwise simulation fails -->
-<xacro:property name="torso_mass" value="${20000*gr_to_Kg}"/>
+<xacro:property name="torso_mass" value="${20000*0.001}"/>
 <xacro:property name="torso_inertia">
     <origin xyz="0 0 0"/>
     <mass value="${torso_mass}"/>
-    <inertia ixx="${torso_mass * 10 * mm2_to_m2}" ixy="0.0" ixz="0.0" iyy="${torso_mass * 10 * mm2_to_m2}" iyz="0.0" izz="${torso_mass * 10 * mm2_to_m2}"/>
+    <inertia ixx="${20 * 10 * 0.000001}" ixy="0.0" ixz="0.0" iyy="${20 * 10 * 0.000001}" iyz="0.0" izz="${20 * 10 * 0.000001}"/>
 </xacro:property>
 
 <xacro:macro name="model_torso" params="parent name *origin">

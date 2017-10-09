@@ -10,39 +10,38 @@
   <xacro:include filename="$(find soft_hand_description)/model/soft_hand.urdf.xacro"/>
     
   <link name="world" />
-  <link name="vito_anchor" />
+   <link name="vito_anchor"/>
 
-    <joint name="w_fixed" type="fixed">
+  <joint name="w_fixed" type="fixed">
       <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
       <parent link="world" />
       <child link="vito_anchor" />
     </joint>
-
   
   <!-- BODY -->
-  <xacro:model_table name="table" 
+<!--    <xacro:model_table name="table"
                     parent="vito_anchor"
                     length="0.725"
                     width="1.05"
                     height="0.910"
-                    plate_thickness="0.05">
+		       plate_thickness="0.05">
     <origin xyz="0.0 0.55 0" rpy="0 0 0"/>
-  </xacro:model_table>
+    </xacro:model_table> -->
 
   <!-- WORKBENCH -->
-  <xacro:model_table name="workbench"
-                    parent="vito_anchor"
-                    length="0.725"
-                    width="1.25"
-                    height="0.960"
-                    plate_thickness="0.1">
-  <origin xyz="-1.25 0.625 0.07" rpy="0 0 0"/>
-  </xacro:model_table>
+<!--   <xacro:model_table name="workbench" -->
+<!--                     parent="vito_anchor" -->
+<!--                     length="0.725" -->
+<!--                     width="1.25" -->
+<!--                     height="0.960" -->
+<!--                     plate_thickness="0.1"> -->
+<!--   <origin xyz="-1.25 0.625 0.07" rpy="0 0 0"/> -->
+<!--   </xacro:model_table> -->
 
   <!-- TORSO -->
-  <xacro:model_torso name="torso" parent="vito_anchor">
+   <xacro:model_torso name="torso" parent="vito_anchor"> -->
     <origin xyz="0 0 0"/>
-  </xacro:model_torso>
+   </xacro:model_torso> 
   
   <!-- LEFT ARM -->
   <xacro:kuka_lwr name="left_arm" parent="vito_anchor">
