@@ -8,7 +8,7 @@
   <xacro:include filename="$(find vito_description)/model/materials.urdf"/>
   <xacro:include filename="$(find lwr_description)/model/kuka_lwr.urdf.xacro"/>
   <xacro:include filename="$(find soft_hand_description)/model/soft_hand.urdf.xacro"/>
-  <xacro:include filename="$(find kit_head_description)/model/kit_head.urdf.xacro"/>
+  <!-- <xacro:include filename="$(find kit_head_description)/model/kit_head.urdf.xacro"/> -->
     
   <link name="vito_anchor" />
   
@@ -49,7 +49,8 @@
 
   <!-- RIGHT ARM -->
   <xacro:kuka_lwr name="right_arm" parent="vito_anchor">
-    <origin xyz="-0.165 0.10858 0.390" rpy="-1.5707963267948966 0.5235987010713441 0.5235990737060282"/>
+    <!-- <origin xyz="-0.165 0.10858 0.390" rpy="-1.5707963267948966 0.5235987010713441 0.5235990737060282"/> -->
+    <origin xyz="-0.165 0.10858 0.390" rpy="-1.5707963267948966 -0.5235987010713441 0.5235990737060282"/>
   </xacro:kuka_lwr>
 
   <!-- RIGHT SOFTHAND -->
@@ -58,8 +59,8 @@
   </xacro:soft_hand>
 
   <!-- HEAD -->
-  <xacro:kit_head name="head" parent="vito_anchor">
+<!--   <xacro:kit_head name="head" parent="vito_anchor">
     <origin xyz="0.0 0.0 ${0.55 + 0.1}" rpy="0.0 0.0 3.141592"/>
-  </xacro:kit_head>
+  </xacro:kit_head> -->
 
 </robot>
