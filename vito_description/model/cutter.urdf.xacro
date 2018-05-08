@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<xacro:macro name="cutter" params="parent name *origin">
+
+	<!-- PACMAN VERION ALREADY INCLUDES THE COUPLER, CLAMP AND BASE -->
+
+	<!-- KUKA_COUPLER -->
+	<xacro:kuka_coupler parent="${parent}" name="${name}_kuka_coupler">
+		<xacro:insert_block name="origin"/>
+	</xacro:kuka_coupler>
+
+	<!-- CLAMP -->
+	<xacro:clamp parent="${name}_kuka_coupler" name="${name}_clamp">
+		<origin xyz="0 0 0.01" rpy="0 0 0"/>
+	</xacro:clamp>
+
+	<!-- PALM -->
+	<joint name="${name}_palm_joint" type="fixed">
+		<origin xyz="0 0 0" rpy="0 0 0"/>
+		<parent link="${name}_clamp" />
+		<child link="${name}_palm_link" />
+	</joint>
+
+	<link name="${name}_palm_link">
+		<inertial>
+			<xacro:insert_block name="palm_inertia"/>
+		</inertial>
+		<visual>
+			<geometry>
+				<mesh filename="package://vito_description/meshes/cutter.stl" scale=" .001 .001 .001" />
+			</geometry>
+			<material name="SoftHand/DarkGrey" />
+		</visual>
+		<collision>
+			<geometry>
+			      <mesh filename="package://vito_description/meshes/cutter.stl" scale=" .001 .001 .001" />
+			</geometry>
+		</collision>
+	</link>
+	
+</xacro:macro>
+
+</robot>
