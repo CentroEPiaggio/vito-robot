@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" 
+       name="vito">
+       
+  <!-- MODELS -->
+  <xacro:include filename="$(find vito_description)/model/materials.urdf"/>
+  <xacro:include filename="$(find lwr_description)/model/kuka_lwr.urdf.xacro"/>
+    
+  <link name="vito_anchor" />
+  
+  <!-- LEFT ARM -->
+  <xacro:kuka_lwr name="left_arm" parent="vito_anchor">
+    <origin xyz="0.770 1.170 1.607" rpy="2.428 -0.361 1.183"/>
+  </xacro:kuka_lwr>
+
+  <!-- RIGHT ARM -->
+  <xacro:kuka_lwr name="right_arm" parent="vito_anchor">
+    <origin xyz="0.770 0.550 1.607" rpy="-2.428 -0.362 -1.183"/>
+  </xacro:kuka_lwr>
+
+</robot>
