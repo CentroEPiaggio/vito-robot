@@ -5,6 +5,7 @@
   <!-- MODELS -->
   <xacro:include filename="$(find vito_description)/model/materials.urdf"/>
   <xacro:include filename="$(find lwr_description)/model/kuka_lwr.urdf.xacro"/>
+  <xacro:include filename="$(find vito_description)/model/cutter.urdf.xacro"/>
     
   <link name="vito_anchor" />
   
@@ -17,5 +18,10 @@
   <xacro:kuka_lwr name="right_arm" parent="vito_anchor">
     <origin xyz="0.770 0.550 1.607" rpy="-2.428 -0.362 -1.183"/>
   </xacro:kuka_lwr>
+  
+  <!-- CUTTER -->
+  <xacro:cutter parent="left_arm_7_link" name="cutter">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </xacro:cutter>
 
 </robot>
