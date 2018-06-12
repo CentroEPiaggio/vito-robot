@@ -4,6 +4,12 @@
 <xacro:macro name="cutter" params="parent name *origin">
 
 	<!-- PACMAN VERION ALREADY INCLUDES THE COUPLER, CLAMP AND BASE -->
+	<xacro:include filename="$(find soft_hand_description)/model/accesories/clamp.urdf.xacro"/>
+	<xacro:include filename="$(find soft_hand_description)/model/accesories/kuka_coupler.urdf.xacro"/>
+	
+	<xacro:property name="radius" value="0.04" />    
+	<xacro:property name="height" value="0.08" />
+	<xacro:property name="mass" value="0.1" />
 
 	<!-- KUKA_COUPLER -->
 	<xacro:kuka_coupler parent="${parent}" name="${name}_kuka_coupler">
@@ -24,7 +30,8 @@
 
 	<link name="${name}_palm_link">
 		<inertial>
-			<xacro:insert_block name="palm_inertia"/>
+		  <mass value="${mass}"/>
+		  <inertia ixx="${(mass/12)*(3*radius*radius+height*height)}" ixy="0.0" ixz="0.0" iyy="${(mass/12)*(3*radius*radius+height*height)}" iyz="0.0" izz="${mass*radius*radius/2}"/>
 		</inertial>
 		<visual>
 			<geometry>
