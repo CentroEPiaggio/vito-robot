@@ -12,6 +12,12 @@ left_arm:
       - left_arm_a4_joint
       - left_arm_a5_joint
       - left_arm_a6_joint
+  joint_impedance_controller:
+    type: lwr_controllers/JointImpedanceController
+    root_name: left_arm_base_link
+    tip_name: left_arm_7_link
+    stiffness_gains: 1000
+    damping_gains: 0.5
 
 right_arm:
   joint_state_controller:
