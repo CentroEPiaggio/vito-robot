@@ -2,9 +2,9 @@
     <!-- LAUNCH INTERFACE -->
     <arg name="gui" default="false" />
     <arg name="robot_name" default="vito"/>
-    <arg name="use_rviz" default="true"/>
+    <arg name="use_rviz" default="false"/>
     <arg name="use_joint_state_publisher" default="true"/>
-    <arg name="load_moveit" default="false"/>
+    <arg name="load_moveit" default="true"/>
     <arg name="use_calibration_package" default="false"/>
     <arg name="use_grasp_estimator" default="false"/>
 
@@ -13,10 +13,10 @@
     <arg name="left_arm_enabled" default="false"/>
     <arg name="left_hand_enabled" default="false"/>
     <arg name="right_arm_enabled" default="false"/>
-    <arg name="right_hand_enabled" default="false"/>
+    <arg name="right_hand_enabled" default="true"/>
 
     <!-- choose whether or not to start the full robot simulation -->
-    <arg name="use_robot_sim" default="true"/>
+    <arg name="use_robot_sim" default="false"/>
 
     <!-- LAUNCH IMPLEMENTATION -->
 

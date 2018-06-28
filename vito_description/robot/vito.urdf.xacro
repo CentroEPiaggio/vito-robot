@@ -6,60 +6,137 @@
   <xacro:include filename="$(find vito_description)/model/torso.urdf.xacro"/>
   <xacro:include filename="$(find vito_description)/model/table.urdf.xacro"/>
   <xacro:include filename="$(find vito_description)/model/materials.urdf"/>
-  <xacro:include filename="$(find lwr_description)/model/kuka_lwr.urdf.xacro"/>
+  <xacro:include filename="$(find lwr_description)/model/kuka_lwr_soma.urdf.xacro"/>
   <xacro:include filename="$(find soft_hand_description)/model/soft_hand.urdf.xacro"/>
   <!-- <xacro:include filename="$(find kit_head_description)/model/kit_head.urdf.xacro"/> -->
+
+  <!-- CAM PARAMS FOR SOMA -->
+  <xacro:property name="cam_px" value="1.65" />
+  <xacro:property name="cam_py" value="-0.7" /> 
+  <xacro:property name="cam_pz" value="1.35" />
+  <xacro:property name="cam_or" value="-2.05" />
+  <xacro:property name="cam_op" value="0" />
+  <xacro:property name="cam_oy" value="0" />
     
-  <link name="vito_anchor" />
+  <link name="world" />
+
+  <!-- KINECT FOR SOMA -->
+
+  <joint name="kinect2_rgb_joint" type="fixed">
+    <origin xyz="${cam_px} ${cam_py} ${cam_pz}" rpy="${cam_or} ${cam_op} ${cam_oy}"/>
+    <parent link="world"/>
+    <child link="kinect2_rgb_frame" />
+  </joint>
+  
+  <link name="kinect2_rgb_frame"/>
+
+  <joint name="kinect2_joint" type="fixed">
+    <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/> 
+    <parent link="kinect2_rgb_frame"/>
+    <child link="kinect2_link"/>
+  </joint>
+
+  <link name="kinect2_link"> 
+    <visual>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>    
+      <box size="0.05 0.05 0.05"/>
+    </geometry>
+    <material name="white">
+      <color rgba="1 1 0 1"/>
+    </material>      
+    </visual>
+  </link>
+
+  <joint name="kinect2_rgb_optical_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="kinect2_link" />
+    <child link="kinect2_rgb_optical_frame" />
+  </joint>
+  
+  <link name="kinect2_rgb_optical_frame"/>
+
+  <!-- THIS ONE MIGHT BE COMMENTED LATER -->
+  <joint name="kinect2_ir_optical_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="kinect2_rgb_optical_frame" />
+    <child link="kinect2_ir_optical_frame" />
+  </joint>
+  
+  <link name="kinect2_ir_optical_frame"/>
+  <!-- THIS ONE MIGHT BE COMMENTED LATER -->
+
+
+  <!-- The fixed joints & links below are usually published by static_transformers launched by the iai _kinect files. However, for Gazebo simulation we need them, so we add them here. (Hence, don't publish them additionally!) -->
+
+  <joint name="kinect2_depth_joint" type="fixed">
+    <origin xyz="0 ${2 * -kinect_cam_py} 0" rpy="0 0 0" />
+    <parent link="kinect2_rgb_frame" />
+    <child link="kinect2_depth_frame" />
+  </joint>
+  
+  <link name="kinect2_depth_frame"/>
+
+  <joint name="kinect2_depth_optical_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="${_M_PI_2} 0 ${_M_PI_2}" />
+    <parent link="kinect2_depth_frame" />
+    <child link="kinect2_depth_optical_frame" />
+  </joint>
+  
+  <link name="kinect2_depth_optical_frame"/>
+
+  <!-- Kinect Camera END -->
+
   
   <!-- BODY -->
-  <xacro:model_table name="table" 
-                    parent="vito_anchor"
+<!--   <xacro:model_table name="table" 
+                    parent="world"
                     length="0.725"
                     width="1.05"
                     height="0.910"
                     plate_thickness="0.05">
     <origin xyz="-0.495 0.55 0" rpy="0 0 0"/>
-  </xacro:model_table>
+  </xacro:model_table> -->
 
   <!-- WORKBENCH -->
-  <xacro:model_table name="workbench"
-                    parent="vito_anchor"
+<!--   <xacro:model_table name="workbench"
+                    parent="world"
                     length="0.725"
                     width="1.25"
                     height="0.960"
                     plate_thickness="0.1">
   <origin xyz="-1.25 0.625 0.07" rpy="0 0 0"/>
-  </xacro:model_table>
+  </xacro:model_table> -->
 
   <!-- TORSO -->
-  <xacro:model_torso name="torso" parent="vito_anchor">
+<!--   <xacro:model_torso name="torso" parent="world">
     <origin xyz="0 0 0"/>
-  </xacro:model_torso>
+  </xacro:model_torso> -->
   
   <!-- LEFT ARM -->
-  <xacro:kuka_lwr name="left_arm" parent="vito_anchor">
-    <origin xyz="-0.165 -0.1085854 0.390" rpy="1.5707963267948966 0.5235987010713441 -0.5235990737060282"/>
-  </xacro:kuka_lwr>
+  <!-- <xacro:kuka_lwr name="left_arm" parent="world">
+    <origin xyz="-0.165 -0.1085854 0.390" rpy="1.5707963267948966 0.5235987010713441 -0.5235990737060282"/> 
+    <origin xyz="0.57 0.801 1.307" rpy="3.1415 0.5235987010713441 3.1415"/>
+  </xacro:kuka_lwr>-->
 
   <!-- LEFT SOFTHAND -->
-  <xacro:soft_hand parent="left_arm_7_link" name="left_hand" left="true" withAdaptiveTransmission="true" useMimicTag="$(arg use_mimic_tag)">
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-  </xacro:soft_hand>
+  <!-- <xacro:soft_hand parent="left_arm_7_link" name="left_hand" left="true" withAdaptiveTransmission="true" useMimicTag="$(arg use_mimic_tag)">
+    <origin xyz="0 0 0" rpy="0 0 0.5235987010713441"/>
+  </xacro:soft_hand> -->
 
   <!-- RIGHT ARM -->
-  <xacro:kuka_lwr name="right_arm" parent="vito_anchor">
+  <xacro:kuka_lwr name="right_arm" parent="world">
     <!-- <origin xyz="-0.165 0.10858 0.390" rpy="-1.5707963267948966 0.5235987010713441 0.5235990737060282"/> -->
-    <origin xyz="-0.165 0.10858 0.390" rpy="-1.5707963267948966 -0.5235987010713441 0.5235990737060282"/>
+ <origin xyz="0.77 0.801 1.607" rpy="3.1415 -0.7854 0"/>
   </xacro:kuka_lwr>
 
   <!-- RIGHT SOFTHAND -->
-  <xacro:soft_hand parent="right_arm_7_link" name="right_hand" left="false" withAdaptiveTransmission="true" useMimicTag="$(arg use_mimic_tag)">
-    <origin xyz="0 0 0" rpy="0 0 0"/>
+  <xacro:soft_hand parent="right_arm_link_ee" name="right_hand" left="false" withAdaptiveTransmission="true" useMimicTag="$(arg use_mimic_tag)">
+    <origin xyz="0 0 0" rpy="0 -1.5708 3.1415"/>
   </xacro:soft_hand>
 
   <!-- HEAD -->
-<!--   <xacro:kit_head name="head" parent="vito_anchor">
+<!--   <xacro:kit_head name="head" parent="world">
     <origin xyz="0.0 0.0 ${0.55 + 0.1}" rpy="0.0 0.0 3.141592"/>
   </xacro:kit_head> -->
 
