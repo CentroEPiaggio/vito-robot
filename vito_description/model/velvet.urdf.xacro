@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<!-- conversions -->
+<!-- I couldn't make the simulation work with realistic values, so I tweaked the conversion values -->
+<xacro:property name="mm_to_m" value="0.001"/>
+<xacro:property name="mm2_to_m2" value="0.000001"/>
+<xacro:property name="gr_to_Kg" value="0.001"/>
+
+<!-- not so negligible, otherwise simulation fails -->
+<xacro:property name="velvet_mass" value="${100*gr_to_Kg}"/> 
+<!-- TODO-->  <xacro:property name="velvet_inertia">  
+    <origin xyz="0 0 0"/>
+    <mass value="${velvet_mass}"/>
+    <inertia ixx="${velvet_mass * 10 * mm2_to_m2}" ixy="0.0" ixz="0.0" iyy="${velvet_mass * 10 * mm2_to_m2}" iyz="0.0" izz="${velvet_mass * 10 * mm2_to_m2}"/>
+</xacro:property>
+
+<xacro:macro name="model_velvet" params="parent name *origin">
+  <joint name="${parent}_${name}_base_joint" type="fixed">
+    <xacro:insert_block name="origin"/>
+    <parent link="${parent}"/>
+    <child link="${name}_link"/>
+  </joint>
+  <link name="${name}_link">
+    <inertial>
+      <xacro:insert_block name="velvet_inertia"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://vito_description/meshes/gazebo_assieme.stl"/>
+      </geometry>
+      <material name="Vito/Silver"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://vito_description/meshes/gazebo_assieme.stl"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <gazebo reference="${name}_link">
+    <!-- <static>true</static> -->
+  </gazebo>
+
+</xacro:macro>
+
+</robot>
