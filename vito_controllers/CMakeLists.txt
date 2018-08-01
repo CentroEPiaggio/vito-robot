@@ -67,21 +67,6 @@ catkin_package(
 
 add_library(${PROJECT_NAME}
   src/cartesian_impedance_vito_controller.cpp
-  # src/joint_impedance_controller.cpp	
-  # src/inverse_dynamics_controller.cpp
-  # src/computed_torque_controller.cpp
-  # src/one_task_inverse_kinematics.cpp
-  # src/multi_task_priority_inverse_kinematics.cpp
-  # src/multi_task_priority_inverse_dynamics.cpp
-  # src/minimum_effort_inverse_dynamics.cpp
-  # src/backstepping_controller.cpp
-  # src/dynamic_sliding_mode_controller.cpp
-  # src/dynamic_sliding_mode_controller_task_space.cpp
-  # src/one_task_inverse_dynamics_jl.cpp
-  # src/gravity_compensation.cpp
-  # src/arm_state_controller.cpp
-  # src/cartesian_impedance_controller.cpp
-  # src/KinematicChainControllerBase.cpp
 )
 
 add_dependencies(${PROJECT_NAME} ${PROJECT_NAME}_gencpp)
