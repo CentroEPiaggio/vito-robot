@@ -2,7 +2,7 @@
 #ifndef VITO_CONTROLLERS__CARTESIAN_INPEDANCE_CONTROLLER_H
 #define VITO_CONTROLLERS__CARTESIAN_INPEDANCE_CONTROLLER_H
 
-#include "KinematicChainControllerBase.h"
+#include "lwr_controllers/KinematicChainControllerBase.h"
 
 #include <visualization_msgs/Marker.h>
 #include <std_msgs/Float64MultiArray.h>

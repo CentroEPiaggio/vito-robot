@@ -6,7 +6,7 @@
 #include <kdl_parser/kdl_parser.hpp>
 #include <urdf/model.h>
 
-#include <lwr_controllers/cartesian_impedance_vito_controller.h>
+#include <vito_controllers/cartesian_impedance_vito_controller.h>
 
 namespace lwr_controllers {
 
