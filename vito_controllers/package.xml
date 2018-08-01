@@ -1,0 +1,38 @@
+<package format="2">
+  <name>vito_controllers</name>
+  <version>0.1.0</version>
+  <description>vito_controllers</description>
+  <maintainer email="danilo.caporale@gmail.com">Danilo Caporale</maintainer>
+  <maintainer email="ale.settimi@gmail.com">Alessandro Settimi</maintainer>
+  <maintainer email="g.lentini88@gmail.com">Gianluca Lentini</maintainer>
+
+  <license>BSD</license>
+
+  <author>Danilo Caporale</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <depend>angles</depend>
+  <depend>controller_interface</depend> 
+  <depend>control_msgs</depend> 
+  <depend>control_toolbox</depend> 
+  <depend>realtime_tools</depend> 
+  <depend>urdf</depend> 
+  <depend>forward_command_controller</depend>
+  <depend>dynamic_reconfigure</depend>
+  <depend>eigen</depend>
+  <depend>kdl_parser</depend>
+  <depend>message_runtime</depend>
+  <depend>geometry_msgs</depend>
+  <depend>kdl_conversions</depend>
+  <depend>sensor_msgs</depend>
+  <depend>lwr_hw</depend>
+  <depend>tf_conversions</depend>
+  <depend>lwr_controllers</depend>
+  
+  <build_depend>message_generation</build_depend>
+  
+  <export>
+    <controller_interface plugin="${prefix}/vito_controllers_plugins.xml"/>
+  </export>
+</package>

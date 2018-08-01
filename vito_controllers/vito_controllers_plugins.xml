@@ -1,0 +1,10 @@
+<library path="lib/libvito_controllers">
+  
+  <class name="vito_controllers/CartesianImpedanceVitoController" type="vito_controllers::CartesianImpedanceVitoController" base_class_type="controller_interface::ControllerBase">
+    <description>
+      The CartesianImpedanceVitoController tracks effort commands (as in JointImpedanceController from KUKA_LWR/LWR_CONTROLLERS). It expects a EffortJointInterface type of hardware interface.
+    </description>
+  </class>
+
+
+</library>
