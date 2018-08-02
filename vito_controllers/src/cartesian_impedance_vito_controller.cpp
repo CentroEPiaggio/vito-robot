@@ -8,14 +8,17 @@
 
 #include <vito_controllers/cartesian_impedance_vito_controller.h>
 
-namespace lwr_controllers {
+namespace vito_controllers {
 
 CartesianImpedanceVitoController::CartesianImpedanceVitoController() {
+    ROS_WARN("VITOVITOVITO Constructor end");
         log_tau_meas.open("tau_meas.csv");
         log_tau_des.open("tau_des.csv");
         log_qerr.open("qerr.csv");
         log_qdot.open("qdot.csv");
         timer = 0;
+            ROS_WARN("VITOVITOVITO Constructor end");
+
 }
 
 CartesianImpedanceVitoController::~CartesianImpedanceVitoController() {
@@ -28,6 +31,7 @@ CartesianImpedanceVitoController::~CartesianImpedanceVitoController() {
 
 bool CartesianImpedanceVitoController::init(hardware_interface::EffortJointInterface *robot, ros::NodeHandle &n)
 {
+        ROS_WARN("VITOVITOVITO init");
     KinematicChainControllerBase<hardware_interface::EffortJointInterface>::init(robot, n);
     K_.resize(kdl_chain_.getNrOfJoints());
     D_.resize(kdl_chain_.getNrOfJoints());   
@@ -75,6 +79,7 @@ bool CartesianImpedanceVitoController::init(hardware_interface::EffortJointInter
     D_cart(4) = 0.0;
     D_cart(5) = 0.0;
 
+        ROS_WARN("VITOVITOVITO init 82");
 
     for (size_t i = 0; i < joint_handles_.size(); i++)
     {
@@ -86,6 +91,7 @@ bool CartesianImpedanceVitoController::init(hardware_interface::EffortJointInter
         tau_(i) = joint_handles_[i].getEffort();
         q_start_(i) = joint_handles_[i].getPosition();
     }
+        ROS_WARN("VITOVITOVITO init 94");
 
     ROS_DEBUG(" Number of joints in handle = %lu", joint_handles_.size() );
 
@@ -99,6 +105,7 @@ bool CartesianImpedanceVitoController::init(hardware_interface::EffortJointInter
             ROS_WARN("Damping gain not set in yaml file, Using %f", D_(i));
         }
     }
+        ROS_WARN("VITOVITOVITO init 108");
 
     typedef  const std_msgs::Float64MultiArray::ConstPtr& msg_type;
     sub_stiffness_ = nh_.subscribe<CartesianImpedanceVitoController, msg_type>("stiffness", 1, boost::bind(&CartesianImpedanceVitoController::setParam, this, _1, &K_, "K"));
@@ -106,6 +113,7 @@ bool CartesianImpedanceVitoController::init(hardware_interface::EffortJointInter
     sub_add_torque_ = nh_.subscribe<CartesianImpedanceVitoController, msg_type>("additional_torque", 1, boost::bind(&CartesianImpedanceVitoController::setParam, this, _1, &tau_des_, "AddTorque"));
     sub_posture_ = nh_.subscribe("command", 1, &CartesianImpedanceVitoController::command, this);
 
+        ROS_WARN("VITOVITOVITO init 116");
 
     // kinematics and dynamics stuff
     jnt_to_jac_solver_.reset(new KDL::ChainJntToJacSolver(kdl_chain_));
@@ -120,6 +128,8 @@ bool CartesianImpedanceVitoController::init(hardware_interface::EffortJointInter
 
     CartesianForces.resize(6);
 
+        ROS_WARN("VITOVITOVITO end");
+
     return true;
 
 
@@ -127,6 +137,7 @@ bool CartesianImpedanceVitoController::init(hardware_interface::EffortJointInter
 
 void CartesianImpedanceVitoController::starting(const ros::Time& time)
 {
+            ROS_WARN("VITOVITOVITO starting");
     // Initializing stiffness, damping, ext_torque and set point values
     for (size_t i = 0; i < joint_handles_.size(); i++) {
         tau_des_(i) = 0.0;
@@ -150,6 +161,7 @@ void CartesianImpedanceVitoController::starting(const ros::Time& time)
     fk_pos_solver_->JntToCart(joint_msr_states_.q,x_meas_);
     fk_pos_solver_->JntToCart(joint_msr_states_.q,x_meas_old_);
 
+            ROS_WARN("VITOVITOVITO end");
 
 }
 
@@ -279,4 +291,4 @@ void CartesianImpedanceVitoController::setParam(const std_msgs::Float64MultiArra
 
 } // namespace
 
-PLUGINLIB_EXPORT_CLASS( lwr_controllers::CartesianImpedanceVitoController, controller_interface::ControllerBase)
+PLUGINLIB_EXPORT_CLASS( vito_controllers::CartesianImpedanceVitoController, controller_interface::ControllerBase)

@@ -66,7 +66,7 @@ catkin_package(
 )
 
 add_library(${PROJECT_NAME}
-  src/cartesian_impedance_vito_controller.cpp
+  src/cartesian_impedance_vito_controller.cpp src/KinematicChainControllerBase.cpp
 )
 
 add_dependencies(${PROJECT_NAME} ${PROJECT_NAME}_gencpp)

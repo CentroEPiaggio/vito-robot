@@ -2,7 +2,7 @@
 #ifndef VITO_CONTROLLERS__CARTESIAN_INPEDANCE_CONTROLLER_H
 #define VITO_CONTROLLERS__CARTESIAN_INPEDANCE_CONTROLLER_H
 
-#include "lwr_controllers/KinematicChainControllerBase.h"
+#include "vito_controllers/KinematicChainControllerBase.h"
 
 #include <visualization_msgs/Marker.h>
 #include <std_msgs/Float64MultiArray.h>
@@ -16,7 +16,7 @@
 
 */
 
-namespace lwr_controllers
+namespace vito_controllers
 {
 
     class CartesianImpedanceVitoController: public controller_interface::KinematicChainControllerBase<hardware_interface::EffortJointInterface>
