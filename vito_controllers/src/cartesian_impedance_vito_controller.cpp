@@ -79,6 +79,7 @@ bool CartesianImpedanceVitoController::init(hardware_interface::EffortJointInter
     D_cart(4) = 0.0;
     D_cart(5) = 0.0;
 
+
         ROS_WARN("VITOVITOVITO init 82");
 
     for (size_t i = 0; i < joint_handles_.size(); i++)
@@ -199,13 +200,20 @@ void CartesianImpedanceVitoController::update(const ros::Time& time, const ros::
         }
         
     }
+    
 
     for(size_t i = 0; i < joint_handles_.size(); i++) {
         tau_(i) = 0;
         for(size_t j = 0; j < 6; j++) {
             tau_(i) += J_ge_(j,i)*CartesianForces(j);
+            double eye = (i==j)?1.0:0.0;
+            tau_(i) += (eye - J_ge_(j,i)*J_ge_(i,j)) * 
+                                                    (  K_joint(j)*(q_start_(j)-joint_msr_states_.q(j)) 
+                                                     - D_joint(j)*joint_msr_states_.qdot(j)             );
         }
     }
+
+
     //ROS_INFO_STREAM("CartesianForces\n\n" << CartesianForces.data << "\n\n");
     log_tau_meas << timer << ",";
     log_tau_des << timer << ",";
