@@ -11,6 +11,10 @@
 
 #include <fstream>
 
+#include <tf/transform_broadcaster.h>
+#include <tf_conversions/tf_kdl.h>
+
+
 /*
     tau_cmd_ = K_*(q_des_ - q_msr_) + D_*dotq_msr_ + G(q_msr_)
 
@@ -69,6 +73,9 @@ namespace vito_controllers
         KDL::JntArray K_joint, D_joint;
         KDL::JntArray K_cart, D_cart;
 
+        // Rviz interface stuff
+        tf::TransformBroadcaster br_ee_pose_;
+        tf::Transform tf_ee_pose_;
 
 
     };

@@ -129,6 +129,8 @@ bool CartesianImpedanceVitoController::init(hardware_interface::EffortJointInter
 
     CartesianForces.resize(6);
 
+    // TODO read config from yaml file
+
         ROS_WARN("VITOVITOVITO end");
 
     return true;
@@ -257,6 +259,10 @@ void CartesianImpedanceVitoController::update(const ros::Time& time, const ros::
     log_qdot << "\n";
 
     x_meas_old_ = x_meas_;
+
+
+    tf::transformKDLToTF( x_des_, tf_ee_pose_);
+    br_ee_pose_.sendTransform(tf::StampedTransform(tf_ee_pose_, ros::Time::now(), "right_arm_base_link", "ciao"));
     ROS_INFO_STREAM(" ");
 }
 
