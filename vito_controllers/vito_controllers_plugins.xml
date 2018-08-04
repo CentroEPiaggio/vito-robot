@@ -6,5 +6,11 @@
     </description>
   </class>
 
+  <class name="vito_controllers/VitoBridgeController" type="vito_controllers::VitoBridgeController" base_class_type="controller_interface::ControllerBase">
+    <description>
+      The VitoBridgeController gets input on a ROS topic and uses the received torques as commands to the robot. The robot dynamics is compensated internally by the KUKA KCL software.
+    </description>
+  </class>
+
 
 </library>

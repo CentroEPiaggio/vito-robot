@@ -67,6 +67,7 @@ catkin_package(
 
 add_library(${PROJECT_NAME}
   src/cartesian_impedance_vito_controller.cpp src/KinematicChainControllerBase.cpp
+  src/vito_bridge_controller.cpp
 )
 
 add_dependencies(${PROJECT_NAME} ${PROJECT_NAME}_gencpp)
@@ -86,6 +87,9 @@ install(TARGETS ${PROJECT_NAME}
 install(FILES vito_controllers_plugins.xml
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
 
+add_executable(dual_arm_manager src/dual_arm_manager.cpp src/DualArms.cpp)
+add_dependencies(dual_arm_manager ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(dual_arm_manager ${catkin_LIBRARIES})
 
 # add_executable(cartesian_command_vito src/cartesian_command_vito.cpp)
 
