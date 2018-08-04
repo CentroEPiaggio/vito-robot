@@ -1,5 +1,5 @@
 
-#include <lwr_controllers/KinematicChainControllerBase.h>
+#include <vito_controllers/KinematicChainControllerBase.h>
 namespace controller_interface
 {
 template<>
