@@ -103,7 +103,7 @@ void DualArms::run()
 	ros::Rate f(100);
 	while(ros::ok())
 	{
-		if(right_arm_alive && left_arm_alive)
+		if(right_arm_alive )//&& left_arm_alive)
 		{
 			pub_ee_pose();
 			compute_torques();
@@ -264,7 +264,22 @@ bool DualArms::load_robot(const Arm& arm)
         ROS_ERROR_STREAM("KinematicChainControllerBase: No tip name found on parameter server ("<<nh_params.getNamespace()<<"/tip_name)");
         return false;
     }
- 
+    
+    switch(arm)
+    {
+        case Arm::RIGHT:
+            // tip_name = "ft_surface";
+            ROS_INFO_STREAM("Right arm tip name: " << tip_name);
+            break;
+        case Arm::LEFT:
+            // tip_name = "left_velvet_link";
+            ROS_INFO_STREAM("Left arm tip name: " << tip_name);
+            break;
+        default:
+            ROS_ERROR_STREAM("Error in load_robot: called with argument " << arm << ". Valid arguments are " << Arm::RIGHT << " " << Arm::LEFT);
+            return false;           
+    }
+
     // Get the gravity vector (direction and magnitude)
     gravity_ = KDL::Vector::Zero();
     gravity_(2) = -9.81;
@@ -376,6 +391,11 @@ bool DualArms::load_robot(const Arm& arm)
 		case Arm::RIGHT:
 
 			kdl_chain_right_ = kdl_chain_;
+
+            ROS_INFO("kdl_chain_right_: \n\n");
+            // kdl_chain_right_.addSegment();
+            ROS_INFO("kdl_chain_right_ END \n\n");
+
 			joint_limits_right_ = joint_limits_;
 			// kinematics and dynamics stuff
 		    jnt_to_jac_solver_right_.reset(new KDL::ChainJntToJacSolver(kdl_chain_right_));
