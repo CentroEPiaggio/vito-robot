@@ -6,6 +6,9 @@ The UNIPI robot is composed of two Kuka LWR equipped with two Pisa/IIT Soft Hand
 
 This package use [ROS/indigo](http://wiki.ros.org/indigo/Installation/Ubuntu), [Gazebo4](http://gazebosim.org/tutorials?tut=install_ubuntu&ver=4.0&cat=install) on [Ubuntu 14.04](http://www.ubuntu.com/download/desktop).
 
+## Dependancies to pisa-iit-soft-hand package
+Some launch files require the pisa-iit-soft-hand package to be installed. The repository can be cloned from [pisa-iit-soft-hand](https://github.com/CentroEPiaggio/pisa-iit-soft-hand.git).
+
 ## Clonning with sub-modules
 
 Clone recursively:
