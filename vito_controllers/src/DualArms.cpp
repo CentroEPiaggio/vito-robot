@@ -3,13 +3,21 @@
 DualArms::DualArms() : nh_params_right("/right_arm"), nh_params_left("/left_arm") {
 	ROS_INFO("DualArms constructor");
 
-	control_type = Control::JOINT_IMPEDANCE;
+	control_type = Control::CARTESIAN_IMPEDANCE;
 
 }
 
 DualArms::~DualArms()
 {
 	ROS_INFO("DualArms clean exit");
+}
+
+Eigen::Matrix<double,3,3> DualArms::skew(Eigen::Matrix<double,3,1> v) {
+    Eigen::Matrix<double,3,3> temp;
+    temp <<     0, -v(2),  v(1),
+             v(2),     0, -v(0),
+            -v(1),  v(0),    0;
+    return temp;
 }
 
 void DualArms::init()
@@ -25,7 +33,9 @@ void DualArms::init()
 
 	sub_joint_state_right_arm_ 	= nh.subscribe("/right_arm/joint_states",1,&DualArms::joint_state_callback_right,this);
 	sub_joint_state_left_arm_ 	= nh.subscribe("/left_arm/joint_states",1,&DualArms::joint_state_callback_left,this);
-
+	sub_command_right_ = nh.subscribe("/right_arm/vito_bridge_controller/commandCart_right",1,&DualArms::commandCart_right_,this);
+	
+	
 	q_right_meas_.resize(number_arm_joints);
 	qdot_right_meas_.resize(number_arm_joints);
 	tau_right_meas_.resize(number_arm_joints); // sensor readings
@@ -43,7 +53,10 @@ void DualArms::init()
     pub_torques_left_arm_ = nh.advertise<sensor_msgs::JointState>("/left_arm/vito_bridge_controller/command_torques", 1);
 
     J_right_.resize(kdl_chain_right_.getNrOfJoints());
+    J_right_last_.resize(kdl_chain_right_.getNrOfJoints());
     J_left_.resize(kdl_chain_left_.getNrOfJoints());
+
+    M_right_.resize(kdl_chain_right_.getNrOfJoints());
 
     CartesianForces_right_.resize(6);
     CartesianForces_left_.resize(6);
@@ -85,6 +98,32 @@ void DualArms::init()
     D_cart(3) = 0.0;
     D_cart(4) = 0.0;
     D_cart(5) = 0.0;
+	
+	K_cart_imp_right.setZero();
+    K_cart_imp_right(0,0) = 1000.0;
+    K_cart_imp_right(1,1) = 1000.0;
+    K_cart_imp_right(2,2) = 1000.0;
+    K_cart_imp_right(3,3) = 10.0;
+    K_cart_imp_right(4,4) = 10.0;
+    K_cart_imp_right(5,5) = 10.0;
+
+    D_cart_imp_right.setZero();
+    D_cart_imp_right(0,0) = 100.0;
+    D_cart_imp_right(1,1) = 100.0;
+    D_cart_imp_right(2,2) = 100.0;
+    D_cart_imp_right(3,3) = 10.0;
+    D_cart_imp_right(4,4) = 10.0;
+    D_cart_imp_right(5,5) = 10.0;
+	
+	M_cart_imp_right.setZero();
+    M_cart_imp_right(0,0) = 100.0;
+    M_cart_imp_right(1,1) = 100.0;
+    M_cart_imp_right(2,2) = 100.0;
+    M_cart_imp_right(3,3) = 10.0;
+    M_cart_imp_right(4,4) = 10.0;
+    M_cart_imp_right(5,5) = 10.0;
+
+	N = 10000;
 
 
     // empty messages
@@ -94,6 +133,8 @@ void DualArms::init()
 	msg_left_arm_.position = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
 	msg_left_arm_.velocity = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
 	msg_left_arm_.effort = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+	
+	ros::Time time_prec_ = ros::Time::now();
 
 }
 
@@ -134,7 +175,8 @@ void DualArms::compute_torques()
 	}
 }
 
-void DualArms::joint_impedance() {
+void DualArms::joint_impedance() 
+{
 	// ROS_INFO("JOINT_IMPEDANCE running");
 
 	for(size_t i=0; i<number_arm_joints; i++)
@@ -144,17 +186,103 @@ void DualArms::joint_impedance() {
 
 		tau_left_(i) = K_joint(i)*(q_left_ref_(i) - q_left_meas_(i)) - D_joint(i) * qdot_left_meas_(i);
 		// ROS_INFO_STREAM(tau_right_(i));
-	}
+	}	
 }
 
-void DualArms::cartesian_impedance() {
+void DualArms::cartesian_impedance() 
+{
+    if (starting) {
+        starting = false;
+        counter = 2*N;
+        fk_pos_solver_right_->JntToCart(q_right_meas_, x_meas_right_);
+        xDES_step_right_(0) = x_meas_right_.p(0);
+        xDES_step_right_(1) = x_meas_right_.p(1);
+        xDES_step_right_(2) = x_meas_right_.p(2);
+        jnt_to_jac_solver_right_->JntToJac(q_right_meas_, J_right_last_);
+    }
+
+    ROS_INFO_STREAM("xDES_step_right_ begin");
+    ROS_INFO_STREAM(xDES_step_right_);
+
 	// ROS_INFO("CARTESIAN_IMPEDANCE running");
+	id_solver_right_->JntToMass(q_right_meas_,M_right_);
+	jnt_to_jac_solver_right_->JntToJac(q_right_meas_, J_right_);
+	fk_pos_solver_right_->JntToCart(q_right_meas_, x_meas_right_);
+	xVEC_right_(0) = x_meas_right_.p(0);
+	xVEC_right_(1) = x_meas_right_.p(1);
+	xVEC_right_(2) = x_meas_right_.p(2);
+	x_meas_right_.M.GetEulerZYX(xVEC_right_(5),xVEC_right_(4),xVEC_right_(3));
+	x_meas_right_.M.GetEulerZYX(rpy_right_(2),rpy_right_(1),rpy_right_(0));
+
+	// velocity error
+	e_ref_dot_right_ = J_right_.data*qdot_right_meas_.data;
+	e_ref_dot_right_(3) = 0;
+	e_ref_dot_right_(4) = 0;
+	e_ref_dot_right_(5) = 0;
+
+    
+
+	if (counter < N) {
+		// interpolazione per le posizioni
+		xDES_step_right_ = xDES_step_right_ + (xDES_right_ - x0_right_)/N;
+		//interpolazione per l'orientamento
+		quat_t_right_ = quat_0_right_.slerp(quat_f_right_,counter/N);
+		counter++;
+	} else if(counter != 2*N) {
+		if (!primo_right_)
+			ROS_INFO("End positioning.");
+		xDES_step_right_ = xDES_right_;
+		quat_t_right_ = quat_f_right_;
+		primo_right_ = true;
+	}    
+	//position error
+	e_ref_right_ = xDES_step_right_ - xVEC_right_;
+	
+	period = ros::Time::now() - time_prec_;
+
+	// Quaternion
+	quat_des_vec_right_(0) = quat_t_right_.x();
+	quat_des_vec_right_(1) = quat_t_right_.y();
+	quat_des_vec_right_(2) = quat_t_right_.z();
+	quat_des_scal_right_ = quat_t_right_.w();
+	x_meas_right_.M.GetQuaternion(quat_vec_right_(0),quat_vec_right_(1),quat_vec_right_(2),quat_scal_right_);
+	quat_temp_right_ = quat_scal_right_*quat_des_vec_right_ - quat_des_scal_right_*quat_vec_right_ - skew(quat_des_vec_right_)*quat_vec_right_;
+	e_ref_right_(3) = quat_temp_right_(0);
+	e_ref_right_(4) = quat_temp_right_(1);
+	e_ref_right_(5) = quat_temp_right_(2);
+	e_ref_dot_right_(3) = 0;//(quat_temp_(0) - quat_old_(0))/period.toSec();
+	e_ref_dot_right_(4) = 0;//(quat_temp_(1) - quat_old_(1))/period.toSec();
+	e_ref_dot_right_(5) = 0;//(quat_temp_(2) - quat_old_(2))/period.toSec();
+	quat_old_right_ = quat_temp_right_;
+
+	J_right_dot_.data = (J_right_.data - J_right_last_.data)/period.toSec();
+	J_right_last_ = J_right_;
+
+	L_right_ = J_right_.data*M_right_.data.inverse()*J_right_.data.transpose();
+	L_right_ = L_right_.inverse();
+
+	//tau_.data = G_.data + C_.data;
+
+	//for(size_t i = 0; i < 7; i++)
+	//	  tau_right_(i) = 0;
+		
+    ROS_INFO_STREAM("e: " << e_ref_right_);
+    ROS_INFO_STREAM("edot: " << e_ref_dot_right_);
+
+	tau_right_.data = J_right_.data.transpose()*(L_right_*M_cart_imp_right.inverse()*
+							(K_cart_imp_right*e_ref_right_ - D_cart_imp_right*e_ref_dot_right_ - L_right_*J_right_dot_.data*q_right_meas_.data));
+    //ROS_INFO_STREAM("New Torque Request: ");
+    //ROS_INFO_STREAM(tau_right_.data);
+    ROS_INFO_STREAM("xDES_step_right_ end");
+    ROS_INFO_STREAM(xDES_step_right_);
+
 }
 
 void DualArms::pub_torques()
 {
 	for(size_t i=0; i < number_arm_joints; i++)
-		msg_right_arm_.effort[i] = tau_right_(i);
+        msg_right_arm_.effort[i] = tau_right_(i);
+		msg_right_arm_.header.stamp = ros::Time::now();
 
 	for(size_t i=0; i < number_arm_joints; i++)
 		msg_left_arm_.effort[i] = tau_left_(i);
@@ -168,8 +296,8 @@ void DualArms::pub_ee_pose()
 	// world_to_base_right_arm = KDL::Rotation::RPY(3.1415926535897932384626, -3.1415926535897932384626/4.0, 0.0);
 	// world_to_base_right_arm = KDL::Rotation::Identity();
 	// x_right_.p = world_to_base_right_arm.Inverse()*x_right_.p;
- //    x_right_.M = world_to_base_right_arm.Inverse()*x_right_.M;
-     // <origin xyz="0.77 0.801 1.607" rpy="3.1415 -0.7854 0"/>   
+	// x_right_.M = world_to_base_right_arm.Inverse()*x_right_.M;
+    // <origin xyz="0.77 0.801 1.607" rpy="3.1415 -0.7854 0"/>   
 
 
     tf::transformKDLToTF( x_right_, tf_ee_pose_right_);
@@ -264,22 +392,7 @@ bool DualArms::load_robot(const Arm& arm)
         ROS_ERROR_STREAM("KinematicChainControllerBase: No tip name found on parameter server ("<<nh_params.getNamespace()<<"/tip_name)");
         return false;
     }
-    
-    switch(arm)
-    {
-        case Arm::RIGHT:
-            // tip_name = "ft_surface";
-            ROS_INFO_STREAM("Right arm tip name: " << tip_name);
-            break;
-        case Arm::LEFT:
-            // tip_name = "left_velvet_link";
-            ROS_INFO_STREAM("Left arm tip name: " << tip_name);
-            break;
-        default:
-            ROS_ERROR_STREAM("Error in load_robot: called with argument " << arm << ". Valid arguments are " << Arm::RIGHT << " " << Arm::LEFT);
-            return false;           
-    }
-
+ 
     // Get the gravity vector (direction and magnitude)
     gravity_ = KDL::Vector::Zero();
     gravity_(2) = -9.81;
@@ -391,11 +504,6 @@ bool DualArms::load_robot(const Arm& arm)
 		case Arm::RIGHT:
 
 			kdl_chain_right_ = kdl_chain_;
-
-            ROS_INFO("kdl_chain_right_: \n\n");
-            // kdl_chain_right_.addSegment();
-            ROS_INFO("kdl_chain_right_ END \n\n");
-
 			joint_limits_right_ = joint_limits_;
 			// kinematics and dynamics stuff
 		    jnt_to_jac_solver_right_.reset(new KDL::ChainJntToJacSolver(kdl_chain_right_));
@@ -414,4 +522,44 @@ bool DualArms::load_robot(const Arm& arm)
 			return false;			
 	}
     return true;
+}
+
+void DualArms::commandCart_right_(const std_msgs::Float64MultiArray::ConstPtr &msg) {
+	if ((int)msg->data.size() != 6) {
+        ROS_ERROR("Posture message had the wrong size: %d", 6);
+        return;
+    }
+    
+    fk_pos_solver_right_->JntToCart(q_right_meas_,x_meas_right_);
+    
+	frame_des_right_ = KDL::Frame(
+							KDL::Rotation::EulerZYX(msg->data[5],
+													msg->data[4],
+													msg->data[3]),
+							KDL::Vector(msg->data[0],
+										msg->data[1],
+										msg->data[2]));
+	xDES_right_(0) = msg->data[0];
+    xDES_right_(1) = msg->data[1];
+    xDES_right_(2) = msg->data[2];
+	xDES_right_(3) = msg->data[3];
+    xDES_right_(4) = msg->data[4];
+    xDES_right_(5) = msg->data[5];
+	
+	x_meas_right_.M.GetEulerZYX(rpy_right_(2),rpy_right_(1),rpy_right_(0));
+	jnt_to_jac_solver_right_->JntToJac(q_right_meas_,J_right_last_);  
+	
+	x_des_right_ = frame_des_right_;
+	
+	if (primo_right_) {
+        primo_right_ = false;
+        N = 1000;       // da cambiare in base alla norma dell'errore
+        x_meas_right_.M.GetQuaternion(quat_vec_right_(0),quat_vec_right_(1),quat_vec_right_(2),quat_scal_right_);          // quaternione terna attuale
+        quat_0_right_ = tf::Quaternion(quat_vec_right_(0),quat_vec_right_(1),quat_vec_right_(2),quat_scal_right_);   
+        x_des_right_.M.GetQuaternion(quat_vec_right_(0),quat_vec_right_(1),quat_vec_right_(2),quat_scal_right_);      // quaternione terna desiderata
+        quat_f_right_ = tf::Quaternion(quat_vec_right_(0),quat_vec_right_(1),quat_vec_right_(2),quat_scal_right_);
+        x0_right_ << x_meas_right_.p(0), x_meas_right_.p(1), x_meas_right_.p(2), 0, 0, 0;           // posizione attuale
+        xDES_step_right_ = x0_right_;
+        counter = 0;
+    }
 }
