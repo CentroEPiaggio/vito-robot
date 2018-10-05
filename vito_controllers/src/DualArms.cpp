@@ -51,6 +51,7 @@ void DualArms::init()
 
 	pub_torques_right_arm_ = nh.advertise<sensor_msgs::JointState>("/right_arm/vito_bridge_controller/command_torques", 1);
     pub_torques_left_arm_ = nh.advertise<sensor_msgs::JointState>("/left_arm/vito_bridge_controller/command_torques", 1);
+    pub_error_right_arm_ = nh.advertise<sensor_msgs::JointState>("/right_arm/vito_bridge_controller/error", 1);
 
     J_right_.resize(kdl_chain_right_.getNrOfJoints());
     J_right_last_.resize(kdl_chain_right_.getNrOfJoints());
@@ -100,30 +101,30 @@ void DualArms::init()
     D_cart(5) = 0.0;
 	
 	K_cart_imp_right.setZero();
-    K_cart_imp_right(0,0) = 1000.0;
-    K_cart_imp_right(1,1) = 1000.0;
-    K_cart_imp_right(2,2) = 1000.0;
+    K_cart_imp_right(0,0) = 20.0;
+    K_cart_imp_right(1,1) = 40.0;
+    K_cart_imp_right(2,2) = 80.0;
     K_cart_imp_right(3,3) = 10.0;
     K_cart_imp_right(4,4) = 10.0;
     K_cart_imp_right(5,5) = 10.0;
 
     D_cart_imp_right.setZero();
-    D_cart_imp_right(0,0) = 100.0;
-    D_cart_imp_right(1,1) = 100.0;
-    D_cart_imp_right(2,2) = 100.0;
+    D_cart_imp_right(0,0) = 6.0;
+    D_cart_imp_right(1,1) = 12.0;
+    D_cart_imp_right(2,2) = 24.0;
     D_cart_imp_right(3,3) = 10.0;
     D_cart_imp_right(4,4) = 10.0;
     D_cart_imp_right(5,5) = 10.0;
 	
 	M_cart_imp_right.setZero();
-    M_cart_imp_right(0,0) = 100.0;
-    M_cart_imp_right(1,1) = 100.0;
-    M_cart_imp_right(2,2) = 100.0;
-    M_cart_imp_right(3,3) = 10.0;
-    M_cart_imp_right(4,4) = 10.0;
-    M_cart_imp_right(5,5) = 10.0;
+    M_cart_imp_right(0,0) = 1.0;
+    M_cart_imp_right(1,1) = 1.0;
+    M_cart_imp_right(2,2) = 1.0;
+    M_cart_imp_right(3,3) = 1.0;
+    M_cart_imp_right(4,4) = 1.0;
+    M_cart_imp_right(5,5) = 1.0;
 
-	N = 10000;
+	N = 100;
 
 
     // empty messages
@@ -149,6 +150,7 @@ void DualArms::run()
 			pub_ee_pose();
 			compute_torques();
 			pub_torques();
+            pub_error();
 		}
 		ros::spinOnce();
 		f.sleep();
@@ -201,8 +203,9 @@ void DualArms::cartesian_impedance()
         jnt_to_jac_solver_right_->JntToJac(q_right_meas_, J_right_last_);
     }
 
-    ROS_INFO_STREAM("xDES_step_right_ begin");
-    ROS_INFO_STREAM(xDES_step_right_);
+    //ROS_INFO_STREAM("M = " << M_cart_imp_right);
+    //ROS_INFO_STREAM("K = " << K_cart_imp_right);
+    //ROS_INFO_STREAM("D = " << D_cart_imp_right);
 
 	// ROS_INFO("CARTESIAN_IMPEDANCE running");
 	id_solver_right_->JntToMass(q_right_meas_,M_right_);
@@ -239,6 +242,7 @@ void DualArms::cartesian_impedance()
 	e_ref_right_ = xDES_step_right_ - xVEC_right_;
 	
 	period = ros::Time::now() - time_prec_;
+    time_prec_ = ros::Time::now();
 
 	// Quaternion
 	quat_des_vec_right_(0) = quat_t_right_.x();
@@ -247,9 +251,9 @@ void DualArms::cartesian_impedance()
 	quat_des_scal_right_ = quat_t_right_.w();
 	x_meas_right_.M.GetQuaternion(quat_vec_right_(0),quat_vec_right_(1),quat_vec_right_(2),quat_scal_right_);
 	quat_temp_right_ = quat_scal_right_*quat_des_vec_right_ - quat_des_scal_right_*quat_vec_right_ - skew(quat_des_vec_right_)*quat_vec_right_;
-	e_ref_right_(3) = quat_temp_right_(0);
-	e_ref_right_(4) = quat_temp_right_(1);
-	e_ref_right_(5) = quat_temp_right_(2);
+	e_ref_right_(3) = 0;//quat_temp_right_(0);
+	e_ref_right_(4) = 0;//quat_temp_right_(1);
+	e_ref_right_(5) = 0;//quat_temp_right_(2);
 	e_ref_dot_right_(3) = 0;//(quat_temp_(0) - quat_old_(0))/period.toSec();
 	e_ref_dot_right_(4) = 0;//(quat_temp_(1) - quat_old_(1))/period.toSec();
 	e_ref_dot_right_(5) = 0;//(quat_temp_(2) - quat_old_(2))/period.toSec();
@@ -266,11 +270,15 @@ void DualArms::cartesian_impedance()
 	//for(size_t i = 0; i < 7; i++)
 	//	  tau_right_(i) = 0;
 		
-    ROS_INFO_STREAM("e: " << e_ref_right_);
-    ROS_INFO_STREAM("edot: " << e_ref_dot_right_);
+    //ROS_INFO_STREAM("e: " << e_ref_right_);
+    //ROS_INFO_STREAM("edot: " << e_ref_dot_right_);
 
 	tau_right_.data = J_right_.data.transpose()*(L_right_*M_cart_imp_right.inverse()*
 							(K_cart_imp_right*e_ref_right_ - D_cart_imp_right*e_ref_dot_right_ - L_right_*J_right_dot_.data*q_right_meas_.data));
+    
+    //tau_right_.data = J_right_.data.transpose()*
+     //           (K_cart_imp_right*e_ref_right_ - D_cart_imp_right*e_ref_dot_right_);
+    
     //ROS_INFO_STREAM("New Torque Request: ");
     //ROS_INFO_STREAM(tau_right_.data);
     ROS_INFO_STREAM("xDES_step_right_ end");
@@ -280,15 +288,24 @@ void DualArms::cartesian_impedance()
 
 void DualArms::pub_torques()
 {
-	for(size_t i=0; i < number_arm_joints; i++)
+    for(size_t i=0; i < number_arm_joints; i++) 
         msg_right_arm_.effort[i] = tau_right_(i);
-		msg_right_arm_.header.stamp = ros::Time::now();
+    msg_right_arm_.header.stamp = ros::Time::now();
 
-	for(size_t i=0; i < number_arm_joints; i++)
-		msg_left_arm_.effort[i] = tau_left_(i);
+    for(size_t i=0; i < number_arm_joints; i++)
+        msg_left_arm_.effort[i] = tau_left_(i);
 
-	pub_torques_right_arm_.publish(msg_right_arm_);
-	pub_torques_left_arm_.publish(msg_left_arm_);
+    pub_torques_right_arm_.publish(msg_right_arm_);
+    pub_torques_left_arm_.publish(msg_left_arm_);
+}
+
+void DualArms::pub_error()
+{
+    for(size_t i=0; i < 6; i++)
+        msg_right_arm_.position[i] = e_ref_right_(i);
+    msg_right_arm_.header.stamp = ros::Time::now();
+
+    pub_error_right_arm_.publish(msg_right_arm_);
 }
 
 void DualArms::pub_ee_pose()
@@ -553,7 +570,7 @@ void DualArms::commandCart_right_(const std_msgs::Float64MultiArray::ConstPtr &m
 	
 	if (primo_right_) {
         primo_right_ = false;
-        N = 1000;       // da cambiare in base alla norma dell'errore
+        N = 100;       // da cambiare in base alla norma dell'errore
         x_meas_right_.M.GetQuaternion(quat_vec_right_(0),quat_vec_right_(1),quat_vec_right_(2),quat_scal_right_);          // quaternione terna attuale
         quat_0_right_ = tf::Quaternion(quat_vec_right_(0),quat_vec_right_(1),quat_vec_right_(2),quat_scal_right_);   
         x_des_right_.M.GetQuaternion(quat_vec_right_(0),quat_vec_right_(1),quat_vec_right_(2),quat_scal_right_);      // quaternione terna desiderata

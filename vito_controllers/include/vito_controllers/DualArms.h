@@ -89,8 +89,10 @@ private:
     // control publisher
     ros::Publisher pub_torques_right_arm_;
 	ros::Publisher pub_torques_left_arm_;
+	ros::Publisher pub_error_right_arm_;
 
 	void pub_torques();
+	void pub_error();
 
 	sensor_msgs::JointState msg_right_arm_, msg_left_arm_;
 
