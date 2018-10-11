@@ -158,6 +158,9 @@ private:
 	KDL::Frame frame_des_right_;
 	KDL::Frame frame_des_left_;
 	bool starting = true;
+	
+	KDL::JntArray C_right_;   // coriolis
+    KDL::JntArray G_right_;   // gravity
 };
 
 #endif
