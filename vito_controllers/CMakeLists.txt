@@ -29,6 +29,7 @@ link_directories(${catkin_LIBRARY_DIRS})
 
 add_message_files(
    FILES
+	config.msg
   #  PoseRPY.msg
   #  RPY.msg
   #  MultiPriorityTask.msg

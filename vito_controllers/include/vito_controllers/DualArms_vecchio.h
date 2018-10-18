@@ -7,7 +7,6 @@
 #include <ros/node_handle.h>
 #include <sensor_msgs/JointState.h>
 #include <ros/topic.h>
-#include <vito_controllers/config.h>
 
 #include <urdf/model.h>
 
@@ -67,12 +66,10 @@ private:
     void joint_state_callback_right(const sensor_msgs::JointState& msg);
     
     void commandCart_right_(const std_msgs::Float64MultiArray::ConstPtr &msg);
-	void csi_omega_right_(const vito_controllers::config::ConstPtr &msg);
 
 	ros::Subscriber sub_joint_state_right_arm_;
 	ros::Subscriber sub_joint_state_left_arm_;
 	ros::Subscriber sub_command_right_;
-	ros::Subscriber sub_param_right_;
 	
 	KDL::JntArray q_left_meas_,	qdot_left_meas_,	tau_left_meas_;
 	KDL::JntArray q_right_meas_, qdot_right_meas_, tau_right_meas_;
@@ -87,10 +84,6 @@ private:
     tf::TransformBroadcaster br_ee_pose_right_, br_ee_pose_left_;
     tf::Transform tf_ee_pose_right_, tf_ee_pose_left_;
 
-    tf::TransformBroadcaster br_ee_des_pose_right_, br_ee_des_pose_left_;
-    tf::Transform tf_ee_des_pose_right_, tf_ee_des_pose_left_;
-    KDL::Frame x_right_des_frame_;
-    
     void pub_ee_pose();
 
     // control publisher
@@ -125,8 +118,7 @@ private:
 	
 	Eigen::Matrix<double,6,1> xVEC_right_;
 	Eigen::Matrix<double,6,6> L_right_;
-		Eigen::Matrix<double,1,4> Q;
-
+	
 	Eigen::Matrix<double,3,1> quat_des_vec_right_;
     Eigen::Matrix<double,3,1> quat_vec_right_;
     Eigen::Matrix<double,3,1> quat_temp_right_;
@@ -140,7 +132,7 @@ private:
     Eigen::Matrix<double,6,1> e_ref_dot_right_;
 	
 	int counter;
-	float N;
+	int N;
 	Eigen::Matrix<double,6,1> x0_right_;
     Eigen::Matrix<double,6,1> xDES_step_right_;
 	Eigen::Matrix<double,6,1> xDES_right_;
@@ -166,9 +158,6 @@ private:
 	KDL::Frame frame_des_right_;
 	KDL::Frame frame_des_left_;
 	bool starting = true;
-	
-	KDL::JntArray C_right_;   // coriolis
-    KDL::JntArray G_right_;   // gravity
 };
 
 #endif

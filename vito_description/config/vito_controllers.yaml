@@ -52,11 +52,11 @@ right_arm:
       - right_arm_a6_joint
   cartesian_impedance_vito_controller:
     type: vito_controllers/CartesianImpedanceVitoController
-    root_name: right_arm_base_link
+    root_name: vito_anchor
     tip_name: right_arm_7_link
   vito_bridge_controller:
     type: vito_controllers/VitoBridgeController
-    root_name: right_arm_base_link
+    root_name: vito_anchor
     tip_name: right_arm_7_link
   joint_impedance_controller:
     type: lwr_controllers/JointImpedanceController

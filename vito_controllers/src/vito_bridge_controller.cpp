@@ -65,7 +65,7 @@ void VitoBridgeController::receive_torques(const sensor_msgs::JointState &msg)
 {
     for(size_t i=0; i<joint_handles_.size(); i++)
         tau_des_(i) = msg.effort.at(i);
-    ROS_INFO_STREAM(tau_des_.data);
+    //ROS_INFO_STREAM(tau_des_.data);
 }
 
 } // namespace
