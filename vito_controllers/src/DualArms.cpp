@@ -89,21 +89,42 @@ void DualArms::init()
     // K_cart(3) = 0.0;
     // K_cart(4) = 0.0;
     // K_cart(5) = 0.0;
+	// K_cart(0) = 80.0;
+    // K_cart(1) = 80.0;
+    // K_cart(2) = 80.0;
+    // K_cart(3) = 5.0;
+    // K_cart(4) = 5.0;
+    // K_cart(5) = 5.0;
+
 	K_cart(0) = 80.0;
     K_cart(1) = 80.0;
     K_cart(2) = 80.0;
-    K_cart(3) = 5.0;
-    K_cart(4) = 5.0;
-    K_cart(5) = 5.0;
-// 
-//     D_cart.resize(6);
-//     D_cart(0) = 10.0;
-//     D_cart(1) = 100.0;
-//     D_cart(2) = 100.0;
-//     D_cart(3) = 0.0;
-//     D_cart(4) = 0.0;
-//     D_cart(5) = 0.0;
+    K_cart(3) = 10.0;
+    K_cart(4) = 10.0;
+    K_cart(5) = 10.0;
+
+    D_cart.resize(6);
+    // D_cart(0) = 10.0;
+    // D_cart(1) = 100.0;
+    // D_cart(2) = 100.0;
+    // D_cart(3) = 0.0;
+    // D_cart(4) = 0.0;
+    // D_cart(5) = 0.0;
+	// D_cart(0) = 5.0;
+    // D_cart(1) = 5.0;
+    // D_cart(2) = 5.0;
+    D_cart(3) = 1.0;
+    D_cart(4) = 1.0;
+    D_cart(5) = 1.0;
 	
+	D_cart(0) = 7.2;
+    D_cart(1) = 7.2;
+    D_cart(2) = 7.2;
+    // D_cart(3) = 7.2;
+    // D_cart(4) = 7.2;
+    // D_cart(5) = 7.2;
+	
+
 	K_cart_imp_right.setZero();
 	K_cart_imp_right(0,0) = 160;
 	K_cart_imp_right(1,1) = 160;
@@ -220,12 +241,15 @@ void DualArms::cartesian_impedance()
 	// tau = g(q) + C(q,\dot{q}) + J(q)'*( - K_d * \tilde{x});
 	// printKDLJacobian(J_right_);
 	// printJacobianTranspose(J_right_);
-	KDL::Twist x_tilde = KDL::diff(x_meas_right_,x_ref_virtual_);
-	KDL::Twist x_tilde_dot = KDL::diff(x_meas_right_,x_ref_virtual_,0.01);
-	KDL::JntArray x_tilde_dot_;
-	x_tilde_dot_.resize(6);
-	x_tilde_dot_.data = J_right_.data*qdot_right_meas_.data;
+	KDL::Twist x_tilde = KDL::diff(x_right_,x_ref_virtual_);
+	KDL::Twist x_tilde_dot = KDL::diff(x_right_,x_right_old_,period.toSec());
+	
 	printKDLTwist(x_tilde, "pose error");
+	printKDLTwist(x_tilde_dot, "pose error_derivative");
+
+	// KDL::JntArray x_tilde_dot_;
+	// x_tilde_dot_.resize(6);
+	// x_tilde_dot_.data = J_right_.data*qdot_right_meas_.data;
 	// printKDLJntArray(x_tilde_dot_, "pose error derivative");
 	
 	tau_right_.data.setZero();
@@ -233,7 +257,8 @@ void DualArms::cartesian_impedance()
 	{
 		for(int j=0; j<6; j++)
 		{
-			tau_right_(i) += J_right_(j,i)*(K_cart(j)*x_tilde(j));
+			//tau_right_(i) += J_right_(j,i)*(K_cart(j)*x_tilde(j)); // WORKING
+			tau_right_(i) += J_right_(j,i)*(K_cart(j)*x_tilde(j) + D_cart(j)*x_tilde_dot(j));
 		}
 	}
 	printKDLJntArray(tau_right_,"tau_right_");
@@ -423,6 +448,9 @@ void DualArms::joint_state_callback_right(const sensor_msgs::JointState& msg)
 	}
 
 	// update cartesian position with last readings
+	x_right_old_ = x_right_;
+	period = ros::Time::now() - time_prec_;
+	time_prec_ = ros::Time::now();
     fk_pos_solver_right_->JntToCart(q_right_meas_,x_right_);
 	if(!virtual_ref_available)
 	{

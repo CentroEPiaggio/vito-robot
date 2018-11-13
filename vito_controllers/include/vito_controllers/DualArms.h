@@ -80,6 +80,7 @@ private:
     boost::scoped_ptr<KDL::ChainFkSolverPos_recursive> fk_pos_solver_right_, fk_pos_solver_left_;
 
     KDL::Frame x_right_, x_left_;  // end effector pose
+	KDL::Frame x_right_old_, x_left_old_;  // end effector pose
 
     // Rviz interface
     tf::TransformBroadcaster br_ee_pose_right_, br_ee_pose_left_;
