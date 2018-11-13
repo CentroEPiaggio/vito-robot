@@ -140,19 +140,12 @@ void DualArms::run()
 	ros::Rate f(100);
 	while(ros::ok())
 	{
-		ROS_INFO_STREAM(__LINE__ << " ###");
-		ROS_INFO_STREAM("left_arm_alive " << left_arm_alive);
 		if(right_arm_alive)//&& left_arm_alive)
 		{
-			ROS_INFO_STREAM(__LINE__ << " ###");
 			pub_ee_pose();
-			ROS_INFO_STREAM(__LINE__ << " ###");
 			compute_torques();
-			ROS_INFO_STREAM(__LINE__ << " ###");
 			pub_torques();
-			ROS_INFO_STREAM(__LINE__ << " ###");
 			pub_error();
-			ROS_INFO_STREAM(__LINE__ << " ###");
 		}
 		ros::spinOnce();
 		f.sleep();
@@ -165,7 +158,6 @@ void DualArms::compute_torques()
 	{
 		case Control::JOINT_IMPEDANCE:
 			// ROS_INFO("JOINT_IMPEDANCE");
-			ROS_INFO_STREAM(__LINE__ << " ###");
 			joint_impedance();
 			break;
 		case Control::CARTESIAN_IMPEDANCE:
