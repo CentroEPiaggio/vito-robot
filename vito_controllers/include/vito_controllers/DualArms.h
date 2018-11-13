@@ -82,6 +82,9 @@ private:
     KDL::Frame x_right_, x_left_;  // end effector pose
 	KDL::Frame x_right_old_, x_left_old_;  // end effector pose
 
+	KDL::Twist x_tilde_; // pose error
+	KDL::Twist x_tilde_dot_; // pose error derivative
+
     // Rviz interface
     tf::TransformBroadcaster br_ee_pose_right_, br_ee_pose_left_;
     tf::Transform tf_ee_pose_right_, tf_ee_pose_left_;

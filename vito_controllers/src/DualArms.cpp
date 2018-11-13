@@ -241,11 +241,11 @@ void DualArms::cartesian_impedance()
 	// tau = g(q) + C(q,\dot{q}) + J(q)'*( - K_d * \tilde{x});
 	// printKDLJacobian(J_right_);
 	// printJacobianTranspose(J_right_);
-	KDL::Twist x_tilde = KDL::diff(x_right_,x_ref_virtual_);
-	KDL::Twist x_tilde_dot = KDL::diff(x_right_,x_right_old_,period.toSec());
+	x_tilde_ = KDL::diff(x_right_,x_ref_virtual_);
+	x_tilde_dot_ = KDL::diff(x_right_,x_right_old_,period.toSec());
 	
-	printKDLTwist(x_tilde, "pose error");
-	printKDLTwist(x_tilde_dot, "pose error_derivative");
+	printKDLTwist(x_tilde_, "pose error");
+	printKDLTwist(x_tilde_dot_, "pose error_derivative");
 
 	// KDL::JntArray x_tilde_dot_;
 	// x_tilde_dot_.resize(6);
@@ -258,7 +258,7 @@ void DualArms::cartesian_impedance()
 		for(int j=0; j<6; j++)
 		{
 			//tau_right_(i) += J_right_(j,i)*(K_cart(j)*x_tilde(j)); // WORKING
-			tau_right_(i) += J_right_(j,i)*(K_cart(j)*x_tilde(j) + D_cart(j)*x_tilde_dot(j));
+			tau_right_(i) += J_right_(j,i)*(K_cart(j)*x_tilde_(j) + D_cart(j)*x_tilde_dot_(j));
 		}
 	}
 	printKDLJntArray(tau_right_,"tau_right_");
@@ -384,7 +384,7 @@ void DualArms::pub_error()
 	if(right_arm_alive)
 	{
 		for(size_t i=0; i < 6; i++)
-			msg_right_arm_.position[i] = e_ref_right_(i);
+			msg_right_arm_.position[i] = x_tilde_(i);//e_ref_right_(i);
 		msg_right_arm_.header.stamp = ros::Time::now();
 
 		pub_error_right_arm_.publish(msg_right_arm_);
