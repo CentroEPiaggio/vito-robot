@@ -2,7 +2,8 @@
 
 DualArms::DualArms() : nh_params_right("/right_arm"), nh_params_left("/left_arm") {
 	ROS_INFO("DualArms constructor");
-	control_type = Control::CARTESIAN_IMPEDANCE;
+	//control_type = Control::CARTESIAN_IMPEDANCE;
+	control_type = Control::JOINT_IMPEDANCE;
 }
 
 DualArms::~DualArms() 
@@ -61,24 +62,24 @@ void DualArms::init()
 //     CartesianForces_right_.resize(6);
 //     CartesianForces_left_.resize(6);
 // 
-//     K_joint.resize(kdl_chain_.getNrOfJoints());
-//     D_joint.resize(kdl_chain_.getNrOfJoints());
-// 
-//     K_joint(0) = 50.0;
-//     K_joint(1) = 50.0;
-//     K_joint(2) = 10.0;
-//     K_joint(3) = 5.0;
-//     K_joint(4) = 5.0;
-//     K_joint(5) = 5.0;
-//     K_joint(6) = 5.0;
-// 
-//     D_joint(0) = 10;
-//     D_joint(1) = 10;
-//     D_joint(2) = 7;
-//     D_joint(3) = 7;
-//     D_joint(4) = 1;
-//     D_joint(5) = 1;
-//     D_joint(6) = 1;
+    K_joint.resize(kdl_chain_.getNrOfJoints());
+    D_joint.resize(kdl_chain_.getNrOfJoints());
+
+    K_joint(0) = 50.0;
+    K_joint(1) = 50.0;
+    K_joint(2) = 10.0;
+    K_joint(3) = 5.0;
+    K_joint(4) = 5.0;
+    K_joint(5) = 5.0;
+    K_joint(6) = 5.0;
+
+    D_joint(0) = 10;
+    D_joint(1) = 10;
+    D_joint(2) = 7;
+    D_joint(3) = 7;
+    D_joint(4) = 1;
+    D_joint(5) = 1;
+    D_joint(6) = 1;
 // 	
 //     K_cart.resize(6);
 //     K_cart(0) = 100.0;
@@ -139,12 +140,19 @@ void DualArms::run()
 	ros::Rate f(100);
 	while(ros::ok())
 	{
+		ROS_INFO_STREAM(__LINE__ << " ###");
+		ROS_INFO_STREAM("left_arm_alive " << left_arm_alive);
 		if(right_arm_alive)//&& left_arm_alive)
 		{
+			ROS_INFO_STREAM(__LINE__ << " ###");
 			pub_ee_pose();
+			ROS_INFO_STREAM(__LINE__ << " ###");
 			compute_torques();
+			ROS_INFO_STREAM(__LINE__ << " ###");
 			pub_torques();
+			ROS_INFO_STREAM(__LINE__ << " ###");
 			pub_error();
+			ROS_INFO_STREAM(__LINE__ << " ###");
 		}
 		ros::spinOnce();
 		f.sleep();
@@ -157,6 +165,7 @@ void DualArms::compute_torques()
 	{
 		case Control::JOINT_IMPEDANCE:
 			// ROS_INFO("JOINT_IMPEDANCE");
+			ROS_INFO_STREAM(__LINE__ << " ###");
 			joint_impedance();
 			break;
 		case Control::CARTESIAN_IMPEDANCE:
@@ -171,13 +180,29 @@ void DualArms::compute_torques()
 
 void DualArms::joint_impedance() 
 {
-	// ROS_INFO("JOINT_IMPEDANCE running");
-	for(size_t i=0; i<number_arm_joints; i++)
+	ROS_INFO_STREAM(__LINE__ << " ###");
+	if(right_arm_alive)
 	{
-		// ROS_INFO_STREAM(K_joint(i) << " " << q_right_ref_(i)  << " " <<  q_right_meas_(i)  << " " <<  D_joint(i)  << " " <<  qdot_right_meas_(i));
-		tau_right_(i) = K_joint(i)*(q_right_ref_(i) - q_right_meas_(i)) - D_joint(i) * qdot_right_meas_(i);
-		tau_left_(i) = K_joint(i)*(q_left_ref_(i) - q_left_meas_(i)) - D_joint(i) * qdot_left_meas_(i);
-		// ROS_INFO_STREAM(tau_right_(i));
+		ROS_INFO_STREAM(__LINE__ << " ###");
+		// ROS_INFO("JOINT_IMPEDANCE running");
+		for(size_t i=0; i<number_arm_joints; i++)
+		{
+			ROS_INFO_STREAM(__LINE__ << " ###" << " i: " << i);
+			// ROS_INFO_STREAM(K_joint(i) << " " << q_right_ref_(i)  << " " <<  q_right_meas_(i)  << " " <<  D_joint(i)  << " " <<  qdot_right_meas_(i));
+			tau_right_(i) = K_joint(i)*(q_right_ref_(i) - q_right_meas_(i)) - D_joint(i) * qdot_right_meas_(i);
+			// tau_left_(i) = K_joint(i)*(q_left_ref_(i) - q_left_meas_(i)) - D_joint(i) * qdot_left_meas_(i);
+			ROS_INFO_STREAM(tau_right_(i));
+		}
+	}
+	if(left_arm_alive)
+	{
+		// ROS_INFO("JOINT_IMPEDANCE running");
+		for(size_t i=0; i<number_arm_joints; i++)
+		{
+			// ROS_INFO_STREAM(K_joint(i) << " " << q_left_ref_(i)  << " " <<  q_left_meas_(i)  << " " <<  D_joint(i)  << " " <<  qdot_left_meas_(i));
+			tau_left_(i) = K_joint(i)*(q_left_ref_(i) - q_left_meas_(i)) - D_joint(i) * qdot_left_meas_(i);
+			ROS_INFO_STREAM(tau_left_(i));
+		}
 	}
 }
 
@@ -273,24 +298,35 @@ void DualArms::cartesian_impedance()
 
 void DualArms::pub_torques()
 {
-    for(size_t i=0; i < number_arm_joints; i++) 
-        msg_right_arm_.effort[i] = tau_right_(i);
-    msg_right_arm_.header.stamp = ros::Time::now();
+	ROS_INFO_STREAM(__LINE__ << " ###");
+	if(right_arm_alive)
+	{
+		for(size_t i=0; i < number_arm_joints; i++) 
+			msg_right_arm_.effort[i] = tau_right_(i);
+		msg_right_arm_.header.stamp = ros::Time::now();
+		pub_torques_right_arm_.publish(msg_right_arm_);
+	}
 
-    for(size_t i=0; i < number_arm_joints; i++)
-        msg_left_arm_.effort[i] = tau_left_(i);
-
-    pub_torques_right_arm_.publish(msg_right_arm_);
-    pub_torques_left_arm_.publish(msg_left_arm_);
+	if(left_arm_alive)
+	{
+		for(size_t i=0; i < number_arm_joints; i++)
+			msg_left_arm_.effort[i] = tau_left_(i);
+		msg_left_arm_.header.stamp = ros::Time::now();
+		pub_torques_left_arm_.publish(msg_left_arm_);
+	}
+	ROS_INFO_STREAM(__LINE__ << " ###");
 }
 
 void DualArms::pub_error()
 {
-    for(size_t i=0; i < 6; i++)
-        msg_right_arm_.position[i] = e_ref_right_(i);
-    msg_right_arm_.header.stamp = ros::Time::now();
+	if(right_arm_alive)
+	{
+		for(size_t i=0; i < 6; i++)
+			msg_right_arm_.position[i] = e_ref_right_(i);
+		msg_right_arm_.header.stamp = ros::Time::now();
 
-    pub_error_right_arm_.publish(msg_right_arm_);
+		pub_error_right_arm_.publish(msg_right_arm_);
+	}
 }
 
 void DualArms::pub_ee_pose()
@@ -302,11 +338,17 @@ void DualArms::pub_ee_pose()
     // <origin xyz="0.77 0.801 1.607" rpy="3.1415 -0.7854 0"/>   
 
 
-    tf::transformKDLToTF( x_right_, tf_ee_pose_right_);
-    tf::transformKDLToTF( x_left_, tf_ee_pose_left_);
-    // br_ee_pose_right_.sendTransform(tf::StampedTransform(tf_ee_pose_right_, ros::Time::now(), "right_arm_base_link", "ciao_destra"));
-    br_ee_pose_right_.sendTransform(tf::StampedTransform(tf_ee_pose_right_, ros::Time::now(), "right_arm_base_link", "ciao_destra"));
-    br_ee_pose_left_.sendTransform(tf::StampedTransform(tf_ee_pose_left_, ros::Time::now(), "left_arm_base_link", "ciao_sinistra"));
+	if(right_arm_alive)
+	{
+    	tf::transformKDLToTF( x_right_, tf_ee_pose_right_);
+		// br_ee_pose_right_.sendTransform(tf::StampedTransform(tf_ee_pose_right_, ros::Time::now(), "right_arm_base_link", "ciao_destra"));
+    	br_ee_pose_right_.sendTransform(tf::StampedTransform(tf_ee_pose_right_, ros::Time::now(), "right_arm_base_link", "ciao_destra"));
+	}
+	if(left_arm_alive)
+	{
+		tf::transformKDLToTF( x_left_, tf_ee_pose_left_);
+    	br_ee_pose_left_.sendTransform(tf::StampedTransform(tf_ee_pose_left_, ros::Time::now(), "left_arm_base_link", "ciao_sinistra"));
+	}
 
 }
 
