@@ -40,6 +40,7 @@ private:
 	Control control_type;
 	void joint_impedance();
 	void cartesian_impedance();
+	void cartesian_impedance_lorale();
 
 	
 	//
@@ -161,6 +162,19 @@ private:
 	
 	KDL::JntArray C_right_;   // coriolis
     KDL::JntArray G_right_;   // gravity
+
+	// utils functions
+	void printKDLTwist(KDL::Twist &twist, const std::string & name = "");
+	void printKDLFrame(KDL::Frame &f);
+	void printKDLJacobian(KDL::Jacobian &J);
+	void printJacobianTranspose(KDL::Jacobian &J);
+	void printKDLInertia(KDL::JntSpaceInertiaMatrix &M);
+	void printKDLJntArray(KDL::JntArray &A, const std::string & name);
+
+	// cartesian impedance control stuff (Dan)
+	KDL::Frame x_ref_virtual_;
+	bool virtual_ref_available = false;
+
 };
 
 #endif

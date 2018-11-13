@@ -2,8 +2,8 @@
 
 DualArms::DualArms() : nh_params_right("/right_arm"), nh_params_left("/left_arm") {
 	ROS_INFO("DualArms constructor");
-	//control_type = Control::CARTESIAN_IMPEDANCE;
-	control_type = Control::JOINT_IMPEDANCE;
+	control_type = Control::CARTESIAN_IMPEDANCE;
+	// control_type = Control::JOINT_IMPEDANCE;
 }
 
 DualArms::~DualArms() 
@@ -80,14 +80,21 @@ void DualArms::init()
     D_joint(4) = 1;
     D_joint(5) = 1;
     D_joint(6) = 1;
-// 	
-//     K_cart.resize(6);
-//     K_cart(0) = 100.0;
-//     K_cart(1) = 1000.0;
-//     K_cart(2) = 1000.0;
-//     K_cart(3) = 0.0;
-//     K_cart(4) = 0.0;
-//     K_cart(5) = 0.0;
+
+	
+    K_cart.resize(6);
+    // K_cart(0) = 100.0;
+    // K_cart(1) = 1000.0;
+    // K_cart(2) = 1000.0;
+    // K_cart(3) = 0.0;
+    // K_cart(4) = 0.0;
+    // K_cart(5) = 0.0;
+	K_cart(0) = 80.0;
+    K_cart(1) = 80.0;
+    K_cart(2) = 80.0;
+    K_cart(3) = 5.0;
+    K_cart(4) = 5.0;
+    K_cart(5) = 5.0;
 // 
 //     D_cart.resize(6);
 //     D_cart(0) = 10.0;
@@ -196,8 +203,47 @@ void DualArms::joint_impedance()
 	}
 }
 
-void DualArms::cartesian_impedance() 
+void DualArms::cartesian_impedance()
 {
+	ROS_INFO_STREAM(__LINE__ << " ### Cartesian Impedance Begin");
+	// update dynamic and kinematic quantities
+	id_solver_right_->JntToMass(q_right_meas_, M_right_);
+	id_solver_right_->JntToGravity(q_right_meas_, G_right_);
+	id_solver_right_->JntToCoriolis(q_right_meas_, qdot_right_meas_, C_right_);
+	jnt_to_jac_solver_right_->JntToJac(q_right_meas_, J_right_);
+	fk_pos_solver_right_->JntToCart(q_right_meas_, x_meas_right_);
+	// printKDLFrame(x_meas_right_);
+	// printKDLJacobian(J_right_);
+	// printKDLInertia(M_right_);
+	// printKDLJntArray(G_right_, "G_right_");
+	// printKDLJntArray(C_right_, "C_right_");
+	// tau = g(q) + C(q,\dot{q}) + J(q)'*( - K_d * \tilde{x});
+	// printKDLJacobian(J_right_);
+	// printJacobianTranspose(J_right_);
+	KDL::Twist x_tilde = KDL::diff(x_meas_right_,x_ref_virtual_);
+	KDL::Twist x_tilde_dot = KDL::diff(x_meas_right_,x_ref_virtual_,0.01);
+	KDL::JntArray x_tilde_dot_;
+	x_tilde_dot_.resize(6);
+	x_tilde_dot_.data = J_right_.data*qdot_right_meas_.data;
+	printKDLTwist(x_tilde, "pose error");
+	// printKDLJntArray(x_tilde_dot_, "pose error derivative");
+	
+	tau_right_.data.setZero();
+	for(int i=0; i<number_arm_joints; i++)
+	{
+		for(int j=0; j<6; j++)
+		{
+			tau_right_(i) += J_right_(j,i)*(K_cart(j)*x_tilde(j));
+		}
+	}
+	printKDLJntArray(tau_right_,"tau_right_");
+	ROS_INFO_STREAM(__LINE__ << " ### Cartesian Impedance End");
+}
+
+void DualArms::cartesian_impedance_lorale() 
+{
+	if(false)
+	{
 	if (starting) {
 		starting = false;
 		counter = 2*N;
@@ -284,6 +330,7 @@ void DualArms::cartesian_impedance()
 	//ROS_INFO_STREAM("New Torque Request: ");
 	//ROS_INFO_STREAM(tau_right_.data);
 	ROS_INFO_STREAM(e_ref_right_(0) << " " << e_ref_right_(1) << " " << e_ref_right_(2));
+	}
 }
 
 void DualArms::pub_torques()
@@ -377,6 +424,16 @@ void DualArms::joint_state_callback_right(const sensor_msgs::JointState& msg)
 
 	// update cartesian position with last readings
     fk_pos_solver_right_->JntToCart(q_right_meas_,x_right_);
+	if(!virtual_ref_available)
+	{
+		if(fabs(x_right_.p(2)) >= 0.1f) // HARDCODED with physical insight
+		{
+			x_ref_virtual_ = x_right_;
+			// printKDLFrame(x_right_);
+			// printKDLFrame(x_ref_virtual_);
+			virtual_ref_available = true;
+		}
+	}
     // compute Jacobian
     jnt_to_jac_solver_right_->JntToJac(q_right_meas_,J_right_);
 
@@ -596,4 +653,62 @@ void DualArms::commandCart_right_(const std_msgs::Float64MultiArray::ConstPtr &m
         xDES_step_right_ = x0_right_;
         counter = 0;
     }
+}
+
+
+// id_solver_right_->JntToMass(q_right_meas_, M_right_);
+// 	id_solver_right_->JntToGravity(q_right_meas_, G_right_);
+// 	id_solver_right_->JntToCoriolis(q_right_meas_, qdot_right_meas_, C_right_);
+// 	jnt_to_jac_solver_right_->JntToJac(q_right_meas_, J_right_);
+// 	fk_pos_solver_right_->JntToCart(q_right_meas_, x_meas_right_);
+
+void DualArms::printKDLTwist(KDL::Twist &twist, const std::string & name)
+{
+	ROS_INFO_STREAM("KDL Twist (" << name << "): ----------------------------");
+	ROS_INFO_STREAM(twist.vel(0) << " " << twist.vel(1) << " " << twist.vel(2));
+	ROS_INFO_STREAM(twist.rot(0) << " " << twist.rot(1) << " " << twist.rot(2));
+	// ROS_INFO_STREAM(f.p(0) << " " << f.p(1) << " " << f.p(2));
+	// double r,p,y;
+	// f.M.GetRPY(r,p,y);
+	// ROS_INFO_STREAM("roll: " << r << " pitch: " << p << " yaw: " << y);
+	ROS_INFO_STREAM("-------------------------------------------------------");
+}
+
+
+void DualArms::printKDLFrame(KDL::Frame &f)
+{
+	ROS_INFO_STREAM("KDL Frame: --------------------------------------------");
+	ROS_INFO_STREAM(f.p(0) << " " << f.p(1) << " " << f.p(2));
+	double r,p,y;
+	f.M.GetRPY(r,p,y);
+	ROS_INFO_STREAM("roll: " << r << " pitch: " << p << " yaw: " << y);
+	ROS_INFO_STREAM("-------------------------------------------------------");
+}
+
+void DualArms::printKDLJacobian(KDL::Jacobian &J)
+{
+	ROS_INFO_STREAM("KDL Jacobian: -----------------------------------------");
+	ROS_INFO_STREAM("\n" << J.data);
+	ROS_INFO_STREAM("-------------------------------------------------------");
+}
+
+void DualArms::printJacobianTranspose(KDL::Jacobian &J)
+{
+	ROS_INFO_STREAM("Eigen Jacobian: -----------------------------------------");
+	ROS_INFO_STREAM("\n" << J.data.transpose());
+	ROS_INFO_STREAM("-------------------------------------------------------");
+}
+
+void DualArms::printKDLInertia(KDL::JntSpaceInertiaMatrix &M)
+{
+	ROS_INFO_STREAM("KDL Inertia: ------------------------------------------");
+	ROS_INFO_STREAM("\n" << M.data);
+	ROS_INFO_STREAM("-------------------------------------------------------");
+}
+
+void DualArms::printKDLJntArray(KDL::JntArray &A, const std::string & name)
+{
+	ROS_INFO_STREAM("KDL Array (" << name << "): ------------------------------------------");
+	ROS_INFO_STREAM("\n" << A.data);
+	ROS_INFO_STREAM("-------------------------------------------------------");
 }
