@@ -172,14 +172,12 @@ void DualArms::compute_torques()
 
 void DualArms::joint_impedance() 
 {
-	ROS_INFO_STREAM(__LINE__ << " ###");
 	if(right_arm_alive)
 	{
-		ROS_INFO_STREAM(__LINE__ << " ###");
+
 		// ROS_INFO("JOINT_IMPEDANCE running");
 		for(size_t i=0; i<number_arm_joints; i++)
 		{
-			ROS_INFO_STREAM(__LINE__ << " ###" << " i: " << i);
 			// ROS_INFO_STREAM(K_joint(i) << " " << q_right_ref_(i)  << " " <<  q_right_meas_(i)  << " " <<  D_joint(i)  << " " <<  qdot_right_meas_(i));
 			tau_right_(i) = K_joint(i)*(q_right_ref_(i) - q_right_meas_(i)) - D_joint(i) * qdot_right_meas_(i);
 			// tau_left_(i) = K_joint(i)*(q_left_ref_(i) - q_left_meas_(i)) - D_joint(i) * qdot_left_meas_(i);
