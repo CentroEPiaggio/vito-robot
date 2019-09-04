@@ -2,7 +2,7 @@
     <!-- LAUNCH INTERFACE -->
     <arg name="gui" default="false" />
     <arg name="robot_name" default="vito_iliad"/>
-    <arg name="use_rviz" default="true"/>
+    <arg name="use_rviz" default="false"/>
     <arg name="use_joint_state_publisher" default="true"/>
     <arg name="load_moveit" default="false"/>
     <arg name="use_calibration_package" default="false"/>
@@ -10,13 +10,13 @@
 
     <!-- configure whether the real hardware is enabled or not -->
     <arg name="head_enabled" default="false"/>
-    <arg name="left_arm_enabled" default="true"/>
+    <arg name="left_arm_enabled" default="false"/>
     <arg name="left_hand_enabled" default="false"/>
     <arg name="right_arm_enabled" default="true"/>
     <arg name="right_hand_enabled" default="false"/>
 
     <!-- choose whether or not to start the full robot simulation -->
-    <arg name="use_robot_sim" default="false"/>
+    <arg name="use_robot_sim" default="true"/>
 
     <!-- LAUNCH IMPLEMENTATION -->
 
@@ -63,13 +63,14 @@
 
         <!-- load Gazebo simulation environment -->
         <include file="$(find gazebo_ros)/launch/empty_world.launch">
-            <arg name="world_name" value="$(find vito_description)/worlds/simple_environment.world"/>
+            <!-- <arg name="world_name" value="$(find vito_description)/worlds/simple_environment.world"/> -->
             <arg name="paused" value="false"/>
             <!-- when using the real/sim scenario in parallel, set "use_enabled_time" to false -->
             <arg name="use_sim_time" value="true"/>
             <arg name="gui" value="true"/>
             <arg name="headless" value="true"/>
             <arg name="debug" value="false"/>
+            <arg name="verbose" value="true"/>
         </include>
 
         <!-- calibration transformations -->
@@ -174,7 +175,7 @@
 
         <!-- load the controllers in current namespace -->
         <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen"  args="joint_state_controller joint_trajectory_controller"/>
-        <node name="controller_stopper" pkg="controller_manager" type="spawner" respawn="false" output="screen"  args="--stopped vito_bridge_controller joint_impedance_controller"/>
+        <node name="controller_stopper" pkg="controller_manager" type="spawner" respawn="false" output="screen"  args="--stopped vito_bridge_controller joint_impedance_controller teleoperation_controller one_task_inverse_kinematics"/>
     </group>
 
     <group ns="right_hand">

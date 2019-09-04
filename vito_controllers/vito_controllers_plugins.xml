@@ -12,5 +12,11 @@
     </description>
   </class>
 
+  <class name="vito_controllers/TeleoperationController" type="vito_controllers::TeleoperationController" base_class_type="controller_interface::ControllerBase">
+    <description>
+      To add some comments about the controller
+    </description>
+  </class>
+
 
 </library>

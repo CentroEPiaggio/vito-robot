@@ -192,13 +192,13 @@
       <disableFixedJointLumping>true</disableFixedJointLumping>
     </gazebo>  -->
 
-    <xacro:model_table name="table" 
+    <!-- <xacro:model_table name="table" 
                     parent="world"
                     length="0.6"
                     width="0.8"
                     height="0.70"
                     plate_thickness="0.05">
     <origin xyz="1.350 1.201 0.70" rpy="0 0 0"/>
-</xacro:model_table>
+</xacro:model_table> -->
 
 </robot>

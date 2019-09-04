@@ -64,7 +64,17 @@ right_arm:
     tip_name: right_arm_7_link
     stiffness_gains: 1000
     damping_gains: 0.5
-   
+  one_task_inverse_kinematics:
+    type: lwr_controllers/OneTaskInverseKinematics
+    root_name: right_arm_base_link
+    tip_name: right_arm_7_link
+  teleoperation_controller:
+    type: vito_controllers/TeleoperationController
+    root_name: right_arm_base_link
+    tip_name: right_arm_7_link
+    listen_topic: /spacenav_pose_
+    alpha1: 1.0
+    alpha2: 0.5
   # stiffness_trajectory_controller:
   #   type: position_controllers/JointTrajectoryController
   #   joints:
