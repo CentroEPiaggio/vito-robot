@@ -36,10 +36,11 @@ public:
 	Eigen::Matrix<double,3,3> skew(Eigen::Matrix<double,3,1> v);
 private:
 	// Put your control types in the enum Control and define a separate method for each controller
-	enum Control {JOINT_IMPEDANCE, CARTESIAN_IMPEDANCE};
+	enum Control {JOINT_IMPEDANCE, CARTESIAN_IMPEDANCE, CARTESIAN_IMPEDANCE_ELBOW};
 	Control control_type;
 	void joint_impedance();
 	void cartesian_impedance();
+	void cartesian_impedance_elbow();
 	void cartesian_impedance_lorale();
 
 	
@@ -80,15 +81,27 @@ private:
     boost::scoped_ptr<KDL::ChainFkSolverPos_recursive> fk_pos_solver_right_, fk_pos_solver_left_;
 
     KDL::Frame x_right_, x_left_;  // end effector pose
-	KDL::Frame x_right_old_, x_left_old_;  // end effector pose
+    KDL::Frame x_right_old_, x_left_old_;  // end effector pose
 
-	KDL::Twist x_tilde_; // pose error
-	KDL::Twist x_tilde_dot_; // pose error derivative
+    KDL::Twist x_tilde_; // pose error
+    KDL::Twist x_tilde_dot_; // pose error derivative
 
+    KDL::Frame x_right_elbow_;
+    KDL::Frame x_right_elbow_old_;
+    
+    KDL::Twist x_tilde_elbow_;
+    KDL::Twist x_tilde_elbow_dot_;
+    
     // Rviz interface
     tf::TransformBroadcaster br_ee_pose_right_, br_ee_pose_left_;
     tf::Transform tf_ee_pose_right_, tf_ee_pose_left_;
 
+    tf::TransformBroadcaster br_ee_ref_pose_right_, br_ee_ref_pose_left_;
+    tf::Transform tf_ee_ref_pose_right_, tf_ee_ref_pose_left_;
+
+    tf::Transform tf_elbow_pose_right_;
+    tf::TransformBroadcaster br_elbow_pose_right_;
+    
     void pub_ee_pose();
 
     // control publisher

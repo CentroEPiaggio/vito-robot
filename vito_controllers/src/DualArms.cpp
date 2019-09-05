@@ -2,7 +2,8 @@
 
 DualArms::DualArms() : nh_params_right("/right_arm"), nh_params_left("/left_arm") {
 	ROS_INFO("DualArms constructor");
-	control_type = Control::CARTESIAN_IMPEDANCE;
+// 	control_type = Control::CARTESIAN_IMPEDANCE; // WORKING
+	control_type = CARTESIAN_IMPEDANCE_ELBOW;
 	// control_type = Control::JOINT_IMPEDANCE;
 }
 
@@ -83,43 +84,65 @@ void DualArms::init()
 
 	
     K_cart.resize(6);
-    // K_cart(0) = 100.0;
-    // K_cart(1) = 1000.0;
-    // K_cart(2) = 1000.0;
-    // K_cart(3) = 0.0;
-    // K_cart(4) = 0.0;
-    // K_cart(5) = 0.0;
-	// K_cart(0) = 80.0;
-    // K_cart(1) = 80.0;
-    // K_cart(2) = 80.0;
-    // K_cart(3) = 5.0;
-    // K_cart(4) = 5.0;
-    // K_cart(5) = 5.0;
-
+//     K_cart(0) = 100.0;
+//     K_cart(1) = 1000.0;
+//     K_cart(2) = 1000.0;
+//     K_cart(3) = 0.0;
+//     K_cart(4) = 0.0;
+//     K_cart(5) = 0.0;
+    
+    // early morning working oscillates
 	K_cart(0) = 80.0;
     K_cart(1) = 80.0;
     K_cart(2) = 80.0;
-    K_cart(3) = 10.0;
-    K_cart(4) = 10.0;
-    K_cart(5) = 10.0;
+    K_cart(3) = 5.0;
+    K_cart(4) = 5.0;
+    K_cart(5) = 5.0;
 
+    // early morning working tuned
+//     K_cart(0) = 160.0;
+//     K_cart(1) = 160.0;
+//     K_cart(2) = 160.0;
+//     K_cart(3) = 20.0;
+//     K_cart(4) = 20.0;
+//     K_cart(5) = 20.0;
+
+//     K_cart(0) = 320.0;
+//     K_cart(1) = 320.0;
+//     K_cart(2) = 320.0;
+//     K_cart(3) = 40.0;
+//     K_cart(4) = 40.0;
+//     K_cart(5) = 40.0;
+    
     D_cart.resize(6);
-    // D_cart(0) = 10.0;
-    // D_cart(1) = 100.0;
-    // D_cart(2) = 100.0;
-    // D_cart(3) = 0.0;
-    // D_cart(4) = 0.0;
-    // D_cart(5) = 0.0;
+//     D_cart(0) = 10.0;
+//     D_cart(1) = 100.0;
+//     D_cart(2) = 100.0;
+//     D_cart(3) = 0.0;
+//     D_cart(4) = 0.0;
+//     D_cart(5) = 0.0;
+    
 	// D_cart(0) = 5.0;
     // D_cart(1) = 5.0;
     // D_cart(2) = 5.0;
-    D_cart(3) = 1.0;
+    
+    // lorale tuning
+//     D_cart(3) = 2.0;
+//     D_cart(4) = 2.0;
+//     D_cart(5) = 2.0;
+// 	
+//     D_cart(0) = 14.4;
+//     D_cart(1) = 14.4;
+//     D_cart(2) = 14.4;
+    
+        D_cart(3) = 1.0;
     D_cart(4) = 1.0;
     D_cart(5) = 1.0;
 	
-	D_cart(0) = 7.2;
+    D_cart(0) = 7.2;
     D_cart(1) = 7.2;
     D_cart(2) = 7.2;
+    
     // D_cart(3) = 7.2;
     // D_cart(4) = 7.2;
     // D_cart(5) = 7.2;
@@ -192,6 +215,10 @@ void DualArms::compute_torques()
 			// ROS_INFO("CARTESIAN_IMPEDANCE");
 			cartesian_impedance();
 			break;
+		case Control::CARTESIAN_IMPEDANCE_ELBOW:
+			// ROS_INFO("CARTESIAN_IMPEDANCE_ELBOW");
+			cartesian_impedance_elbow();
+			break;
 		default:
 			ROS_ERROR_STREAM("Unkown control type in DualArms::compute_torques!");
 			break;
@@ -258,11 +285,75 @@ void DualArms::cartesian_impedance()
 		for(int j=0; j<6; j++)
 		{
 			//tau_right_(i) += J_right_(j,i)*(K_cart(j)*x_tilde(j)); // WORKING
-			tau_right_(i) += J_right_(j,i)*(K_cart(j)*x_tilde_(j) + D_cart(j)*x_tilde_dot_(j));
+			tau_right_(i) += J_right_(j,i)*(K_cart(j)*x_tilde_(j) + D_cart(j)*x_tilde_dot_(j)); // WORKING
+
 		}
 	}
 	printKDLJntArray(tau_right_,"tau_right_");
 	ROS_INFO_STREAM(__LINE__ << " ### Cartesian Impedance End");
+}
+
+void DualArms::cartesian_impedance_elbow()
+{
+	ROS_INFO_STREAM(__LINE__ << " ### Cartesian Impedance Elbow Begin");
+	// update dynamic and kinematic quantities
+	id_solver_right_->JntToMass(q_right_meas_, M_right_);
+	id_solver_right_->JntToGravity(q_right_meas_, G_right_);
+	id_solver_right_->JntToCoriolis(q_right_meas_, qdot_right_meas_, C_right_);
+	jnt_to_jac_solver_right_->JntToJac(q_right_meas_, J_right_);
+	fk_pos_solver_right_->JntToCart(q_right_meas_, x_meas_right_);
+	// printKDLFrame(x_meas_right_);
+	// printKDLJacobian(J_right_);
+	// printKDLInertia(M_right_);
+	// printKDLJntArray(G_right_, "G_right_");
+	// printKDLJntArray(C_right_, "C_right_");
+	// tau = g(q) + C(q,\dot{q}) + J(q)'*( - K_d * \tilde{x});
+	// printKDLJacobian(J_right_);
+	// printJacobianTranspose(J_right_);
+	x_tilde_ = KDL::diff(x_right_,x_ref_virtual_);
+	x_tilde_dot_ = KDL::diff(x_right_,x_right_old_,period.toSec());
+	
+	printKDLTwist(x_tilde_, "pose error");
+	printKDLTwist(x_tilde_dot_, "pose error_derivative");
+
+	// KDL::JntArray x_tilde_dot_;
+	// x_tilde_dot_.resize(6);
+	// x_tilde_dot_.data = J_right_.data*qdot_right_meas_.data;
+	// printKDLJntArray(x_tilde_dot_, "pose error derivative");
+	
+	KDL::JntArray K_cart_second;
+	
+	      K_cart_second.resize(6);
+    K_cart_second(0) = 1.0;
+    K_cart_second(1) = 1.0;
+    K_cart_second(2) = 1.0;
+    K_cart_second(3) = 0.0;
+    K_cart_second(4) = 0.0;
+    K_cart_second(5) = 0.0;
+    
+    KDL::JntArray err_elbow;
+//     KDL::JntArray err_elbow = KDL::diff(x_right_elbow_,x_ref_right_elbow_);
+    err_elbow.resize(6);
+    
+	// end effector task - higher priority
+	tau_right_.data.setZero();
+	for(int i=0; i<number_arm_joints; i++)
+	{
+		for(int j=0; j<6; j++)
+		{
+			//tau_right_(i) += J_right_(j,i)*(K_cart(j)*x_tilde(j)); // WORKING
+			// tau_right_(i) += J_right_(j,i)*(K_cart(j)*x_tilde_(j) + D_cart(j)*x_tilde_dot_(j)); // WORKING
+			tau_right_(i) += J_right_(j,i)*(K_cart(j)*x_tilde_(j) + D_cart(j)*x_tilde_dot_(j)); // WORKING
+			double eye = (i==j)?1.0:0.0;
+			double zero = (i>2)?0.0:1.0;
+			tau_right_(i) += (eye - J_right_(j,i)*J_right_(i,j)) * 
+                                                    ( zero*J_right_(j,i)*K_cart_second(j)*err_elbow(j) );  
+		}
+	}
+	
+	
+	printKDLJntArray(tau_right_,"tau_right_");
+	ROS_INFO_STREAM(__LINE__ << " ### Cartesian Impedance Elbow End");
 }
 
 void DualArms::cartesian_impedance_lorale() 
@@ -405,11 +496,25 @@ void DualArms::pub_ee_pose()
     	tf::transformKDLToTF( x_right_, tf_ee_pose_right_);
 		// br_ee_pose_right_.sendTransform(tf::StampedTransform(tf_ee_pose_right_, ros::Time::now(), "right_arm_base_link", "ciao_destra"));
     	br_ee_pose_right_.sendTransform(tf::StampedTransform(tf_ee_pose_right_, ros::Time::now(), "right_arm_base_link", "ciao_destra"));
+	
+	tf::transformKDLToTF( x_ref_virtual_, tf_ee_ref_pose_right_);
+	br_ee_ref_pose_right_.sendTransform(tf::StampedTransform(tf_ee_ref_pose_right_, ros::Time::now(), "right_arm_base_link", "ref_right"));
+	
+	  if(control_type == Control::CARTESIAN_IMPEDANCE_ELBOW)
+	  {
+	    tf::transformKDLToTF( x_right_elbow_, tf_elbow_pose_right_);
+	    br_elbow_pose_right_.sendTransform(tf::StampedTransform(tf_elbow_pose_right_,ros::Time::now(), "right_arm_base_link", "elbow_right"));
+
+	  }
 	}
 	if(left_arm_alive)
 	{
 		tf::transformKDLToTF( x_left_, tf_ee_pose_left_);
     	br_ee_pose_left_.sendTransform(tf::StampedTransform(tf_ee_pose_left_, ros::Time::now(), "left_arm_base_link", "ciao_sinistra"));
+	
+	// TODO for left arm: change x_ref_virtual_ to x_ref_right_virtual_
+// 	tf::transformKDLToTF( x_ref_virtual_, tf_ee_ref_pose_right_);
+// 	br_ee_ref_pose_right_.sendTransform(tf::StampedTransform(tf_ee_ref_pose_right_, ros::Time::now(), "right_arm_base_link", "ref_right"));
 	}
 
 }
@@ -452,6 +557,11 @@ void DualArms::joint_state_callback_right(const sensor_msgs::JointState& msg)
 	period = ros::Time::now() - time_prec_;
 	time_prec_ = ros::Time::now();
     fk_pos_solver_right_->JntToCart(q_right_meas_,x_right_);
+    
+    if(control_type == Control::CARTESIAN_IMPEDANCE_ELBOW)
+      fk_pos_solver_right_->JntToCart(q_right_meas_,x_right_elbow_,4);//"right_arm_a3_joint");
+    
+    
 	if(!virtual_ref_available)
 	{
 		if(fabs(x_right_.p(2)) >= 0.1f) // HARDCODED with physical insight
@@ -665,6 +775,12 @@ void DualArms::commandCart_right_(const std_msgs::Float64MultiArray::ConstPtr &m
     xDES_right_(4) = msg->data[4];
     xDES_right_(5) = msg->data[5];
 	
+    for(int i=0; i<3; i++)
+      x_ref_virtual_.p(i) = xDES_right_(i);
+    
+    
+    x_ref_virtual_.M = KDL::Rotation::RPY((double)xDES_right_(3),(double)xDES_right_(4),(double)xDES_right_(5));
+//     
 	x_meas_right_.M.GetEulerZYX(rpy_right_(2),rpy_right_(1),rpy_right_(0));
 	jnt_to_jac_solver_right_->JntToJac(q_right_meas_,J_right_last_);  
 	
