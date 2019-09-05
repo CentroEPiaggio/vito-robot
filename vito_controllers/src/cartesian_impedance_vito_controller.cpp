@@ -74,7 +74,7 @@ bool CartesianImpedanceVitoController::init(hardware_interface::EffortJointInter
     D_cart.resize(6);
     D_cart(0) = 10.0*0;
     D_cart(1) = 100.0*0;
-    D_cart(2) = 100.0*0x;
+    D_cart(2) = 100.0*0;
     D_cart(3) = 0.0;
     D_cart(4) = 0.0;
     D_cart(5) = 0.0;
