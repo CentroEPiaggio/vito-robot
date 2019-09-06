@@ -91,14 +91,22 @@ void DualArms::init()
 //     K_cart(4) = 0.0;
 //     K_cart(5) = 0.0;
     
-    // early morning working oscillates
-	K_cart(0) = 80.0;
-    K_cart(1) = 80.0;
-    K_cart(2) = 80.0;
-    K_cart(3) = 5.0;
-    K_cart(4) = 5.0;
-    K_cart(5) = 5.0;
+//     // early morning working oscillates -- works without hands *******
+// 	K_cart(0) = 80.0;
+//     K_cart(1) = 80.0;
+//     K_cart(2) = 80.0;
+//     K_cart(3) = 5.0;
+//     K_cart(4) = 5.0;
+//     K_cart(5) = 5.0;
 
+    // 
+	K_cart(0) = 100.0;
+    K_cart(1) = 100.0;
+    K_cart(2) = 100.0;
+    K_cart(3) = 1.0;
+    K_cart(4) = 1.0;
+    K_cart(5) = 1.0;
+    
     // early morning working tuned
 //     K_cart(0) = 160.0;
 //     K_cart(1) = 160.0;
@@ -135,13 +143,22 @@ void DualArms::init()
 //     D_cart(1) = 14.4;
 //     D_cart(2) = 14.4;
     
-        D_cart(3) = 1.0;
+    // work without hands *******
+//         D_cart(3) = 1.0;
+//     D_cart(4) = 1.0;
+//     D_cart(5) = 1.0;
+// 	
+//     D_cart(0) = 7.2;
+//     D_cart(1) = 7.2;
+//     D_cart(2) = 7.2;
+    
+     D_cart(3) = 1.0;
     D_cart(4) = 1.0;
     D_cart(5) = 1.0;
 	
-    D_cart(0) = 7.2;
-    D_cart(1) = 7.2;
-    D_cart(2) = 7.2;
+    D_cart(0) = 1.0;
+    D_cart(1) = 1.0;
+    D_cart(2) = 1.0;
     
     // D_cart(3) = 7.2;
     // D_cart(4) = 7.2;
@@ -324,16 +341,15 @@ void DualArms::cartesian_impedance_elbow()
 	KDL::JntArray K_cart_second;
 	
 	      K_cart_second.resize(6);
-    K_cart_second(0) = 1.0;
-    K_cart_second(1) = 1.0;
-    K_cart_second(2) = 1.0;
+    K_cart_second(0) = 5.0;
+    K_cart_second(1) = 5.0;
+    K_cart_second(2) = 5.0;
     K_cart_second(3) = 0.0;
     K_cart_second(4) = 0.0;
     K_cart_second(5) = 0.0;
     
-    KDL::JntArray err_elbow;
-//     KDL::JntArray err_elbow = KDL::diff(x_right_elbow_,x_ref_right_elbow_);
-    err_elbow.resize(6);
+    KDL::Twist err_elbow;
+    err_elbow = KDL::diff(x_right_elbow_,x_ref_right_elbow_);
     
 	// end effector task - higher priority
 	tau_right_.data.setZero();
@@ -505,6 +521,8 @@ void DualArms::pub_ee_pose()
 	    tf::transformKDLToTF( x_right_elbow_, tf_elbow_pose_right_);
 	    br_elbow_pose_right_.sendTransform(tf::StampedTransform(tf_elbow_pose_right_,ros::Time::now(), "right_arm_base_link", "elbow_right"));
 
+	    tf::transformKDLToTF( x_ref_right_elbow_, tf_elbow_ref_right_);
+	    br_elbow_pose_right_.sendTransform(tf::StampedTransform(tf_elbow_ref_right_,ros::Time::now(), "right_arm_base_link", "ref_elbow_right"));
 	  }
 	}
 	if(left_arm_alive)
@@ -754,49 +772,59 @@ bool DualArms::load_robot(const Arm& arm)
 }
 
 void DualArms::commandCart_right_(const std_msgs::Float64MultiArray::ConstPtr &msg) {
-	if ((int)msg->data.size() != 6) {
-        ROS_ERROR("Posture message had the wrong size: %d", 6);
-        return;
-    }
-    
-    fk_pos_solver_right_->JntToCart(q_right_meas_,x_meas_right_);
-    
-	frame_des_right_ = KDL::Frame(
-							KDL::Rotation::EulerZYX(msg->data[5],
-													msg->data[4],
-													msg->data[3]),
-							KDL::Vector(msg->data[0],
-										msg->data[1],
-										msg->data[2]));
-	xDES_right_(0) = msg->data[0];
-    xDES_right_(1) = msg->data[1];
-    xDES_right_(2) = msg->data[2];
-	xDES_right_(3) = msg->data[3];
-    xDES_right_(4) = msg->data[4];
-    xDES_right_(5) = msg->data[5];
-	
-    for(int i=0; i<3; i++)
+  if ((int)msg->data.size() != 6 && (int)msg->data.size() != 12) {
+    ROS_ERROR("Posture message had the wrong size: %d", (int)msg->data.size());
+    return;
+  }
+  
+  fk_pos_solver_right_->JntToCart(q_right_meas_,x_meas_right_);
+  
+  frame_des_right_ = KDL::Frame(
+    KDL::Rotation::EulerZYX(msg->data[5],
+			    msg->data[4],
+			    msg->data[3]),
+			    KDL::Vector(msg->data[0],
+					msg->data[1],
+					msg->data[2]));
+  
+  xDES_right_(0) = msg->data[0];
+  xDES_right_(1) = msg->data[1];
+  xDES_right_(2) = msg->data[2];
+  xDES_right_(3) = msg->data[3];
+  xDES_right_(4) = msg->data[4];
+  xDES_right_(5) = msg->data[5];
+
+  
+  for(int i=0; i<3; i++)
       x_ref_virtual_.p(i) = xDES_right_(i);
-    
-    
-    x_ref_virtual_.M = KDL::Rotation::RPY((double)xDES_right_(3),(double)xDES_right_(4),(double)xDES_right_(5));
+  
+  x_ref_virtual_.M = KDL::Rotation::RPY((double)xDES_right_(3),(double)xDES_right_(4),(double)xDES_right_(5));
+  
+  if((int)msg->data.size() == 12)
+  {
+    for(int i=0; i<3; i++)
+      x_ref_right_elbow_.p(i) = msg->data[6+i];
+  
+  x_ref_right_elbow_.M = KDL::Rotation::RPY((double)msg->data[9],(double)msg->data[10],(double)msg->data[11]);
+  }
 //     
-	x_meas_right_.M.GetEulerZYX(rpy_right_(2),rpy_right_(1),rpy_right_(0));
-	jnt_to_jac_solver_right_->JntToJac(q_right_meas_,J_right_last_);  
-	
-	x_des_right_ = frame_des_right_;
-	
-	if (primo_right_) {
-        primo_right_ = false;
-        N = 1000;       // da cambiare in base alla norma dell'errore
-        x_meas_right_.M.GetQuaternion(quat_vec_right_(0),quat_vec_right_(1),quat_vec_right_(2),quat_scal_right_);          // quaternione terna attuale
-        quat_0_right_ = tf::Quaternion(quat_vec_right_(0),quat_vec_right_(1),quat_vec_right_(2),quat_scal_right_);   
-        x_des_right_.M.GetQuaternion(quat_vec_right_(0),quat_vec_right_(1),quat_vec_right_(2),quat_scal_right_);      // quaternione terna desiderata
-        quat_f_right_ = tf::Quaternion(quat_vec_right_(0),quat_vec_right_(1),quat_vec_right_(2),quat_scal_right_);
-        x0_right_ << x_meas_right_.p(0), x_meas_right_.p(1), x_meas_right_.p(2), 0, 0, 0;           // posizione attuale
-        xDES_step_right_ = x0_right_;
-        counter = 0;
-    }
+  
+  x_meas_right_.M.GetEulerZYX(rpy_right_(2),rpy_right_(1),rpy_right_(0));
+  jnt_to_jac_solver_right_->JntToJac(q_right_meas_,J_right_last_);  
+  
+  x_des_right_ = frame_des_right_;
+  
+  if (primo_right_) {
+    primo_right_ = false;
+    N = 1000;       // da cambiare in base alla norma dell'errore
+    x_meas_right_.M.GetQuaternion(quat_vec_right_(0),quat_vec_right_(1),quat_vec_right_(2),quat_scal_right_);          // quaternione terna attuale
+    quat_0_right_ = tf::Quaternion(quat_vec_right_(0),quat_vec_right_(1),quat_vec_right_(2),quat_scal_right_);   
+    x_des_right_.M.GetQuaternion(quat_vec_right_(0),quat_vec_right_(1),quat_vec_right_(2),quat_scal_right_);      // quaternione terna desiderata
+    quat_f_right_ = tf::Quaternion(quat_vec_right_(0),quat_vec_right_(1),quat_vec_right_(2),quat_scal_right_);
+    x0_right_ << x_meas_right_.p(0), x_meas_right_.p(1), x_meas_right_.p(2), 0, 0, 0;           // posizione attuale
+    xDES_step_right_ = x0_right_;
+    counter = 0;
+  }
 }
 
 

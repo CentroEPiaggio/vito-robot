@@ -102,6 +102,9 @@ private:
     tf::Transform tf_elbow_pose_right_;
     tf::TransformBroadcaster br_elbow_pose_right_;
     
+    tf::Transform tf_elbow_ref_right_;
+    tf::TransformBroadcaster br_elbow_ref_right_;
+    
     void pub_ee_pose();
 
     // control publisher
@@ -190,7 +193,10 @@ private:
 
 	// cartesian impedance control stuff (Dan)
 	KDL::Frame x_ref_virtual_;
+	
 	bool virtual_ref_available = false;
+	
+	KDL::Frame x_ref_right_elbow_;
 
 };
 
