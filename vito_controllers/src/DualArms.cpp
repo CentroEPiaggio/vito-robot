@@ -91,7 +91,7 @@ void DualArms::init()
 //     K_cart(4) = 0.0;
 //     K_cart(5) = 0.0;
     
-//     // early morning working oscillates -- works without hands *******
+    // early morning working oscillates -- works without hands *******
 // 	K_cart(0) = 80.0;
 //     K_cart(1) = 80.0;
 //     K_cart(2) = 80.0;
@@ -99,13 +99,30 @@ void DualArms::init()
 //     K_cart(4) = 5.0;
 //     K_cart(5) = 5.0;
 
-    // 
-	K_cart(0) = 100.0;
-    K_cart(1) = 100.0;
-    K_cart(2) = 100.0;
-    K_cart(3) = 1.0;
-    K_cart(4) = 1.0;
-    K_cart(5) = 1.0;
+//     // GAINS FOR REAL ROBOT
+// 	K_cart(0) = 100.0;
+//     K_cart(1) = 100.0;
+//     K_cart(2) = 100.0;
+//     K_cart(3) = 1.0;
+//     K_cart(4) = 1.0;
+//     K_cart(5) = 1.0;
+
+    // GAINS FOR REAL ROBOT
+	K_cart(0) = 90.0;
+    K_cart(1) = 90.0;
+    K_cart(2) = 90.0;
+    K_cart(3) = 1.5;
+    K_cart(4) = 1.5;
+    K_cart(5) = 1.5;
+
+    
+//     // GAINS FOR SIMULATED ROBOT
+// 	K_cart(0) = 10000.0;
+//     K_cart(1) = 10000.0;
+//     K_cart(2) = 10000.0;
+//     K_cart(3) = 100.0;
+//     K_cart(4) = 100.0;
+//     K_cart(5) = 100.0;
     
     // early morning working tuned
 //     K_cart(0) = 160.0;
@@ -143,7 +160,7 @@ void DualArms::init()
 //     D_cart(1) = 14.4;
 //     D_cart(2) = 14.4;
     
-    // work without hands *******
+//     // work without hands *******
 //         D_cart(3) = 1.0;
 //     D_cart(4) = 1.0;
 //     D_cart(5) = 1.0;
@@ -152,9 +169,19 @@ void DualArms::init()
 //     D_cart(1) = 7.2;
 //     D_cart(2) = 7.2;
     
-     D_cart(3) = 1.0;
-    D_cart(4) = 1.0;
-    D_cart(5) = 1.0;
+//         // GAINS FOR REAL ROBOT WITH HAND
+//      D_cart(3) = 1.0;
+//     D_cart(4) = 1.0;
+//     D_cart(5) = 1.0;
+// 	
+//     D_cart(0) = 1.0;
+//     D_cart(1) = 1.0;
+//     D_cart(2) = 1.0;
+    
+    // GAINS FOR REAL ROBOT WITH HAND
+     D_cart(3) = 2.0;
+    D_cart(4) = 2.0;
+    D_cart(5) = 2.0;
 	
     D_cart(0) = 1.0;
     D_cart(1) = 1.0;
@@ -341,12 +368,21 @@ void DualArms::cartesian_impedance_elbow()
 	KDL::JntArray K_cart_second;
 	
 	      K_cart_second.resize(6);
-    K_cart_second(0) = 5.0;
-    K_cart_second(1) = 5.0;
-    K_cart_second(2) = 5.0;
+    // GAINS FOR REAL ROBOT
+    K_cart_second(0) = 5.0/5.;
+    K_cart_second(1) = 5.0/5.;
+    K_cart_second(2) = 5.0/5.;
     K_cart_second(3) = 0.0;
     K_cart_second(4) = 0.0;
     K_cart_second(5) = 0.0;
+
+// 	          // GAINS FOR SIMULATED ROBOT
+//     K_cart_second(0) = 50000.0;
+//     K_cart_second(1) = 50000.0;
+//     K_cart_second(2) = 50000.0;
+//     K_cart_second(3) = 0.0;
+//     K_cart_second(4) = 0.0;
+//     K_cart_second(5) = 0.0;
     
     KDL::Twist err_elbow;
     err_elbow = KDL::diff(x_right_elbow_,x_ref_right_elbow_);
