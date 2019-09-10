@@ -108,12 +108,21 @@ void DualArms::init()
 //     K_cart(5) = 1.0;
 
     // GAINS FOR REAL ROBOT
-	K_cart(0) = 90.0;
-    K_cart(1) = 90.0;
-    K_cart(2) = 90.0;
-    K_cart(3) = 1.5;
-    K_cart(4) = 1.5;
-    K_cart(5) = 1.5;
+// 	K_cart(0) = 90.0;
+//     K_cart(1) = 90.0;
+//     K_cart(2) = 90.0;
+//     K_cart(3) = 1.5;
+//     K_cart(4) = 1.5;
+//     K_cart(5) = 1.5;
+    K_cart(0) = 100.0;
+    K_cart(1) = 100.0;
+    K_cart(2) = 110.0;
+    K_cart(3) = 2.5;
+    K_cart(4) = 2.5;
+    K_cart(5) = 2.5;
+//     K_cart(3) = 10.5; // TOP per task senza payload
+//     K_cart(4) = 10.5;
+//     K_cart(5) = 10.5;
 
     
 //     // GAINS FOR SIMULATED ROBOT
@@ -369,13 +378,20 @@ void DualArms::cartesian_impedance_elbow()
 	
 	      K_cart_second.resize(6);
     // GAINS FOR REAL ROBOT
-    K_cart_second(0) = 5.0/5.;
-    K_cart_second(1) = 5.0/5.;
-    K_cart_second(2) = 5.0/5.;
+//     K_cart_second(0) = 5.0/5.;
+//     K_cart_second(1) = 5.0/5.;
+//     K_cart_second(2) = 5.0/5.;
+//     K_cart_second(3) = 0.0;
+//     K_cart_second(4) = 0.0;
+//     K_cart_second(5) = 0.0;
+    K_cart_second(0) = 5.0;
+    K_cart_second(1) = 5.0;
+    K_cart_second(2) = 5.0;
     K_cart_second(3) = 0.0;
     K_cart_second(4) = 0.0;
     K_cart_second(5) = 0.0;
 
+    
 // 	          // GAINS FOR SIMULATED ROBOT
 //     K_cart_second(0) = 50000.0;
 //     K_cart_second(1) = 50000.0;
